@@ -8,13 +8,17 @@ namespace GameLogic
 class Combat
 {
 private:
-    Player player;
-    Enemy Enemy;
+    Entities::Player player;
+    Entities::Enemy Enemy;
+    bool IsRunning;
 public:
-    Combat(Player player, Enemy Enemy);
+    Combat(Entities::Player player, Entities::Enemy Enemy);
      ~Combat();
     void ExecutePlayerTurn();
     void ExecuteEnemyTurn();
+    Entities::Player GetPlayer();
+    bool IsRunning();
+
 };  
 }
 #endif
