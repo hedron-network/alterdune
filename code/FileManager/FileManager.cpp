@@ -63,9 +63,6 @@ namespace File{
     Player FileManager::LoadPlayer(std::string filepath){
 
     }
-    Player loadPlayer(std::string filepath){
-
-    }
 
 
 }
