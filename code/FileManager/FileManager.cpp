@@ -63,13 +63,9 @@ namespace File{
     Player FileManager::LoadPlayer(std::string filepath){
 
     }
-<<<<<<< Updated upstream
     Player loadPlayer(std::string filepath){
 
     }
 
 
 }
-=======
-}
->>>>>>> Stashed changes
