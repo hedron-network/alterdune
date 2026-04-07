@@ -38,10 +38,10 @@ namespace File{
         return table;
         
     }
-    std::vector<std::vector<std::string>> FileManager::ReadCSV(std::string filepath){
+    std::optional<std::vector<std::vector<std::string>>> FileManager::ReadCSV(std::string filepath){
         std::ifstream stream(filepath);
         if(!stream){
-            return;
+            return std::nullopt;
         }
         return ExtractDataFromStream(stream);
     }
