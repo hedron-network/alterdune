@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <optional>
 
+#include <Menu.hh>
 #include <FileManager.hh>
 #include <Player.hh>
 #include <Combat.hh>
@@ -17,6 +18,7 @@ private:
     Entities::Player player;
     std::optional<Combat> combat;
     std::optional<Bestiary> bestiary;
+    Menu menu;
     std::vector<Entities::Enemy> enemies;
     File::FileManager fileManager;
 
@@ -28,8 +30,8 @@ private:
     void Fight();
     bool ShowBestiary();
     void Reset();
-    void ShowMenu();
-
+    bool ShowMenu();
+    bool ShowMainMenu();
 
 
 public:

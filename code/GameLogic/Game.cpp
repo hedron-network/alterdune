@@ -1,19 +1,26 @@
 #include <Game.hh>
 namespace GameLogic{
     Game::Game(){
-        LoadExternalData();
-        ShuffleEnemies();
-        CreateFirstEncounter();
+        Reset();
     }
-
+    #pragma region dataHandling
 
     void Game::LoadExternalData(){
         this->player = fileManager.LoadPlayer(fileManager.playerCSV);
         this->enemies= fileManager.LoadEntities(fileManager.entityCSV);
     }
+    void Game::ShuffleEnemies(){
+        auto rng = std::default_random_engine {};
+        std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
+    }
     void Game::CreateFirstEncounter(){
         this->combat = Combat(this->player,this->enemies.back());
         enemies.pop_back();
+    }
+    void Game::Reset(){
+        LoadExternalData();
+        ShuffleEnemies();
+        CreateFirstEncounter();
     }
     bool Game::NextEncounter(){
         if(!combat.has_value()){
@@ -23,29 +30,54 @@ namespace GameLogic{
             return false;
         }
         this->player =this->combat.value().GetPlayer();
-        this->player.fullHeal();
         this->combat = Combat(player,enemies.back());
         enemies.pop_back();
         return true;
     }
-    void Game::ShuffleEnemies(){
-        auto rng = std::default_random_engine {};
-        std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
-    }
-    void Game::Reset(){
-        
-        ShuffleEnemies();
-        CreateFirstEncounter();
-    }
-    void Game::ShowMenu(){
-        throw "Not Implemented";
+
+    #pragma endregion
+
+    #pragma region GameLoop
+    bool Game::ShowMainMenu(){
+        auto choiceOPT=menu.DisplayMainMenu();
+        if(!choiceOPT.has_value()){
+            while (!choiceOPT.has_value())
+            {
+                choiceOPT=menu.DisplayMainMenu();
+            }   
+        }
+        auto choice= choiceOPT.value();
+        bool continueGame= true;
+        switch (choice)
+        {
+        case MenuChoice::FIGHT:
+            break;
+        case MenuChoice::BESTIARY:
+            menu.ShowBestiary();
+            ShowMainMenu();
+            break;
+        case MenuChoice::ITEMS:
+            auto item=menu.ChooseItems();
+            if (item.has_value()){
+                item->Use();
+            }
+            ShowMainMenu();
+            break;
+        case MenuChoice::EXIT:
+            continueGame=false;
+            break;
+        default:
+            throw "Invalid state";
+        }
+        return continueGame;
     }
     
     void Game::GameLoop(){
         if(!combat.has_value()){
             throw "Invalid state";
         }
-        while (true)
+        bool running=true;
+        while (running)
         {
             if(!combat.has_value()){
                 break;
@@ -54,16 +86,18 @@ namespace GameLogic{
             if(!NextEncounter){
                 Reset();
             }
-            ShowMenu();
+            running=ShowMainMenu();
         }
     }
     void Game::Fight(){
         while(combat->IsRunning()){
-            combat->ExecutePlayerTurn();
+            combat->ExecutePlayerTurn(menu);
             if(combat->IsRunning()){
                 combat.value().ExecuteEnemyTurn();
             }
         }
     
     }
+    #pragma endregion
+    
 }
