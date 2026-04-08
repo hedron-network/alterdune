@@ -2,6 +2,7 @@
 #define Combat_h
 #include <Enemy.hh>
 #include <Player.hh>
+#include <Menu.hh>
 
 namespace GameLogic
 {
@@ -9,15 +10,19 @@ class Combat
 {
 private:
     Entities::Player player;
-    Entities::Enemy Enemy;
+    Entities::Enemy enemy;
     bool IsRunning;
 public:
-    Combat(Entities::Player player, Entities::Enemy Enemy);
+    Combat(Entities::Player player, Entities::Enemy enemy);
      ~Combat();
-    void ExecutePlayerTurn();
+    void ExecutePlayerTurn(Menu& menu);
     void ExecuteEnemyTurn();
     Entities::Player GetPlayer();
     bool IsRunning();
+    void Attack();
+    void ACT();
+    void UseItem();
+    void Spare();
 
 };  
 }
