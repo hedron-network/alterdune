@@ -4,12 +4,12 @@ namespace GameLogic
     Combat::Combat(Entities::Player player, Entities::Enemy enemy){
         this->player = player;
         this->enemy = enemy;
-        this->IsRunning = true;
+        this->isRunning = true;
     }
     bool Combat::IsRunning(){
         return IsRunning;
     }
-    void ExecutePlayerTurn(Menu& menu){
+    void Combat::ExecutePlayerTurn(Menu& menu){
         auto choiceOPT =menu.DisplayCombatMenu();
         if (!choiceOPT.has_value()){
             while (!choiceOPT.has_value()){choiceOPT = menu.DisplayCombatMenu();}
@@ -38,12 +38,12 @@ namespace GameLogic
         }
         
     }
-    void Attack()
+    void Combat::Attack()
     {
         const int dmg = player.Attack();
         enemy.TakeDamage(dmg);
     }
-    bool ACT(Menu& menu)
+    bool Combat::ACT(Menu& menu)
     {
         auto actions = enemy.GetACT();
         auto select = menu.ActMenu(actions);
@@ -53,7 +53,7 @@ namespace GameLogic
         enemy.ACT(select.value());
         return true;
     }
-    bool UseItem(Menu& menu)
+    bool Combat::UseItem(Menu& menu)
     {
         auto select = menu.ChooseItems();
         if (!select.has_value()){
@@ -62,7 +62,7 @@ namespace GameLogic
         select.value().UseItem();
         return true;
     }
-    void Spare()
+    void Combat::Spare()
     {
         if(enemy.Spare()){
             std::cout<<enemy.GetName()<<" has been spared"<<std::endl;
@@ -72,10 +72,10 @@ namespace GameLogic
         }
     }
 
-    void ExecuteEnemyTurn(){
+    void Combat::ExecuteEnemyTurn(){
         throw -1;
     }
-    Entities::Player GetPlayer(){
+    Entities::Player Combat::GetPlayer(){
         return this->player;
     }
 

@@ -11,7 +11,7 @@ class Combat
 private:
     Entities::Player player;
     Entities::Enemy enemy;
-    bool IsRunning;
+    bool isRunning;
 public:
     Combat(Entities::Player player, Entities::Enemy enemy);
      ~Combat();
@@ -20,8 +20,8 @@ public:
     Entities::Player GetPlayer();
     bool IsRunning();
     void Attack();
-    void ACT();
-    void UseItem();
+    bool ACT(Menu menu);
+    bool UseItem();
     void Spare();
 
 };  
