@@ -1,7 +1,7 @@
 #include <Item.hh>
 using namespace std;
 
-namespace Items{
+namespace Attributes{
     Item::Item(string name, string description, int quantite)
     {
         this->name=name;
