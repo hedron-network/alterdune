@@ -6,10 +6,7 @@ namespace Entities{
         this->categorie=categorie;
         this->description=description;
         this->mercy=mercy;
-        for (int i=0; i<4; i++)
-        {
-            this->Act[i]=Act[i];
-        }
+        this->Act=Act;
 
         
     }
