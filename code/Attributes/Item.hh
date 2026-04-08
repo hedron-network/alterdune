@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-namespace Items
+namespace Attributes
 {
 
 class Item {
