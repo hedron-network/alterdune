@@ -1,15 +1,13 @@
-#ifndef BESTIARY_HH
-#define BESTIARY_HH
-
 #include <string>
 #include <vector>
+using namespace std;
 
 class Enemy;
 
 class Bestiary {
 private:
-    std::vector<Enemy*> enemies;
-    std::string result;
+    vector<Enemy*> enemies;
+    string result;
 
 public:
     Bestiary();
@@ -17,12 +15,12 @@ public:
     Bestiary(const std::vector<Enemy*>& enemies, const std::string& result);
 
     void AddEnemy(Enemy* enemy);
-    const std::vector<Enemy*>& GetEnemies() const;
-    const std::string& GetResult() const;
+    const vector<Enemy*>& GetEnemies() const;
+    const string& GetResult() const;
     void SetResult(const std::string& value);
 
     size_t Size() const;
     bool IsEmpty() const;
 };
 
-#endif // BESTIARY_HH
+

@@ -1,48 +1,50 @@
-#include "Bestiary.hh"
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
 
-Bestiary::Bestiary()
-    : enemies(), result()
-{
-}
+class Enemy;
 
-Bestiary::Bestiary(const std::string& result)
-    : enemies(), result(result)
-{
-}
+class Bestiary {
+    private:
+    vector<Enemy*> enemies;
+    string result;
 
-Bestiary::Bestiary(const std::vector<Enemy*>& enemies, const std::string& result)
-    : enemies(enemies), result(result)
-{
-}
+    public:
 
-void Bestiary::AddEnemy(Enemy* enemy)
-{
-    if (enemy != nullptr) {
-        enemies.push_back(enemy);
+    Bestiary(vector<Enemy*> enemies, string result)
+    {
+        this->enemies = enemies;
+        this->result = result;
     }
-}
 
-const std::vector<Enemy*>& Bestiary::GetEnemies() const
-{
-    return enemies;
-}
+    void AddEnemy(Enemy* enemy)
+    {
+        this->enemies.push_back(enemy);
+    }
 
-const std::string& Bestiary::GetResult() const
-{
-    return result;
-}
+    vector<Enemy*> GetEnemies()
+    {
+        return this->enemies;
+    }
 
-void Bestiary::SetResult(const std::string& value)
-{
-    result = value;
-}
+    string GetResult()
+    {
+        return this->result;
+    }
 
-size_t Bestiary::Size() const
-{
-    return enemies.size();
-}
+    void SetResult(string value)
+    {
+        this->result = value;
+    }
 
-bool Bestiary::IsEmpty() const
-{
-    return enemies.empty();
-}
+    size_t Size()
+    {
+        return this->enemies.size();
+    }
+
+    bool IsEmpty()
+    {
+        return this->enemies.empty();
+    }
+};
