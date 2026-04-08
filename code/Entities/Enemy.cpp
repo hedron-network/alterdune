@@ -1,21 +1,42 @@
 #include <Enemy.hh>
 
 namespace Entities{
-    Enemy::Enemy (string name, int hpMax, string categorie, string statistique, int mercy, string act[]) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
+    Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, string act[]) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
     {
         this->categorie=categorie;
-        this->statistique=statistique;
+        this->description=description;
         this->mercy=mercy;
         for (int i=0; i<4; i++)
         {
-            this->act[i]=act[i];
+            this->Act[i]=Act[i];
         }
 
         
     }
 
     void Enemy::ACT(Action action)
-        {
-            mercy+=action.GetMercyModifier();
-        }
-}
+    {
+        mercy-=action.GetMercyModifier();
+    }
+
+    bool Enemy::Spare()
+    {
+        if (mercy<0)
+
+        return true;
+    }
+
+    string Enemy::GetName()
+    {
+        return name;
+    }
+
+    vector<Action> Enemy::GetAction()
+    {
+        return Act;
+    }
+
+
+
+}   
+
