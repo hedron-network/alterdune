@@ -20,7 +20,7 @@ namespace Entities
     vector<Action> Act;
 
     public :
-    Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, string act[]);
+    Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act);
 
     void ACT(Action action);
 
@@ -28,7 +28,7 @@ namespace Entities
 
     string GetName();
 
-    Action GetAction();
+    vector<Action> GetAction();
 
 
 };  
