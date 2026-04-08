@@ -2,7 +2,7 @@
 namespace GameLogic
 {
     std::optional<MenuChoice> Menu::DisplayMainMenu(){
-        std::cout<<"1 Fight 2 Bestiary 3 Item 4 EXIT"<<std::endl;
+        std::cout<<"1 Fight 2 Bestiary \n3 Item 4 EXIT\n-1 Back"<<std::endl;
         int choice;
         std::cin>>choice;
         std::optional<MenuChoice> formattedChoice;
@@ -28,7 +28,7 @@ namespace GameLogic
     }
 
     std::optional<MenuChoice> Menu::DisplayCombatMenu(){
-        std::cout<<"1 Fight 2 ACT 3 Item 4 Spare"<<std::endl;
+        std::cout<<"1 Fight 2 ACT \n3 Item 4 Spare\n-1 Back"<<std::endl;
         int choice;
         std::cin>>choice;
         std::optional<MenuChoice> formattedChoice;
@@ -38,13 +38,13 @@ namespace GameLogic
             formattedChoice= MenuChoice::FIGHT;
             break;
         case 2:
-            formattedChoice = MenuChoice::BESTIARY;
+            formattedChoice = MenuChoice::ACT;
             break;
         case 3:
             formattedChoice = MenuChoice::ITEMS;
             break;
         case 4:
-            formattedChoice = MenuChoice::EXIT;
+            formattedChoice = MenuChoice::SPARE;
             break;
         default:
             formattedChoice = std::nullopt;
@@ -56,6 +56,7 @@ namespace GameLogic
         for(int i =0;i<actions.size();i++){
             std::cout<<i<<" "<<actions[i].GetInfoString()<<std::endl;
         }
+        std::cout<<"\n-1 Back"<<std::endl;
         int choice;
         std::cin>>choice;
         if(choice>=actions.size()||choice<0){

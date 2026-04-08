@@ -40,7 +40,7 @@ namespace GameLogic
     }
     void Attack()
     {
-        int dmg = player.Attack();
+        const int dmg = player.Attack();
         enemy.TakeDamage(dmg);
     }
     bool ACT(Menu& menu)
