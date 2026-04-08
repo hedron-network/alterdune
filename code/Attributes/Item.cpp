@@ -1,18 +1,12 @@
-#include <iostream>
-#include <string>
+#include <Item.hh>
 using namespace std;
 
-class Item {
-    private:
-    string name;
-    string description;
-    int quantite; //heal
-
-    public:
-    Item(string name, string description)
-     {
+namespace Items{
+    Item::Item(string name, string description, int quantite)
+    {
         this->name=name;
         this->description=description;
         this->quantite=quantite;
-     }
+    }
 };
+

@@ -4,7 +4,7 @@ namespace Attributes
     Attack::Attack(std::string name,std::string description,double attackModifier){
         this->name = name;
         this->description = description;
-        this-> attackModifier;
+        this->attackModifier = attackModifier;
     }
     double Attack::GetAttackModifier(){
         return attackModifier;

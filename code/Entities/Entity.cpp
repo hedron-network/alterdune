@@ -1,57 +1,55 @@
 #include <iostream>
 #include <string>
+#include <Entity.hh>
+#include <Attack.hh>
 using namespace std;
+using namespace Attributes;
+namespace Entities{
 
-class Entity {
-    private:
-    int hpMax;
-
-    protected:
-    int hp;
-    string name;
-
-    public:
-    Entity(int hpMax, string name)
+    Entity::Entity(int hpMax, string name, Attributes::Attack atk)
+        : attack(atk)
     {
         this->hpMax=hpMax;
         this->name=name;
         this->hp=hpMax;
     }
-};
 
-class Player : public Entity {
-    private:
-    int numberOfKill;
-    int numberOfSpare;
-    int numberOfVictory;
+    Entity::~Entity() {}
 
-    public :
-    Player(string name, int hpMax) : Entity(hpMax, name)
+    int Entity::GetHp()
     {
-        this->numberOfKill = 0;
-        this->numberOfSpare = 0;
-        this->numberOfVictory = 0;
+        return hp;
     }
 
-};
-
-class Enemy : public Entity {
-    private:
-    string categorie; 
-    string statistique;
-    int mercy;
-    int act[4];
-
-    public :
-    Enemy (string name, int hpMax, string categorie, string statistique, int mercy, int act[]) : Entity(hpMax, name)
+    double Entity::GetAttackModifier()
     {
-        this->categorie=categorie;
-        this->statistique=statistique;
-        this->mercy=mercy;
-        for (int i=0; i<4; i++)
+        return attack.GetAttackModifier();
+    }
+
+    int Entity::Attack()
+    {
+        return (int)attack.GetAttackModifier();       
+    }
+
+    void Entity::TakeDamage(int damage, int hp)
+    {
+        hp=hp-damage;
+    }
+
+    void Heal(int amount, int hp, int hpMax)
+    {
+        if(hp+amount<=hpMax)
         {
-            this->act[i]=act[i];
+            hp=hp+amount;
         }
+        else hp=hpMax;
     }
+}
 
-};
+
+
+
+
+
+
+
