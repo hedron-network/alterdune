@@ -1,6 +1,7 @@
 #ifndef stringConverter_h
 #define stringConverter_h
 #include <string>
+#include <Enemy.hh>
 namespace File
 {
     template <typename T>

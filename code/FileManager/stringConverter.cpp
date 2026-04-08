@@ -20,4 +20,26 @@ namespace File
         int dataValue= std::stoi(data);
         return dataValue==1;
     }
+    template<>
+    Entities::EnemyType ConvertTo<Entities::EnemyType>(const std::string& data){
+        Entities::EnemyType dataValue;
+        switch (std::stoi(data))
+        {
+        case 0:
+            dataValue = Entities::EnemyType::NORMAL;
+            break;
+        case 1:
+            dataValue = Entities::EnemyType::MINIBOSS;
+            break;
+        case 2:
+            dataValue = Entities::EnemyType::BOSS;
+            break;
+        
+        default:
+            dataValue = Entities::EnemyType::NORMAL; //default fallback
+            break;
+        }
+        return dataValue;
+    }
+
 }
