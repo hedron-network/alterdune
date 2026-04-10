@@ -6,8 +6,6 @@
 
 #include <Item.hh>
 #include <Action.hh>
-
-
 namespace GameLogic
 {
 enum MenuChoice {
@@ -28,7 +26,7 @@ public:
     std::optional<MenuChoice> DisplayCombatMenu();
     std::optional<Attributes::Action> ActMenu(std::vector<Attributes::Action>& actions);
     void ShowBestiary();
-    std::optional<Attributes::Item> ChooseItems(std::vector<Item>& items);
+    std::optional<Attributes::Item &> ChooseItems(std::vector<Item>& items);
     std::string NameSelection();
 };  
 }

@@ -52,6 +52,7 @@ namespace GameLogic
         }
         return formattedChoice;
     }
+    
     std::optional<Attributes::Action> Menu::ActMenu(std::vector<Attributes::Action>& actions){
         for(int i =0;i<actions.size();i++){
             std::cout<<i<<" "<<actions[i].GetInfoString()<<std::endl;
@@ -64,7 +65,23 @@ namespace GameLogic
         }
         return actions[choice];
     }
-    std::string NameSelection(){
+    
+    std::optional<Attributes::Item &> Menu::ChooseItems(std::vector<Item>& items){
+        for(int i =0;i<items.size();i++){
+            std::cout<<"("<<i<<") : "<<items[i].GetName()<<" | "<<items[i].GetQuantity()<<std::endl;
+        }
+        int choice;
+        std::cin>>choice;
+        if(choice<0||choice>=items.size()){
+            return std::nullopt;
+        }
+        if(items[choice].GetQuantity()==0){
+            return std::nullopt;
+        }
+        return items[choice];
+    }
+    
+    std::string Menu::NameSelection(){
         std::cout<<"Enter your Name"<<std::endl;
         std::string name;
         std::cin>>name;
