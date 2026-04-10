@@ -6,15 +6,22 @@ namespace GameLogic{
     #pragma region dataHandling
 
     void Game::LoadExternalData(){
-        this->player = fileManager.LoadPlayer(fileManager.playerCSV);
-        this->enemies= fileManager.LoadEntities(fileManager.entityCSV);
+        std::string name;
+        if(!this->player.has_value()){
+           name = menu.NameSelection();
+        }
+        else{
+            name = this->player.GetName()        
+        }
+        this->player = fileManager.LoadPlayer(name);
+        this->enemies= fileManager.LoadEnemies(fileManager.entityCSV);
     }
     void Game::ShuffleEnemies(){
         auto rng = std::default_random_engine {};
         std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
     }
     void Game::CreateFirstEncounter(){
-        this->combat = Combat(this->player,this->enemies.back());
+        this->combat = Combat(this->player.value(),this->enemies.back());
         enemies.pop_back();
     }
     void Game::Reset(){
@@ -30,7 +37,7 @@ namespace GameLogic{
             return false;
         }
         this->player =this->combat.value().GetPlayer();
-        this->combat = Combat(player,enemies.back());
+        this->combat = Combat(player.value(),enemies.back());
         enemies.pop_back();
         return true;
     }

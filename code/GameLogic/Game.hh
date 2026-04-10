@@ -15,7 +15,7 @@ namespace GameLogic
 class Game
 {
 private:
-    Entities::Player player;
+    std::optional<Entities::Player> player;
     std::optional<Combat> combat;
     std::optional<Bestiary> bestiary;
     Menu menu;
