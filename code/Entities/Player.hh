@@ -14,7 +14,8 @@ namespace Entities
     vector<Item> ListOfItem;
 
     public :
-    Player(string name, int hpMax);
+    Player(string name, int hpMax,vector<Item> ListOfItem);
+    vector<Item> GetItems();
 
 };
 }
