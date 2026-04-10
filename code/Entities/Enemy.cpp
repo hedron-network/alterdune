@@ -23,11 +23,6 @@ namespace Entities{
         return true;
     }
 
-    string Enemy::GetName()
-    {
-        return name;
-    }
-
     vector<Action> Enemy::GetAction()
     {
         return Act;
