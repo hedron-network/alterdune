@@ -23,10 +23,10 @@ private:
     Attributes::Item LoadItemFromData(const std::vector<std::string>& dataRow, int startOffset=0);
     std::vector<Attributes::Action> ActionVectorFromData(const std::vector<std::string>& dataRow,int offset,int numberOfActions);
 public:
-    const std::string entityCSV;
-    const std::string playerCSV;
+    const std::string entityCSV="./asset/Enemies.csv";
+    const std::string itemCSV="./asset/Items.csv";
     FileManager();
-    std::vector<Entities::Enemy> LoadEnemies(const std::string &filepath);
+    std::vector<Entities::Enemy> LoadEnemies();
     Entities::Player LoadPlayer(const std::string& name);
     
 };  

@@ -15,20 +15,37 @@ namespace GameLogic{
             name = this->player.value().GetName();      
         }
         this->player = fileManager.LoadPlayer(name);
-        this->enemies= fileManager.LoadEnemies(fileManager.entityCSV);
+        this->enemies= fileManager.LoadEnemies();
+        if(enemies.size()==0){
+            throw std::runtime_error("Error loading enemies");
+        }
     }
     void Game::ShuffleEnemies(){
         auto rng = std::default_random_engine {};
         std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
     }
     void Game::CreateFirstEncounter(){
+        if(!this->player.has_value()){
+            std::cout<<"Error loading player"<<std::endl;
+            throw -1;
+        }
+        std::cout<<this->player.value().GetName();
+        std::cout<<enemies.size();
+        std::cout<<this->enemies.back().GetName();
         this->combat = Combat(this->player.value(),this->enemies.back());
+        
+        std::cout<<"pass;";
         enemies.pop_back();
+        
+        std::cout<<"pass;";
     }
     void Game::Reset(){
         LoadExternalData();
+        
         ShuffleEnemies();
+        
         CreateFirstEncounter();
+        
     }
     bool Game::NextEncounter(){
         if(!combat.has_value()){
@@ -88,7 +105,7 @@ namespace GameLogic{
         if(!combat.has_value()){
             throw "Invalid state";
         }
-        bool running=true;
+        bool running=ShowMainMenu();
         while (running)
         {
             if(!combat.has_value()){

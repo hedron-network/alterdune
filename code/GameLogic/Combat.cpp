@@ -40,6 +40,7 @@ namespace GameLogic
     }
     void Combat::Attack()
     {
+        std::cout<<"Attacked"<<std::endl;
         const int dmg = player.Attack();
         enemy.TakeDamage(dmg);
     }
@@ -74,7 +75,8 @@ namespace GameLogic
     }
 
     void Combat::ExecuteEnemyTurn(){
-        throw -1;
+        std::cout<<"Enemy attack not implemented";
+        throw std::runtime_error("Not Implemented");
     }
     Entities::Player Combat::GetPlayer(){
         return this->player;
