@@ -38,7 +38,6 @@ private:
 
 public:
     Game();
-     ~Game();
     void StartGame();
 
 };  

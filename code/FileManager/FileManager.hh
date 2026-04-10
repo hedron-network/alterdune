@@ -26,7 +26,6 @@ public:
     const std::string entityCSV;
     const std::string playerCSV;
     FileManager();
-     ~FileManager();
     std::vector<Entities::Enemy> LoadEnemies(const std::string &filepath);
     Entities::Player LoadPlayer(const std::string& name);
     

@@ -14,7 +14,6 @@ private:
     bool isRunning;
 public:
     Combat(Entities::Player player, Entities::Enemy enemy);
-     ~Combat();
     void ExecutePlayerTurn(Menu& menu);
     void ExecuteEnemyTurn();
     Entities::Player GetPlayer();

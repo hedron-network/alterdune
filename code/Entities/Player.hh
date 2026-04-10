@@ -14,11 +14,11 @@ namespace Entities
     int numberOfKill;
     int numberOfSpare;
     int numberOfVictory;
-    vector<Item> ListOfItem;
+    vector<Attributes::Item> ListOfItem;
 
     public :
-    Player(string name, int hpMax,vector<Item> ListOfItem);
-    vector<Item> GetItems();
+    Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
+    vector<Attributes::Item> GetItems();
 
 };
 }

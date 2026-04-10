@@ -3,6 +3,7 @@ namespace GameLogic{
     Game::Game(){
         Reset();
     }
+    
     #pragma region dataHandling
 
     void Game::LoadExternalData(){
@@ -110,5 +111,7 @@ namespace GameLogic{
     
     }
     #pragma endregion
-    
+    void Game::StartGame(){
+        GameLoop();
+    }
 }

@@ -21,7 +21,6 @@ class Menu
 private:
 public:
     Menu();
-     ~Menu();
     std::optional<MenuChoice> DisplayMainMenu();
     std::optional<MenuChoice> DisplayCombatMenu();
     std::optional<Attributes::Action> ActMenu(std::vector<Attributes::Action>& actions);

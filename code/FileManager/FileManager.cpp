@@ -2,6 +2,7 @@
 namespace File{
     const std::string entityCSV="";
     const std::string itemCSV="";
+    FileManager::FileManager(){}
     std::vector<std::string> FileManager::readRow(const std::string &row){// passes original value as read only to avoid copying
         std::vector<std::string> fields = {""};
         int i =0;

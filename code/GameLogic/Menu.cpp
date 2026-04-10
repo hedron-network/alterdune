@@ -1,6 +1,7 @@
 #include <Menu.hh>
 namespace GameLogic
 {
+    Menu::Menu(){}
     std::optional<MenuChoice> Menu::DisplayMainMenu(){
         std::cout<<"1 Fight 2 Bestiary \n3 Item 4 EXIT\n-1 Back"<<std::endl;
         int choice;
@@ -86,6 +87,9 @@ namespace GameLogic
         std::string name;
         std::cin>>name;
         return name;
+    }
+    void Menu::ShowBestiary(){
+        throw "NotImplemented";
     }
 }
 
