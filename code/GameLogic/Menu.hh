@@ -3,6 +3,7 @@
 #include <iostream>
 #include <optional>
 #include <vector>
+#include <limits>
 
 #include "../Attributes/Item.hh"
 #include "../Attributes/Action.hh"

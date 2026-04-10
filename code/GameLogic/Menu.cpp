@@ -3,9 +3,14 @@ namespace GameLogic
 {
     Menu::Menu(){}
     std::optional<MenuChoice> Menu::DisplayMainMenu(){
+        std::cout<<std::endl;
         std::cout<<"1 Fight 2 Bestiary \n3 Item 4 EXIT\n-1 Back"<<std::endl;
         int choice;
-        std::cin>>choice;
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+            return std::nullopt;
+        }
         std::optional<MenuChoice> formattedChoice;
         switch (choice)
         {
@@ -31,7 +36,11 @@ namespace GameLogic
     std::optional<MenuChoice> Menu::DisplayCombatMenu(){
         std::cout<<"1 Fight 2 ACT \n3 Item 4 Spare\n-1 Back"<<std::endl;
         int choice;
-        std::cin>>choice;
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+            return std::nullopt;
+        }
         std::optional<MenuChoice> formattedChoice;
         switch (choice)
         {
@@ -89,7 +98,7 @@ namespace GameLogic
         return name;
     }
     void Menu::ShowBestiary(){
-        throw "NotImplemented";
+        throw std::runtime_error("Not Implemented");
     }
 }
 

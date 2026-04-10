@@ -6,9 +6,7 @@ namespace Entities{
         this->categorie=categorie;
         this->description=description;
         this->mercy=mercy;
-        this->Act=Act;
-
-        
+        this->Act=Act;        
     }
 
     void Enemy::ACT(Action action)

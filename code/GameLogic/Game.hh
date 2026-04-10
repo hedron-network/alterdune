@@ -4,6 +4,7 @@
 #include <random>
 #include <algorithm>
 #include <optional>
+#include <ctime>
 
 #include "Menu.hh"
 #include "Combat.hh"

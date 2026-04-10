@@ -21,13 +21,12 @@ namespace GameLogic{
         }
     }
     void Game::ShuffleEnemies(){
-        auto rng = std::default_random_engine {};
+        auto rng = std::default_random_engine {static_cast<unsigned>(std::time(nullptr))};
         std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
     }
     void Game::CreateFirstEncounter(){
         if(!this->player.has_value()){
-            std::cout<<"Error loading player"<<std::endl;
-            throw -1;
+            throw std::runtime_error("Error loading player");
         }
         std::cout<<this->player.value().GetName();
         std::cout<<enemies.size();
@@ -49,7 +48,7 @@ namespace GameLogic{
     }
     bool Game::NextEncounter(){
         if(!combat.has_value()){
-            throw "Invalid state";
+            throw std::runtime_error("Invalid state");
         }
         if(enemies.size()<=0){
             return false;
@@ -89,7 +88,7 @@ namespace GameLogic{
             continueGame=false;
             break;
         default:
-            throw "Invalid state";
+            throw std::runtime_error("Invalid state");
         }
         return continueGame;
     }
@@ -103,7 +102,7 @@ namespace GameLogic{
     
     void Game::GameLoop(){
         if(!combat.has_value()){
-            throw "Invalid state";
+            throw std::runtime_error("Invalid state");
         }
         bool running=ShowMainMenu();
         while (running)
