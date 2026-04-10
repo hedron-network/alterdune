@@ -2,7 +2,10 @@
 #define Item_h
 #include <iostream>
 #include <string>
-#include<Player.hh>
+
+namespace Entities{
+    class Player;
+}
 using namespace std;
 namespace Attributes
 {

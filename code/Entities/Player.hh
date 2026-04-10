@@ -1,7 +1,10 @@
-#include <Entity.hh>
+#ifndef Player_h
+#define Player_h
 #include <string>
 #include <vector>
-#include <Item.hh>
+
+#include "Entity.hh"
+#include "../Attributes/Item.hh"
 using namespace std;
 
 namespace Entities
@@ -11,11 +14,12 @@ namespace Entities
     int numberOfKill;
     int numberOfSpare;
     int numberOfVictory;
-    vector<Item> ListOfItem;
+    vector<Attributes::Item> ListOfItem;
 
     public :
-    Player(string name, int hpMax,vector<Item> ListOfItem);
-    vector<Item> GetItems();
+    Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
+    vector<Attributes::Item> GetItems();
 
 };
 }
+#endif

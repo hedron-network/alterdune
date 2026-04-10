@@ -1,4 +1,5 @@
 #include <Item.hh>
+#include "../Entities/Player.hh"
 using namespace std;
 
 namespace Attributes{

@@ -2,7 +2,7 @@
 #define Entity_h
 #include <iostream>
 #include <string>
-#include <Attack.hh>
+#include "../Attributes/Attack.hh"
 using namespace std;
 using namespace Attributes;
 

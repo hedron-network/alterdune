@@ -7,7 +7,13 @@ namespace File
 
     template <>
     int ConvertTo<int>(const std::string& data) {
-        return std::stoi(data);
+        try{
+            return std::stoi(data);
+        }catch(...){
+            std::cout<<"can't convert "<<data<<" to int"<<std::endl;
+            throw std::runtime_error("S2I convertion error");
+        }
+        
     }
 
     template <>

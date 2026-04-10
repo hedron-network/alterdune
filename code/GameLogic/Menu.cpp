@@ -1,10 +1,16 @@
 #include <Menu.hh>
 namespace GameLogic
 {
+    Menu::Menu(){}
     std::optional<MenuChoice> Menu::DisplayMainMenu(){
+        std::cout<<std::endl;
         std::cout<<"1 Fight 2 Bestiary \n3 Item 4 EXIT\n-1 Back"<<std::endl;
         int choice;
-        std::cin>>choice;
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+            return std::nullopt;
+        }
         std::optional<MenuChoice> formattedChoice;
         switch (choice)
         {
@@ -30,7 +36,11 @@ namespace GameLogic
     std::optional<MenuChoice> Menu::DisplayCombatMenu(){
         std::cout<<"1 Fight 2 ACT \n3 Item 4 Spare\n-1 Back"<<std::endl;
         int choice;
-        std::cin>>choice;
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+            return std::nullopt;
+        }
         std::optional<MenuChoice> formattedChoice;
         switch (choice)
         {
@@ -66,7 +76,7 @@ namespace GameLogic
         return actions[choice];
     }
     
-    std::optional<Attributes::Item &> Menu::ChooseItems(std::vector<Item>& items){
+    std::optional<Attributes::Item> Menu::ChooseItems(std::vector<Attributes::Item>& items){
         for(int i =0;i<items.size();i++){
             std::cout<<"("<<i<<") : "<<items[i].GetName()<<" | "<<items[i].GetQuantity()<<std::endl;
         }
@@ -86,6 +96,9 @@ namespace GameLogic
         std::string name;
         std::cin>>name;
         return name;
+    }
+    void Menu::ShowBestiary(){
+        throw std::runtime_error("Not Implemented");
     }
 }
 

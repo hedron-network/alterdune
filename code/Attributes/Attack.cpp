@@ -6,6 +6,7 @@ namespace Attributes
         this->description = description;
         this->attackModifier = attackModifier;
     }
+    Attack::~Attack(){}
     double Attack::GetAttackModifier(){
         return attackModifier;
     }

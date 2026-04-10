@@ -6,6 +6,7 @@ namespace Attributes
         this->description = description;
         this-> mercyModifier;
     }
+    Action::~Action(){}
     int Action::GetMercyModifier(){
         return mercyModifier;
     }

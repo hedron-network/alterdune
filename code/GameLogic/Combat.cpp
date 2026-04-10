@@ -7,9 +7,10 @@ namespace GameLogic
         this->isRunning = true;
     }
     bool Combat::IsRunning(){
-        return IsRunning;
+        return this->isRunning;
     }
     void Combat::ExecutePlayerTurn(Menu& menu){
+        std::cout<<"\n"<<player.GetName()<<" vs "<<enemy.GetName()<<std::endl;
         auto choiceOPT =menu.DisplayCombatMenu();
         if (!choiceOPT.has_value()){
             while (!choiceOPT.has_value()){choiceOPT = menu.DisplayCombatMenu();}
@@ -40,6 +41,7 @@ namespace GameLogic
     }
     void Combat::Attack()
     {
+        std::cout<<"Attacked"<<std::endl;
         const int dmg = player.Attack();
         enemy.TakeDamage(dmg);
     }
@@ -74,7 +76,8 @@ namespace GameLogic
     }
 
     void Combat::ExecuteEnemyTurn(){
-        throw -1;
+        std::cout<<"Enemy attack not implemented"<<std::endl;
+        throw std::runtime_error("Not Implemented");
     }
     Entities::Player Combat::GetPlayer(){
         return this->player;
