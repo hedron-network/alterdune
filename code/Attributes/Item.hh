@@ -17,6 +17,8 @@ class Item {
     public:
     Item(string name, string description,int itemPower, int quantite);
     void UseItem(Entities::Player& player);
+    string GetName();
+    int GetQuantity();
 };
 }
 #endif

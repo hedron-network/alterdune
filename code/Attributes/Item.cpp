@@ -13,5 +13,11 @@ namespace Attributes{
         player.Heal(itemPower);
         quantite=quantite-1;
     }
+    string Item::GetName(){
+        return name;
+    }
+    int Item::GetQuantity(){
+        return quantite;
+    }
 };
 
