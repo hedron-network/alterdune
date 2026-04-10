@@ -11,14 +11,17 @@ namespace Entities{
 
     void Enemy::ACT(Action action)
     {
+        std::cout<<action.GetDescription()<<std::endl;
         mercy-=action.GetMercyModifier();
     }
 
     bool Enemy::Spare()
     {
-        if (mercy<0)
+        if (mercy<0){
 
         return true;
+        }
+        return false;
     }
 
     vector<Action> Enemy::GetAction()
