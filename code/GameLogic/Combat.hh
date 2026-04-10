@@ -1,8 +1,8 @@
 #ifndef Combat_h
 #define Combat_h
-#include <Enemy.hh>
-#include <Player.hh>
-#include <Menu.hh>
+#include "../Entities/Enemy.hh"
+#include "../Entities/Player.hh"
+#include "Menu.hh"
 
 namespace GameLogic
 {

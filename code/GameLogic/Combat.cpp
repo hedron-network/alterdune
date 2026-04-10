@@ -7,7 +7,7 @@ namespace GameLogic
         this->isRunning = true;
     }
     bool Combat::IsRunning(){
-        return IsRunning;
+        return this->isRunning;
     }
     void Combat::ExecutePlayerTurn(Menu& menu){
         auto choiceOPT =menu.DisplayCombatMenu();

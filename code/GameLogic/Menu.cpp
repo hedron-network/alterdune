@@ -66,7 +66,7 @@ namespace GameLogic
         return actions[choice];
     }
     
-    std::optional<Attributes::Item &> Menu::ChooseItems(std::vector<Item>& items){
+    std::optional<Attributes::Item> Menu::ChooseItems(std::vector<Attributes::Item>& items){
         for(int i =0;i<items.size();i++){
             std::cout<<"("<<i<<") : "<<items[i].GetName()<<" | "<<items[i].GetQuantity()<<std::endl;
         }

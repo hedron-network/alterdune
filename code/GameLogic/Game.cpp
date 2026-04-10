@@ -94,7 +94,7 @@ namespace GameLogic{
                 break;
             }
             Fight();
-            if(!NextEncounter){
+            if(!NextEncounter()){
                 Reset();
             }
             running=ShowMainMenu();

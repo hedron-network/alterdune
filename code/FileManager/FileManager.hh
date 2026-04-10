@@ -5,10 +5,11 @@
 #include <iostream>
 #include <fstream>
 #include <optional>
-#include <Enemy.hh>
-#include <Player.hh>
-#include <stringConverter.hh>
-#include <Item.hh>
+
+#include "../Entities/Enemy.hh"
+#include "../Entities/Player.hh"
+#include "stringConverter.hh"
+#include "../Attributes/Item.hh"
 
 namespace File
 {

@@ -1,7 +1,10 @@
-#include <Entity.hh>
+#ifndef Enemy_h
+#define Enemy_h
+
 #include <string>
-#include <Action.hh>
 #include <vector>
+#include "../Attributes/Action.hh"
+#include "Entity.hh"
 
 using namespace std;
 
@@ -26,11 +29,10 @@ namespace Entities
 
     bool Spare();
 
-    string GetName();
-
     vector<Action> GetAction();
 
 
 };  
 }
 
+#endif

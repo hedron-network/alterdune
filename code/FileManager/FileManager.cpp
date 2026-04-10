@@ -85,7 +85,7 @@ namespace File{
         }
         return items;
     }
-    Attributes::Item FileManager::LoadItemFromData(const std::vector<std::string>& dataRow, int startOffset=0){
+    Attributes::Item FileManager::LoadItemFromData(const std::vector<std::string>& dataRow, int startOffset){
         std::string name= dataRow[startOffset];
         std::string description = dataRow[startOffset+1];
         int power= ConvertTo<int>(dataRow[startOffset+2]);

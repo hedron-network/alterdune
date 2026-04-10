@@ -5,12 +5,12 @@
 #include <algorithm>
 #include <optional>
 
-#include <Menu.hh>
-#include <FileManager.hh>
-#include <Player.hh>
-#include <Combat.hh>
-#include <Enemy.hh>
-#include <Bestiary.hh>
+#include "Menu.hh"
+#include "Combat.hh"
+#include "Bestiary.hh"
+#include "../FileManager/FileManager.hh"
+#include "../Entities/Player.hh"
+#include "../Entities/Enemy.hh"
 namespace GameLogic
 {
 class Game

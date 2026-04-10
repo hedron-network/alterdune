@@ -1,7 +1,10 @@
-#include <Entity.hh>
+#ifndef Player_h
+#define Player_h
 #include <string>
 #include <vector>
-#include <Item.hh>
+
+#include "Entity.hh"
+#include "../Attributes/Item.hh"
 using namespace std;
 
 namespace Entities
@@ -19,3 +22,4 @@ namespace Entities
 
 };
 }
+#endif
