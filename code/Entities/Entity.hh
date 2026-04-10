@@ -24,10 +24,11 @@ class Entity {
     Entity(int hpMax, string name, Attributes::Attack atk);
     virtual ~Entity();
     int GetHp();
+    std::string GetName();
     double GetAttackModifier();
     int Attack();
-    void TakeDamage(int damage ,int hp);
-    void Heal(int amount, int hpMax);
+    void TakeDamage(int damage);
+    void Heal(int amount);
 };
 
 

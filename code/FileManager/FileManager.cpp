@@ -69,7 +69,7 @@ namespace File{
     }
     Entities::Player FileManager::LoadPlayer(const std::string &name){
         auto items = LoadItems(itemCSV);
-        Entities::Player new_player(name,100);
+        Entities::Player new_player(name,100,items);
         return new_player;
     }
     std::vector<Attributes::Item> FileManager::LoadItems(const std::string &filepath){
@@ -88,7 +88,9 @@ namespace File{
     Attributes::Item FileManager::LoadItemFromData(const std::vector<std::string>& dataRow, int startOffset=0){
         std::string name= dataRow[startOffset];
         std::string description = dataRow[startOffset+1];
-        int quantite= ConvertTo<int>(dataRow[startOffset+3]);
+        int power= ConvertTo<int>(dataRow[startOffset+2]);
+        int quantite = ConvertTo<int>(dataRow[startOffset+3]);
+        return Item(name,description,power,quantite);
     }
     std::vector<Attributes::Action> FileManager::ActionVectorFromData(const std::vector<std::string>& dataRow,int offset,int numberOfActions){
         vector<Attributes::Action> act;

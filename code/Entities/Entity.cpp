@@ -20,6 +20,10 @@ namespace Entities{
     {
         return hp;
     }
+    string Entity::GetName()
+    {
+        return name;
+    }
 
     double Entity::GetAttackModifier()
     {
@@ -31,12 +35,17 @@ namespace Entities{
         return (int)attack.GetAttackModifier();       
     }
 
-    void Entity::TakeDamage(int damage, int hp)
+    void Entity::TakeDamage(int damage)
     {
-        hp=hp-damage;
+        if(hp-damage>=0){
+            hp=hp-damage;
+        }
+        else{
+            hp=0;
+        }
     }
 
-    void Heal(int amount, int hp, int hpMax)
+    void Entity::Heal(int amount)
     {
         if(hp+amount<=hpMax)
         {

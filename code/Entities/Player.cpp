@@ -8,4 +8,7 @@ namespace Entities {
         this->numberOfVictory = 0;
         this->ListOfItem=ListOfItem;
     }
+    std::vector<Item> Player::GetItems(){
+        return ListOfItem;
+    }
 }
