@@ -11,7 +11,7 @@ namespace GameLogic{
            name = menu.NameSelection();
         }
         else{
-            name = this->player.GetName()        
+            name = this->player.value().GetName();      
         }
         this->player = fileManager.LoadPlayer(name);
         this->enemies= fileManager.LoadEnemies(fileManager.entityCSV);
@@ -53,7 +53,7 @@ namespace GameLogic{
                 choiceOPT=menu.DisplayMainMenu();
             }   
         }
-        auto choice= choiceOPT.value();
+        MenuChoice choice= choiceOPT.value();
         bool continueGame= true;
         switch (choice)
         {
@@ -64,10 +64,7 @@ namespace GameLogic{
             ShowMainMenu();
             break;
         case MenuChoice::ITEMS:
-            auto item=menu.ChooseItems();
-            if (item.has_value()){
-                item->Use();
-            }
+            ShowAndUseItem();
             ShowMainMenu();
             break;
         case MenuChoice::EXIT:
@@ -77,6 +74,13 @@ namespace GameLogic{
             throw "Invalid state";
         }
         return continueGame;
+    }
+    void Game::ShowAndUseItem(){
+        auto itemlist = this->player.value().GetItems();
+        auto item=menu.ChooseItems(itemlist);
+        if (item.has_value()){
+            item->UseItem(player.value());
+        }
     }
     
     void Game::GameLoop(){

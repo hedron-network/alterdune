@@ -1,9 +1,9 @@
 #include <Combat.hh>
 namespace GameLogic
 {
-    Combat::Combat(Entities::Player player, Entities::Enemy enemy){
-        this->player = player;
-        this->enemy = enemy;
+    Combat::Combat(Entities::Player player, Entities::Enemy enemy)
+    :player(player),enemy(enemy)
+    {
         this->isRunning = true;
     }
     bool Combat::IsRunning(){
@@ -45,7 +45,7 @@ namespace GameLogic
     }
     bool Combat::ACT(Menu& menu)
     {
-        auto actions = enemy.GetACT();
+        auto actions = enemy.GetAction();
         auto select = menu.ActMenu(actions);
         if (!select.has_value()){
             return false;
@@ -55,11 +55,12 @@ namespace GameLogic
     }
     bool Combat::UseItem(Menu& menu)
     {
-        auto select = menu.ChooseItems();
+        auto items = player.GetItems();
+        auto select = menu.ChooseItems(items);
         if (!select.has_value()){
             return false;
         }
-        select.value().UseItem();
+        select.value().UseItem(player);
         return true;
     }
     void Combat::Spare()

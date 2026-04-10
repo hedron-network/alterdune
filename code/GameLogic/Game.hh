@@ -10,6 +10,7 @@
 #include <Player.hh>
 #include <Combat.hh>
 #include <Enemy.hh>
+#include <Bestiary.hh>
 namespace GameLogic
 {
 class Game
@@ -32,6 +33,7 @@ private:
     void Reset();
     bool ShowMenu();
     bool ShowMainMenu();
+    void ShowAndUseItem();
 
 
 public:

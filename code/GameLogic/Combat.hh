@@ -20,8 +20,8 @@ public:
     Entities::Player GetPlayer();
     bool IsRunning();
     void Attack();
-    bool ACT(Menu menu);
-    bool UseItem();
+    bool ACT(Menu& menu);
+    bool UseItem(Menu& menu);
     void Spare();
 
 };  

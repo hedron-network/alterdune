@@ -26,9 +26,10 @@ public:
      ~Menu();
     std::optional<MenuChoice> DisplayMainMenu();
     std::optional<MenuChoice> DisplayCombatMenu();
-    std::optional<Attributes::Action> ActMenu(std::vector<Attributes::Action> actions);
+    std::optional<Attributes::Action> ActMenu(std::vector<Attributes::Action>& actions);
     void ShowBestiary();
-    std::optional<Attributes::Item> ChooseItems();
+    std::optional<Attributes::Item> ChooseItems(std::vector<Item>& items);
+    std::string NameSelection();
 };  
 }
 #endif

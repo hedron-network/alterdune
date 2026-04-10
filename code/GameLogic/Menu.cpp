@@ -52,7 +52,7 @@ namespace GameLogic
         }
         return formattedChoice;
     }
-    std::optional<Attributes::Action> Menu::ActMenu(std::vector<Attributes::Action> actions){
+    std::optional<Attributes::Action> Menu::ActMenu(std::vector<Attributes::Action>& actions){
         for(int i =0;i<actions.size();i++){
             std::cout<<i<<" "<<actions[i].GetInfoString()<<std::endl;
         }
@@ -63,6 +63,12 @@ namespace GameLogic
             return std::nullopt;
         }
         return actions[choice];
+    }
+    std::string NameSelection(){
+        std::cout<<"Enter your Name"<<std::endl;
+        std::string name;
+        std::cin>>name;
+        return name;
     }
 }
 
