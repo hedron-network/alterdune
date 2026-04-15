@@ -1,34 +1,32 @@
 cmake_minimum_required(VERSION 3.20)
-project(Game CXX)
+project(Alterdune LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCES
-    code/main.cpp
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-    code/Attributes/Action.cpp
-    code/Attributes/Attack.cpp
-    code/Attributes/Item.cpp
+file(GLOB SOURCES "code/*.cpp")
 
-    code/Entities/Enemy.cpp
-    code/Entities/Entity.cpp
-    code/Entities/Player.cpp
+include(FetchContent)
+FetchContent_Declare(SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 3.0.2
+    GIT_SHALLOW ON
+    EXCLUDE_FROM_ALL
+    SYSTEM)
+FetchContent_MakeAvailable(SFML)
 
-    code/FileManager/FileManager.cpp
-    code/FileManager/stringConverter.cpp
 
-    code/GameLogic/Bestiary.cpp
-    code/GameLogic/Combat.cpp
-    code/GameLogic/Game.cpp
-    code/GameLogic/Menu.cpp
-)
+add_executable(Game ${SOURCES})
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+target_compile_features(Game PRIVATE cxx_std_17)
+target_link_libraries(Game PRIVATE SFML::Graphics)
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    code/Attributes
-    code/Entities
-    code/FileManager
-    code/GameLogic
-)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Game)
+
+
+
+
+
+

@@ -41,6 +41,7 @@ public:
     Game();
     void StartGame();
 
-};  
+}; 
+
 }
 #endif
