@@ -41,7 +41,7 @@ struct Button {
 // Helper function declarations
 std::vector<sf::Texture> LoadButtonTexture();
 std::vector<sf::Sprite> LoadButtonSprites(const std::vector<sf::Texture>& textures);
-std::vector<Button> LoadButtons(const vector<sf::Texture> & textures);
+std::vector<Button> LoadButtons(const std::vector<sf::Texture> & textures);
 
 } // namespace Assets
 #endif
