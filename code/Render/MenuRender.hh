@@ -5,6 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include "Assets.hh"
 namespace Render{
+    enum MenuType{
+    MAIN_MENU,COMBAT_MENU,ITEM_MENU
+};
 class MenuRender
 {
 private:
@@ -17,13 +20,12 @@ private:
 public:
     MenuRender(MenuType menuType);
     ~MenuRender();
+    void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void AddButtons();
     void onButtonPressed(Assets::ButtonId id);
     void SetComponentVisibility(MenuType menuType);
 };
-enum MenuType{
-    MAIN_MENU,COMBAT_MENU,ITEM_MENU
-};
+
 };
 #endif

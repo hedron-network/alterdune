@@ -19,33 +19,27 @@ namespace Render{
             }
         }
     }
-    void MenuRender::AddButtons(){
-        const int MaxButton = 4;
-        for(Assets::Button b:this->buttons){
-            int Voffset= 1;
-            if (b.placement >=2){
-                Voffset=2;
-            }
-            sf::Vector2f vect(100.f * (b.placement%2), 250.f*Voffset);
+    void MenuRender::AddButtons() {
+    std::vector<Assets::Button> copy = this->buttons; // iterate the copy
+        this->buttons.clear();
+        for (Assets::Button b : copy) {
+            int Voffset = (b.placement >= 2) ? 2 : 1;
+            sf::Vector2f vect(100.f * (b.placement % 2), 250.f * Voffset);
             b.sprite.setPosition(vect);
-            buttons.push_back(b);
+            this->buttons.push_back(b);
         }
     }
     void MenuRender::FilterButtons(){
         auto buttonsToHide = GetButtonsToHide(this->menuType);
-        int numberOfButtonsToPop=0;
         for(int i =buttons.size()-1;i>=0;i--){
             for(Assets::ButtonId id : buttonsToHide){
                 if(buttons[i].id==id){
                     Assets::Button temp = buttons[buttons.size()-1];
                     buttons[buttons.size()-1] = buttons[i];
                     buttons[i]=temp;
-                    numberOfButtonsToPop++;
+                    buttons.pop_back();
                 }
             }
-        }
-        for(int i=0;i<numberOfButtonsToPop;i++){
-            buttons.pop_back();
         }
     }
     std::vector<Assets::ButtonId> MenuRender::GetButtonsToHide(MenuType menuType){
@@ -80,6 +74,9 @@ namespace Render{
     void MenuRender::onButtonPressed(Assets::ButtonId id) {
         
     }
-       
+    void MenuRender::draw(sf::RenderWindow& window) {
+    for (auto& b : buttons)
+        window.draw(b.sprite);
+    }   
     
 };

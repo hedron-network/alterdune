@@ -1,28 +1,39 @@
 #include "GameLogic/Game.hh"
+#include <memory.h>
 #include <SFML/Graphics.hpp>
 
-int main()
-{
-	sf::RenderWindow window( sf::VideoMode( { 200, 200 } ), "SFML works!" );
-	window.setFramerateLimit(60);
+#include "Render/StateManager.hh"
+#include "Render/Views.hh"
 
-	
-	sf::CircleShape shape( 100.f );
-	shape.setFillColor( sf::Color::Green );
+int main() {
+    sf::RenderWindow window(sf::VideoMode({640, 480}), "Game");
 
-	while ( window.isOpen() )
-	{
-		while ( const std::optional event = window.pollEvent() )
-		{
-			if ( event->is<sf::Event::Closed>() )
-				window.close();
-		}
+    Render::StateManager manager;
+    manager.pushState(std::make_unique<Render::MainMenu>());
 
-		window.clear();
-		window.draw( shape );
-		window.display();
-	}
-};
+    sf::Clock clock;
+    while (window.isOpen()) {
+        float dt = clock.restart().asSeconds();
+
+        while (auto event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>())
+                window.close();
+
+            if (auto* state = manager.getCurrentState())
+                state->handleEvent(*event, window);
+        }
+
+        if (auto* state = manager.getCurrentState())
+            state->update(dt);
+
+        window.clear(sf::Color::Black);
+
+        if (auto* state = manager.getCurrentState())
+            state->draw(window);
+
+        window.display();
+    }
+}
 /*
 int main(){
     GameLogic::Game game;

@@ -32,11 +32,12 @@ const int buttonPlacement[buttonNumber]{
 
 struct Button {
     sf::Sprite sprite;
+    sf::Sprite hover_sprite;
     ButtonId id;
     int placement;
 
-    Button(const sf::Sprite& s, ButtonId i, int p)
-        : sprite(s), id(i), placement(p){}
+    Button(const sf::Sprite& s,const sf::Sprite &hs ,ButtonId i, int p)
+        : sprite(s),hover_sprite(hs), id(i), placement(p){}
 };
 // Helper function declarations
 std::vector<sf::Texture> LoadButtonTexture();

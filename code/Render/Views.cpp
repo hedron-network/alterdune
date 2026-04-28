@@ -13,6 +13,11 @@ namespace Render{
             }
         }
     }
+    void MenuTemplate::update(float dt) { /* nothing yet */ }
+
+    void MenuTemplate::draw(sf::RenderWindow& window) {
+        menu.draw(window);
+    }
 
 
     MainMenu::MainMenu():MenuTemplate(MAIN_MENU){}
