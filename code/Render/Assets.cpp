@@ -22,12 +22,16 @@ std::vector<sf::Sprite> LoadButtonSprites(const std::vector<sf::Texture> & textu
     }
     return sprites;
 }
-std::vector<Button> LoadButtons(const std::vector<sf::Texture> & textures){
-    auto sprites = LoadButtonSprites(textures);
+std::vector<Button> LoadButtons(std::vector<sf::Texture>& textures) {
     std::vector<Button> buttons;
-    for(int i=0; i<sprites.size();i+=2){
-        buttons.push_back(Button{sprites[i],sprites[i+1], static_cast<ButtonId>(i/2),buttonPlacement[i/2]});
+    for (int i = 0; i < buttonNumber; i++) {
+        // textures[i*2] and textures[i*2+1] are stable in the stored vector
+        sf::Sprite sprite(textures[i * 2]);
+        sf::Sprite hover_sprite(textures[i * 2 + 1]);
+        buttons.push_back(Button{sprite, hover_sprite,
+            static_cast<ButtonId>(i), buttonPlacement[i]});
     }
+    
     return buttons;
 }
 }

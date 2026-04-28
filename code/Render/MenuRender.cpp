@@ -1,16 +1,19 @@
 #include "MenuRender.hh"
+#include <iostream>
+#include <algorithm>
 namespace Render{
+
     MenuRender::MenuRender(MenuType menuType)
     :menuType(menuType){
         LoadAssets();
         FilterButtons();
         AddButtons();
     }
-    void MenuRender::LoadAssets(){
-        this->textures = Assets::LoadButtonTexture();
-        this->buttons = Assets::LoadButtons(textures);
+    MenuRender::~MenuRender() {}
+    void MenuRender::LoadAssets() {
+        this->textures = Assets::LoadButtonTexture(); // textures stored in member var
+        this->buttons = Assets::LoadButtons(this->textures); // sprites point into member var
     }
-
 
     void MenuRender::handleClick(sf::Vector2f mousePos) {
         for (auto &b : buttons) {
@@ -20,28 +23,32 @@ namespace Render{
         }
     }
     void MenuRender::AddButtons() {
-    std::vector<Assets::Button> copy = this->buttons; // iterate the copy
+        std::vector<Assets::Button> copy = this->buttons;
+        const int x =buttons[0].sprite.getTexture().getSize().x;
+        const int y =buttons[0].sprite.getTexture().getSize().y;
+        const float staticOffset = 10.f;
         this->buttons.clear();
-        for (Assets::Button b : copy) {
-            int Voffset = (b.placement >= 2) ? 2 : 1;
-            sf::Vector2f vect(100.f * (b.placement % 2), 250.f * Voffset);
+        for (int i = 0; i < (int)copy.size(); i++) {
+            Assets::Button b = copy[i];
+            int Voffset = (i >= 2) ? 2 : 1;
+            
+            sf::Vector2f vect((x+staticOffset) * (i % 2),(y+staticOffset)* Voffset);
             b.sprite.setPosition(vect);
             this->buttons.push_back(b);
         }
     }
-    void MenuRender::FilterButtons(){
+    void MenuRender::FilterButtons() {
         auto buttonsToHide = GetButtonsToHide(this->menuType);
-        for(int i =buttons.size()-1;i>=0;i--){
-            for(Assets::ButtonId id : buttonsToHide){
-                if(buttons[i].id==id){
-                    Assets::Button temp = buttons[buttons.size()-1];
-                    buttons[buttons.size()-1] = buttons[i];
-                    buttons[i]=temp;
-                    buttons.pop_back();
-                }
-            }
-        }
-    }
+        this->buttons.erase(
+            std::remove_if(this->buttons.begin(), this->buttons.end(),
+                [&buttonsToHide](const Assets::Button& b) {
+                    for (Assets::ButtonId id : buttonsToHide)
+                        if (b.id == id) return true;
+                    return false;
+                }),
+            this->buttons.end()
+        );
+}
     std::vector<Assets::ButtonId> MenuRender::GetButtonsToHide(MenuType menuType){
         std::vector<Assets::ButtonId> buttonsToHide;
         switch (menuType)
@@ -72,7 +79,31 @@ namespace Render{
     }
     
     void MenuRender::onButtonPressed(Assets::ButtonId id) {
-        
+        using namespace Assets;
+        switch (id)
+        {
+        case ButtonId::ATTACK:
+            std::cout<<"Attack";
+            break;
+        case ButtonId::ACT:
+            std::cout<<"ACT";
+            break;
+        case ButtonId::BESTIARY:
+            std::cout<<"BESTIARY";
+            break;
+        case ButtonId::ITEM:
+            std::cout<<"ITEM";
+            break;
+        case ButtonId::SPARE:
+            std::cout<<"SPARE";
+            break;
+        case ButtonId::EXIT:
+            std::cout<<"Exit";
+            break;
+        default:
+            std::cout<<"gne";
+            break;
+        }
     }
     void MenuRender::draw(sf::RenderWindow& window) {
     for (auto& b : buttons)

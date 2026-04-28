@@ -6,7 +6,7 @@
 #include "Render/Views.hh"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({640, 480}), "Game");
+    sf::RenderWindow window(sf::VideoMode({640, 600}), "Game");
 
     Render::StateManager manager;
     manager.pushState(std::make_unique<Render::MainMenu>());
