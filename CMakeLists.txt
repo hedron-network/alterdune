@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-file(GLOB SOURCES "code/*.cpp")
+file(GLOB_RECURSE SOURCES "code/*.cpp")
 
 include(FetchContent)
 FetchContent_Declare(SFML
