@@ -14,6 +14,8 @@ public:
      ~Action();
     int GetMercyModifier();
     std::string GetInfoString();
+    std::string GetName();
+    std::string GetDescription();
 };  
 
 }

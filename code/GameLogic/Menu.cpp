@@ -65,7 +65,7 @@ namespace GameLogic
     
     std::optional<Attributes::Action> Menu::ActMenu(std::vector<Attributes::Action>& actions){
         for(int i =0;i<actions.size();i++){
-            std::cout<<i<<" "<<actions[i].GetInfoString()<<std::endl;
+            std::cout<<i<<" "<<actions[i].GetName()<<std::endl;
         }
         std::cout<<"\n-1 Back"<<std::endl;
         int choice;
