@@ -1,4 +1,4 @@
-#include <Enemy.hh>
+#include "Enemy.hh"
 
 namespace Entities{
     Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
