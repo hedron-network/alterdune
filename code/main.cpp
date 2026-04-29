@@ -6,14 +6,15 @@
 #include "Render/Views.hh"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({640, 600}), "Game");
+    sf::RenderWindow window(sf::VideoMode({940, 720}), "Game");
 
     Render::StateManager manager;
-    manager.pushState(std::make_unique<Render::MainMenu>());
+    manager.pushState(std::make_unique<Render::CombatMenu>(window));
 
     sf::Clock clock;
     while (window.isOpen()) {
         float dt = clock.restart().asSeconds();
+        
 
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
@@ -23,8 +24,9 @@ int main() {
                 state->handleEvent(*event, window);
         }
 
+        auto mPos = sf::Vector2f(sf::Mouse::getPosition(window));
         if (auto* state = manager.getCurrentState())
-            state->update(dt);
+            state->update(dt,mPos);
 
         window.clear(sf::Color::Black);
 

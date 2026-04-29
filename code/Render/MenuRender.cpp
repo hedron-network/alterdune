@@ -3,11 +3,11 @@
 #include <algorithm>
 namespace Render{
 
-    MenuRender::MenuRender(MenuType menuType)
+    MenuRender::MenuRender(MenuType menuType,sf::RenderWindow& window)
     :menuType(menuType){
         LoadAssets();
         FilterButtons();
-        AddButtons();
+        AddButtons(window);
     }
     MenuRender::~MenuRender() {}
     void MenuRender::LoadAssets() {
@@ -22,20 +22,44 @@ namespace Render{
             }
         }
     }
-    void MenuRender::AddButtons() {
+    void MenuRender::AddButtons(sf::RenderWindow& window) {
+        auto windowSize =window.getSize();
         std::vector<Assets::Button> copy = this->buttons;
-        const int x =buttons[0].sprite.getTexture().getSize().x;
-        const int y =buttons[0].sprite.getTexture().getSize().y;
+        const int buttonWidth =buttons[0].sprite.getTexture().getSize().x;
+        const int buttonHeight =buttons[0].sprite.getTexture().getSize().y;
         const float staticOffset = 10.f;
+        const float bottomMargin = 40.f;
+
+        const int cols = 4;
+        const int rows =1;
+
+        float totalWidth = cols * buttonWidth + (cols - 1) * staticOffset;
+        float totalHeight = rows * buttonHeight + (rows - 1) * staticOffset;
+
+        float startX = (windowSize.x - totalWidth) / 2.f;
+        float startY = windowSize.y - totalHeight - bottomMargin;
+
         this->buttons.clear();
         for (int i = 0; i < (int)copy.size(); i++) {
             Assets::Button b = copy[i];
-            int Voffset = (i >= 2) ? 2 : 1;
-            
-            sf::Vector2f vect((x+staticOffset) * (i % 2),(y+staticOffset)* Voffset);
-            b.sprite.setPosition(vect);
+            int col = i % cols;
+            int row = i / cols;
+
+            float x = startX + col * (buttonWidth + staticOffset);
+            float y = startY + row * (buttonHeight + staticOffset);
+
+            b.sprite.setPosition({x, y});
+            b.hover_sprite.setPosition({x, y});
+
             this->buttons.push_back(b);
         }
+    }
+    bool MenuRender::isHovered(sf::RenderWindow& window, Assets::Button b) {
+        auto mousePixel = sf::Mouse::getPosition(window);
+        auto mouseWorld = window.mapPixelToCoords(mousePixel);
+        return b.sprite.getGlobalBounds().contains(
+            sf::Vector2f((float)mouseWorld.x,(float)mouseWorld.y)
+        );
     }
     void MenuRender::FilterButtons() {
         auto buttonsToHide = GetButtonsToHide(this->menuType);
@@ -77,6 +101,8 @@ namespace Render{
         }
         return buttonsToHide;
     }
+    void MenuRender::update(float dt){
+    }
     
     void MenuRender::onButtonPressed(Assets::ButtonId id) {
         using namespace Assets;
@@ -107,7 +133,13 @@ namespace Render{
     }
     void MenuRender::draw(sf::RenderWindow& window) {
     for (auto& b : buttons)
-        window.draw(b.sprite);
+        if(isHovered(window,b)){
+            window.draw(b.hover_sprite);
+        }
+        else{
+            window.draw(b.sprite);
+        }
+
     }   
     
 };

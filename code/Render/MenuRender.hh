@@ -17,12 +17,14 @@ private:
     void LoadAssets();
     void FilterButtons();
     std::vector<Assets::ButtonId> GetButtonsToHide(MenuType menuType);
+    bool isHovered(sf::RenderWindow& window, Assets::Button b);
 public:
-    MenuRender(MenuType menuType);
+    void update(float dt);
+    MenuRender(MenuType menuType,sf::RenderWindow& window);
     ~MenuRender();
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
-    void AddButtons();
+    void AddButtons(sf::RenderWindow& window);
     void onButtonPressed(Assets::ButtonId id);
     void SetComponentVisibility(MenuType menuType);
 };
