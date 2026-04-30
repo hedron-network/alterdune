@@ -1,7 +1,7 @@
 #include "Views.hh"
 namespace Render{
 
-    MenuTemplate::MenuTemplate(MenuType type,sf::RenderWindow& window):menu(MenuRender(type,window)){}
+    MenuTemplate::MenuTemplate(MenuType type,const sf::RenderWindow& window):menu(MenuRender(type,window)){}
     void MenuTemplate::handleEvent(sf::Event& event, sf::RenderWindow& window){
         if (const auto* mousePressed = event.getIf<sf::Event::MouseButtonPressed>())
         {
@@ -11,6 +11,12 @@ namespace Render{
                     window.mapPixelToCoords(mousePressed->position)
                 );
             }
+        }
+        if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
+        {
+            menu.handleKeyPress(
+                keyPressed->code
+            );
         }
     }
     void MenuTemplate::update(float dt, sf::Vector2f mPos) {
@@ -22,8 +28,8 @@ namespace Render{
     }
 
 
-    MainMenu::MainMenu(sf::RenderWindow& window):MenuTemplate(MAIN_MENU,window){}
-    CombatMenu::CombatMenu(sf::RenderWindow& window):MenuTemplate(COMBAT_MENU,window){}
-    ItemMenu::ItemMenu(sf::RenderWindow& window):MenuTemplate(ITEM_MENU,window){}
+    MainMenu::MainMenu(const sf::RenderWindow& window):MenuTemplate(MAIN_MENU,window){}
+    CombatMenu::CombatMenu(const sf::RenderWindow& window):MenuTemplate(COMBAT_MENU,window){}
+    ItemMenu::ItemMenu(const sf::RenderWindow& window):MenuTemplate(ITEM_MENU,window){}
 
 }

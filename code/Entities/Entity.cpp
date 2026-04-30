@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include "Entity.hh"
-#include "../Attributes/Attack.hh"
 using namespace std;
 using namespace Attributes;
 namespace Entities{

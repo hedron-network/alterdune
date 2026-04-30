@@ -16,7 +16,7 @@ namespace Render{
     class MenuTemplate: public State{
         MenuRender menu;
         public:
-        MenuTemplate(MenuType type,sf::RenderWindow& window);
+        MenuTemplate(MenuType type,const sf::RenderWindow& window);
 
         void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
         void update(float dt, sf::Vector2f mousePos) override;
@@ -25,15 +25,15 @@ namespace Render{
 
     class MainMenu : public MenuTemplate {
         public:
-            MainMenu(sf::RenderWindow& window);
+            MainMenu(const sf::RenderWindow& window);
     };
     class CombatMenu : public MenuTemplate{
         public:
-            CombatMenu(sf::RenderWindow& window);
+            CombatMenu(const sf::RenderWindow& window);
     };
     class ItemMenu : public MenuTemplate{
         public:
-            ItemMenu(sf::RenderWindow& window);
+            ItemMenu(const sf::RenderWindow& window);
     };
 };
 #endif

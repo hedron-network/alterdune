@@ -8,6 +8,7 @@ namespace Render{
         LoadAssets();
         FilterButtons();
         AddButtons(window);
+        selected= buttons[0].id;
     }
     MenuRender::~MenuRender() {}
     void MenuRender::LoadAssets() {
@@ -21,6 +22,47 @@ namespace Render{
                 onButtonPressed(b.id);
             }
         }
+    }
+    void MenuRender::handleKeyPress(sf::Keyboard::Key key) {
+        if(key == sf::Keyboard::Key::Left){
+            int prevIdx = getPrevButtonIndex();
+            selected =buttons[prevIdx].id;
+        }
+        if(key == sf::Keyboard::Key::Right){
+            int nextIdx = getNextButtonIndex();
+            selected =buttons[nextIdx].id;
+        }
+        if(key == sf::Keyboard::Key::Enter){
+            onButtonPressed(selected);
+        }
+    }
+    int MenuRender::getPrevButtonIndex(){
+        int prev=-1;
+            for(int i =0;i<buttons.size();i++){
+                if(buttons[i].id == selected){
+                    if(i==0){
+                        prev = buttons.size()-1;
+                    }
+                    else{
+                        prev= i-1;
+                    }
+                }
+            }
+        return prev;
+    }
+    int MenuRender::getNextButtonIndex(){
+        int next=-1;
+            for(int i =0;i<buttons.size();i++){
+                if(buttons[i].id == selected){
+                    if(i==buttons.size()-1){
+                        next = 0;
+                    }
+                    else{
+                        next= i+1;
+                    }
+                }
+            }
+        return next;
     }
     void MenuRender::AddButtons(sf::RenderWindow& window) {
         auto windowSize =window.getSize();
@@ -53,6 +95,16 @@ namespace Render{
 
             this->buttons.push_back(b);
         }
+        const float totalRectWidth = totalWidth+2*staticOffset;
+        const float totalRectHeight = totalHeight+2*staticOffset;
+        buttonRect = sf::RectangleShape(sf::Vector2f(totalRectWidth,totalRectHeight));
+        buttonRect.setOutlineThickness(4);
+        buttonRect.setOutlineColor(sf::Color::White);
+        buttonRect.setFillColor(sf::Color::Transparent);
+        float startRectX = (windowSize.x - totalRectWidth) / 2.f;
+        float startRectY = windowSize.y - totalRectHeight - bottomMargin+staticOffset;
+        buttonRect.setPosition(sf::Vector2f(startRectX,startRectY));
+
     }
     bool MenuRender::isHovered(sf::RenderWindow& window, Assets::Button b) {
         auto mousePixel = sf::Mouse::getPosition(window);
@@ -133,13 +185,15 @@ namespace Render{
     }
     void MenuRender::draw(sf::RenderWindow& window) {
     for (auto& b : buttons)
-        if(isHovered(window,b)){
+        if(isHovered(window,b)|| b.id == selected){
+            selected=b.id;
             window.draw(b.hover_sprite);
         }
         else{
             window.draw(b.sprite);
         }
 
-    }   
+    window.draw(buttonRect);
+    }  
     
 };
