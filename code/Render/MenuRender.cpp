@@ -3,7 +3,7 @@
 #include <algorithm>
 namespace Render{
 
-    MenuRender::MenuRender(MenuType menuType,sf::RenderWindow& window)
+    MenuRender::MenuRender(MenuType menuType,const sf::RenderWindow& window)
     :menuType(menuType){
         LoadAssets();
         FilterButtons();
@@ -64,7 +64,7 @@ namespace Render{
             }
         return next;
     }
-    void MenuRender::AddButtons(sf::RenderWindow& window) {
+    void MenuRender::AddButtons(const sf::RenderWindow& window) {
         auto windowSize =window.getSize();
         std::vector<Assets::Button> copy = this->buttons;
         const int buttonWidth =buttons[0].sprite.getTexture().getSize().x;

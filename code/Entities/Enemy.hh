@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <SFML/Graphics.hpp>
+#include "../Render/Assets.hh"
 #include "../Attributes/Action.hh"
 #include "Entity.hh"
 
@@ -17,6 +19,9 @@ namespace Entities
     };
     class Enemy : public Entity {
     private:
+    
+    std::vector<sf::Texture> textures;
+    std::vector<sf::Sprite> sprites;
     EnemyType categorie; 
     string description;
     int mercy;
@@ -30,6 +35,9 @@ namespace Entities
     bool Spare();
 
     vector<Action> GetAction();
+
+    vector<sf::Texture> GetTextures();
+    vector<sf::Sprite> GetSprites();
 
 
 };  

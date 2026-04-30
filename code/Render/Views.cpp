@@ -19,7 +19,7 @@ namespace Render{
             );
         }
     }
-    void MenuTemplate::update(float dt, sf::Vector2f mPos) {
+    void MenuTemplate::update(float dt) {
         menu.update(dt);
     }
 
@@ -31,5 +31,8 @@ namespace Render{
     MainMenu::MainMenu(const sf::RenderWindow& window):MenuTemplate(MAIN_MENU,window){}
     CombatMenu::CombatMenu(const sf::RenderWindow& window):MenuTemplate(COMBAT_MENU,window){}
     ItemMenu::ItemMenu(const sf::RenderWindow& window):MenuTemplate(ITEM_MENU,window){}
+
+
+    
 
 }

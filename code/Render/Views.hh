@@ -8,7 +8,7 @@ namespace Render{
     class State {
     public:
         virtual void handleEvent(sf::Event& event,sf::RenderWindow& window) = 0;
-        virtual void update(float dt, sf::Vector2f mousePos) = 0;
+        virtual void update(float dt) = 0;
         virtual void draw(sf::RenderWindow& window) = 0;
         virtual ~State() {}
     };
@@ -19,7 +19,7 @@ namespace Render{
         MenuTemplate(MenuType type,const sf::RenderWindow& window);
 
         void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
-        void update(float dt, sf::Vector2f mousePos) override;
+        void update(float dt) override;
         void draw(sf::RenderWindow& window) override;
     };
 
@@ -35,5 +35,11 @@ namespace Render{
         public:
             ItemMenu(const sf::RenderWindow& window);
     };
-};
+
+    class CombatState: public State{
+        void handleEvent(sf::Event& event,sf::RenderWindow& window);
+        void update(float dt);
+        void draw(sf::RenderWindow& window);
+    };
+}
 #endif

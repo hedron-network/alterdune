@@ -7,6 +7,9 @@ namespace Entities {
         this->numberOfSpare = 0;
         this->numberOfVictory = 0;
         this->ListOfItem=ListOfItem;
+        for(int i =0;i<sprites.size();i++){
+            sprites[i].setScale(sf::Vector2f(20,20));
+        }
     }
     std::vector<Item> Player::GetItems(){
         return ListOfItem;

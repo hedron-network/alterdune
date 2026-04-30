@@ -29,7 +29,7 @@ public:
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void handleKeyPress(sf::Keyboard::Key key);
-    void AddButtons(sf::RenderWindow& window);
+    void AddButtons(const sf::RenderWindow& window);
     void onButtonPressed(Assets::ButtonId id);
     void SetComponentVisibility(MenuType menuType);
 };

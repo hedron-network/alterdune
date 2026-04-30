@@ -3,12 +3,15 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <fstream>
 
 namespace Assets {
 // PATH
 
 const std::string AssetFolder=".\\asset\\";
-const std::string TextureFolder = AssetFolder+"buttons\\";
+const std::string buttonTextureFolder = AssetFolder+"buttons\\";
+const std::string enemyTextureFolder = AssetFolder+"enemy\\";
+const std::string GUIFolder= AssetFolder+"GUI\\";
 
 // Buttons assets
 constexpr int buttonNumber = 6;
@@ -43,6 +46,15 @@ struct Button {
 std::vector<sf::Texture> LoadButtonTexture();
 std::vector<sf::Sprite> LoadButtonSprites(const std::vector<sf::Texture>& textures);
 std::vector<Button> LoadButtons(std::vector<sf::Texture>& textures);
+std::vector<sf::Texture> LoadEnemyTexture(const std::string& EnemyName);
+std::vector<sf::Sprite> LoadEnemySprites(const std::vector<sf::Texture>& textures);
+std::vector<sf::Texture> LoadPlayerTexture();
+std::vector<sf::Sprite> LoadPlayerSprites(const std::vector<sf::Texture> & textures);
+
+
+
+std::vector<sf::Sprite> SimpleLoadTexture(const std::vector<sf::Texture> & textures);
+bool FileExist(const std::string &path);
 
 } // namespace Assets
 #endif

@@ -14,7 +14,7 @@ namespace GameLogic{
         else{
             name = this->player.value().GetName();      
         }
-        this->player = fileManager.LoadPlayer(name);
+        this->player.value() = fileManager.LoadPlayer(name);
         this->enemies= fileManager.LoadEnemies();
         if(enemies.size()==0){
             throw std::runtime_error("Error loading enemies");

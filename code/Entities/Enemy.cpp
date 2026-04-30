@@ -6,7 +6,10 @@ namespace Entities{
         this->categorie=categorie;
         this->description=description;
         this->mercy=mercy;
-        this->Act=Act;        
+        this->Act=Act;  
+        this->textures = Assets::LoadEnemyTexture(name);
+        this->sprites = Assets::LoadEnemySprites(textures);
+
     }
 
     void Enemy::ACT(Action action)
@@ -28,7 +31,12 @@ namespace Entities{
     {
         return Act;
     }
-
+    vector<sf::Texture> Enemy::GetTextures(){
+        return textures;
+    }
+    vector<sf::Sprite> Enemy::GetSprites(){
+        return sprites;
+    }
 
 
 }   

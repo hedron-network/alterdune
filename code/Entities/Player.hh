@@ -2,9 +2,11 @@
 #define Player_h
 #include <string>
 #include <vector>
+#include<SFML/Graphics.hpp>
 
 #include "Entity.hh"
 #include "../Attributes/Item.hh"
+#include "../Render/Assets.hh"
 using namespace std;
 
 namespace Entities
@@ -15,6 +17,8 @@ namespace Entities
     int numberOfSpare;
     int numberOfVictory;
     vector<Attributes::Item> ListOfItem;
+    vector<sf::Texture> textures= Assets::LoadPlayerTexture();
+    vector<sf::Sprite> sprites = Assets::LoadPlayerSprites(textures);
 
     public :
     Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);

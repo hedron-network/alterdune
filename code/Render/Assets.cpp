@@ -5,8 +5,8 @@ std::vector<sf::Texture> LoadButtonTexture(){
     for(int i=0;i<buttonNumber;i++){
         sf::Texture tex;
         sf::Texture htex;
-        tex.loadFromFile(TextureFolder + +"ut_button_"+buttonNames[i] + "_normal.png");
-        htex.loadFromFile(TextureFolder + +"ut_button_"+buttonNames[i] + "_hover.png");
+        tex.loadFromFile(buttonTextureFolder + +"ut_button_"+buttonNames[i] + "_normal.png");
+        htex.loadFromFile(buttonTextureFolder + +"ut_button_"+buttonNames[i] + "_hover.png");
         textures.push_back(tex);
         textures.push_back(htex);
     }
@@ -33,5 +33,51 @@ std::vector<Button> LoadButtons(std::vector<sf::Texture>& textures) {
     }
     
     return buttons;
+}
+
+std::vector<sf::Texture> LoadPlayerTexture(){
+    std::vector<sf::Texture> textures;
+    int i=0;
+    while (FileExist(GUIFolder+"heart_"+std::to_string(i)+".png"))
+    {
+        sf::Texture tex;
+        tex.loadFromFile(GUIFolder+"heart_"+std::to_string(i)+".png");
+        textures.push_back(tex);
+    }
+    return textures;
+}
+
+std::vector<sf::Texture> LoadEnemyTexture(const std::string& EnemyName){
+    std::vector<sf::Texture> textures;
+    int i =0;
+    while (FileExist(enemyTextureFolder+"enemy_"+EnemyName+std::to_string(i)+".png"))
+    {
+        sf::Texture tex;
+        tex.loadFromFile(enemyTextureFolder+"enemy_"+EnemyName+std::to_string(i)+".png");
+        textures.push_back(tex);
+    }
+    return textures;
+        
+}
+std::vector<sf::Sprite> LoadEnemySprites(const std::vector<sf::Texture>& textures){
+    return SimpleLoadTexture(textures);
+}
+std::vector<sf::Sprite> LoadPlayerSprites(const std::vector<sf::Texture>& textures){
+    return SimpleLoadTexture(textures);
+}
+
+
+//inline Helpers
+inline std::vector<sf::Sprite> SimpleLoadTexture(const std::vector<sf::Texture>& textures){
+    std::vector<sf::Sprite> sprites;
+    for(int i =0;i<textures.size();i++){
+        sf::Sprite sprite(textures[i]);
+        sprites.push_back(sprite);
+    }
+    return sprites;
+}
+inline bool FileExist (const std::string& name) {
+    std::ifstream f(name.c_str());
+    return f.good();
 }
 }

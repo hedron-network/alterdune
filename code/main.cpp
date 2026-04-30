@@ -26,7 +26,7 @@ int main() {
 
         auto mPos = sf::Vector2f(sf::Mouse::getPosition(window));
         if (auto* state = manager.getCurrentState())
-            state->update(dt,mPos);
+            state->update(dt);
 
         window.clear(sf::Color::Black);
 
