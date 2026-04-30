@@ -38,5 +38,19 @@ namespace Render{
             void update(float dt);
             void draw(sf::RenderWindow& window);
     };
+    class Particle{
+        sf::Vector2f origin;
+        sf::Vector2f velocity;
+        public:
+            virtual sf::Vector2f GetNextPos(float dt)=0;
+            virtual bool IsHit(sf::Vector2f pos)=0;
+    };
+    class Bone :public Particle{
+        sf::CircleShape hitbox;
+    };
+    class Bullet : public Particle{
+        sf::RectangleShape hitbox;
+    };
 }
+
 #endif
