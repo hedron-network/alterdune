@@ -17,13 +17,11 @@ namespace Entities
     int numberOfSpare;
     int numberOfVictory;
     vector<Attributes::Item> ListOfItem;
-    vector<sf::Texture> textures= Assets::LoadPlayerTexture();
-    vector<sf::Sprite> sprites = Assets::LoadPlayerSprites(textures);
+    
 
     public :
     Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
     vector<Attributes::Item> GetItems();
-
 };
 }
 #endif

@@ -9,12 +9,12 @@ namespace GameLogic{
     void Game::LoadExternalData(){
         std::string name;
         if(!this->player.has_value()){
-           name = menu.NameSelection();
+           name = "a";//menu.NameSelection();
         }
         else{
             name = this->player.value().GetName();      
         }
-        this->player.value() = fileManager.LoadPlayer(name);
+        this->player = fileManager.LoadPlayer(name);
         this->enemies= fileManager.LoadEnemies();
         if(enemies.size()==0){
             throw std::runtime_error("Error loading enemies");
@@ -32,19 +32,15 @@ namespace GameLogic{
         std::cout<<enemies.size();
         std::cout<<this->enemies.back().GetName();
         this->combat = Combat(this->player.value(),this->enemies.back());
-        
-        std::cout<<"pass;";
         enemies.pop_back();
-        
-        std::cout<<"pass;";
     }
     void Game::Reset(){
         LoadExternalData();
-        
+        std::cout<<"External Data loaded ;";
         ShuffleEnemies();
-        
+        std::cout<<"Enemies Shuffled ;";
         CreateFirstEncounter();
-        
+        std::cout<<"Encouter Created ;";
     }
     bool Game::NextEncounter(){
         if(!combat.has_value()){

@@ -31,10 +31,10 @@ namespace Entities{
     {
         return Act;
     }
-    vector<sf::Texture> Enemy::GetTextures(){
+    vector<sf::Texture>& Enemy::GetTextures(){
         return textures;
     }
-    vector<sf::Sprite> Enemy::GetSprites(){
+    vector<sf::Sprite>& Enemy::GetSprites(){
         return sprites;
     }
 

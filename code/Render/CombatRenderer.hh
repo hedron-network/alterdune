@@ -6,26 +6,17 @@
 #include "../GameLogic/Combat.hh"
 #include "Assets.hh"
 namespace Render{
-    struct Vector2{
-        float x;
-        float y;
-        Vector2(float X, float Y){
-            this->x=X;this->y=Y;
-        };
-        Vector2(){
-            this->x=0;this->y=0;
-        }
-    };
     enum CombatMode{
         MAIN,
         GRAVITY
     };
     class CombatRenderer{
         private:
-            Vector2 playerPos;
-            Vector2 playerVelocity;
+            sf::Vector2f playerPos;
+            sf::Vector2f playerVelocity;
             CombatMode combatMode;
             GameLogic::Combat combat;
+            const float PlayerSpeed=150.f;
             
             float startX;
             float startY;
@@ -33,12 +24,16 @@ namespace Render{
             float endY;
 
             sf::RectangleShape playerBounds;
-
+            const vector<sf::Texture> playerTextures= Assets::LoadPlayerTexture();
+            vector<sf::Sprite> playerSprites = Assets::LoadPlayerSprites(playerTextures);
+            
+            int playerSpriteIdex;
 
             void CreateBounds(const sf::RenderWindow &window);
-            Vector2 Origin();
+            sf::Vector2f Origin();
+            void ChangeTo(CombatMode combatMode);
         public:
-            CombatRenderer(GameLogic::Combat combat,const sf::RenderWindow& window);
+            CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
             void handleEvent(sf::Event& event,sf::RenderWindow& window);
             void update(float dt);
             void draw(sf::RenderWindow& window);

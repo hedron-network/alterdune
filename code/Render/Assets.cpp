@@ -1,4 +1,5 @@
 #include "Assets.hh"
+#include <iostream>
 namespace Assets{
 std::vector<sf::Texture> LoadButtonTexture(){
     std::vector<sf::Texture> textures;
@@ -40,10 +41,14 @@ std::vector<sf::Texture> LoadPlayerTexture(){
     int i=0;
     while (FileExist(GUIFolder+"heart_"+std::to_string(i)+".png"))
     {
+        std::cout<<"on "<<GUIFolder+"heart_"+std::to_string(i)+".png"<<std::endl;
         sf::Texture tex;
         tex.loadFromFile(GUIFolder+"heart_"+std::to_string(i)+".png");
+        tex.setSmooth(true);
         textures.push_back(tex);
+        i++;
     }
+    std::cout<<"loaded "<<textures.size()<<" textures";
     return textures;
 }
 
@@ -55,6 +60,7 @@ std::vector<sf::Texture> LoadEnemyTexture(const std::string& EnemyName){
         sf::Texture tex;
         tex.loadFromFile(enemyTextureFolder+"enemy_"+EnemyName+std::to_string(i)+".png");
         textures.push_back(tex);
+        i++;
     }
     return textures;
         

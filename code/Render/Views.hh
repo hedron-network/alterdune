@@ -3,7 +3,10 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "../GameLogic/Combat.hh"
+
 #include "MenuRender.hh"
+#include "CombatRenderer.hh"
 namespace Render{
     class State {
     public:
@@ -37,6 +40,9 @@ namespace Render{
     };
 
     class CombatState: public State{
+        public:
+        CombatRenderer combatRenderer;
+        CombatState(GameLogic::Combat &combat,const sf::RenderWindow& window);
         void handleEvent(sf::Event& event,sf::RenderWindow& window);
         void update(float dt);
         void draw(sf::RenderWindow& window);

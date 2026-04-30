@@ -36,8 +36,8 @@ namespace Entities
 
     vector<Action> GetAction();
 
-    vector<sf::Texture> GetTextures();
-    vector<sf::Sprite> GetSprites();
+    vector<sf::Texture>& GetTextures();
+    vector<sf::Sprite>& GetSprites();
 
 
 };  

@@ -18,7 +18,6 @@ class Game
 {
 private:
     std::optional<Entities::Player> player;
-    std::optional<Combat> combat;
     std::optional<Bestiary> bestiary;
     Menu menu;
     std::vector<Entities::Enemy> enemies;
@@ -39,6 +38,7 @@ private:
 
 public:
     Game();
+    std::optional<Combat> combat;
     void StartGame();
 
 }; 

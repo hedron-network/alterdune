@@ -9,9 +9,13 @@ int main() {
     sf::RenderWindow window(sf::VideoMode({940, 720}), "Game");
 
     Render::StateManager manager;
-    manager.pushState(std::make_unique<Render::CombatMenu>(window));
-
+    GameLogic::Game game;
     sf::Clock clock;
+
+    if(!game.combat.has_value()){
+        throw -1;
+    }
+    manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
     while (window.isOpen()) {
         float dt = clock.restart().asSeconds();
         
@@ -23,7 +27,6 @@ int main() {
             if (auto* state = manager.getCurrentState())
                 state->handleEvent(*event, window);
         }
-
         auto mPos = sf::Vector2f(sf::Mouse::getPosition(window));
         if (auto* state = manager.getCurrentState())
             state->update(dt);
