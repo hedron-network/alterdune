@@ -33,58 +33,78 @@ namespace Render{
         return sf::Vector2f((startX+endX)/2.f,(startY+endY)/2.f);
     }
     void CombatRenderer::handleEvent(sf::Event& event,sf::RenderWindow& window){
+        using namespace sf::Keyboard;
+        if(isKeyPressed(Key::Up)||isKeyPressed(Key::Z)){
+            playerVelocity.y= -PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Down)||isKeyPressed(Key::S)){
+            playerVelocity.y+= PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Left)||isKeyPressed(Key::Q)){
+            playerVelocity.x= -PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Right)||isKeyPressed(Key::D)){
+            playerVelocity.x+= PlayerSpeed;
+        }
+        if (playerVelocity != sf::Vector2f(0,0)){
+            playerVelocity= playerVelocity.normalized()*PlayerSpeed;
+        }
+
         if(const auto keyPress = event.getIf<sf::Event::KeyPressed>()){
             const auto keyCode= keyPress->code;
-            using namespace sf::Keyboard;
-            if(keyCode== Key::Up|| keyCode==Key::Z){
-                playerVelocity.y= -PlayerSpeed;
-            }
-            if(keyCode== Key::Down|| keyCode==Key::S){
-                playerVelocity.y= PlayerSpeed;
-            }
-            if(keyCode== Key::Left|| keyCode==Key::Q){
-                playerVelocity.x= -PlayerSpeed;
-            }
-            if(keyCode== Key::Right|| keyCode==Key::D){
-                playerVelocity.x= PlayerSpeed;
+            if(keyCode == Key::B){
+                particles.push_back(particleManager.makeCircle(Origin(),150.f,0,10,500,MovementType::Homing,999));
             }
         }
         if(const auto keyPress = event.getIf<sf::Event::KeyReleased>()){
             const auto keyCode= keyPress->code;
             using namespace sf::Keyboard;
-            if((keyCode== Key::Up|| keyCode==Key::Z)&&playerVelocity.y==-PlayerSpeed){
+            if((keyCode== Key::Up|| keyCode==Key::Z)&&playerVelocity.y<0){
                 playerVelocity.y= 0;
             }
-            if((keyCode== Key::Down|| keyCode==Key::S)&&playerVelocity.y==PlayerSpeed){
+            if((keyCode== Key::Down|| keyCode==Key::S)&&playerVelocity.y>0&& CombatMode::GRAVITY){
                 playerVelocity.y= 0;
             }
-            if((keyCode== Key::Left|| keyCode==Key::Q)&&playerVelocity.x==-PlayerSpeed){
+            if((keyCode== Key::Left|| keyCode==Key::Q)&&playerVelocity.x<0){
                 playerVelocity.x= 0;
             }
-            if((keyCode== Key::Right|| keyCode==Key::D)&&playerVelocity.x==PlayerSpeed){
+            if((keyCode== Key::Right|| keyCode==Key::D)&&playerVelocity.x>0){
                 playerVelocity.x= 0;
             }
         }
         auto mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
         if(playerBounds.getGlobalBounds().contains(mousePosition)){
+            window.setMouseCursorVisible(false);
             playerPos=mousePosition;
             playerVelocity=sf::Vector2f(0,0);
         }
+        else{
+            window.setMouseCursorVisible(true);
+        }
     }
     void CombatRenderer::update(float dt){
+        UpdatePos(dt);
+        for(int i=0;i<playerSprites.size();i++){
+            playerSprites[i].setPosition(playerPos);
+        }
+        for(Particle& p:particles){
+            particleManager.UpdatePos(p,playerSprites[playerSpriteIdex].getGlobalBounds().getCenter(),dt);
+        }
+    }
+    void CombatRenderer::UpdatePos(float dt){
         playerPos.x = playerPos.x + playerVelocity.x *dt;
         if(playerPos.x<startX){playerPos.x=startX;}
         if(playerPos.x>endX-playerSprites[playerSpriteIdex].getGlobalBounds().size.x){playerPos.x=endX-playerSprites[playerSpriteIdex].getGlobalBounds().size.x;}
         playerPos.y = playerPos.y + playerVelocity.y *dt;
         if(playerPos.y<startY){playerPos.y=startY;}
         if(playerPos.y>endY-playerSprites[playerSpriteIdex].getGlobalBounds().size.y){playerPos.y=endY-playerSprites[playerSpriteIdex].getGlobalBounds().size.y;}
-        for(int i=0;i<playerSprites.size();i++){
-            playerSprites[i].setPosition(playerPos);
-        }
     }
     void CombatRenderer::draw(sf::RenderWindow& window){
         window.draw(playerBounds);
         window.draw(playerSprites[playerSpriteIdex]);
+        for(Particle& p:particles){
+            particleManager.drawParticle(window,p);
+        }
     }
     void CombatRenderer::ChangeTo(CombatMode combatMode){
         switch (combatMode)

@@ -16,6 +16,7 @@ int main() {
         throw -1;
     }
     manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
+    //manager.pushState(std::make_unique<Render::MainMenu>(window));
     while (window.isOpen()) {
         float dt = clock.restart().asSeconds();
         

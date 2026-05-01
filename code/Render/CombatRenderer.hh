@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../GameLogic/Combat.hh"
+#include "Particle.hh"
 #include "Assets.hh"
 namespace Render{
     enum CombatMode{
@@ -12,6 +13,8 @@ namespace Render{
     };
     class CombatRenderer{
         private:
+            ParticleManager particleManager;
+            std::vector<Particle> particles;
             sf::Vector2f playerPos;
             sf::Vector2f playerVelocity;
             CombatMode combatMode;
@@ -22,7 +25,7 @@ namespace Render{
             float startY;
             float endX;
             float endY;
-
+            
             sf::RectangleShape playerBounds;
             const vector<sf::Texture> playerTextures= Assets::LoadPlayerTexture();
             vector<sf::Sprite> playerSprites = Assets::LoadPlayerSprites(playerTextures);
@@ -32,25 +35,14 @@ namespace Render{
             void CreateBounds(const sf::RenderWindow &window);
             sf::Vector2f Origin();
             void ChangeTo(CombatMode combatMode);
+            void UpdatePos(float dt);
         public:
             CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
             void handleEvent(sf::Event& event,sf::RenderWindow& window);
             void update(float dt);
             void draw(sf::RenderWindow& window);
     };
-    class Particle{
-        sf::Vector2f origin;
-        sf::Vector2f velocity;
-        public:
-            virtual sf::Vector2f GetNextPos(float dt)=0;
-            virtual bool IsHit(sf::Vector2f pos)=0;
-    };
-    class Bone :public Particle{
-        sf::CircleShape hitbox;
-    };
-    class Bullet : public Particle{
-        sf::RectangleShape hitbox;
-    };
+
 }
 
 #endif
