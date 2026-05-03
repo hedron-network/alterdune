@@ -3,9 +3,14 @@
 #include "Assets.hh"
 #include <vector>
 #include <math.h>
+#include <algorithm>
 enum class ShapeType { Circle, Rectangle,Sprite };
 enum class MovementType { Constant, Homing,None};
 
+struct PixelMask {
+    std::vector<bool> mask;
+    unsigned int width, height;
+};
 struct Particle {
     sf::Vector2f position;
     sf::Vector2f velocity;
@@ -13,6 +18,8 @@ struct Particle {
     float angle;
     float steerStrength;
     std::optional<sf::Sprite> sprite;
+    float spriteRotationSpeed;
+    std::optional<PixelMask> pixelMask;
     ShapeType shape;
     MovementType movement;
 
@@ -32,15 +39,20 @@ class ParticleManager{
     inline sf::Vector2f GetVelocity(const Particle &particle);
     inline void BaseUpdateStep(Particle &particle, float dt);
     inline void UpdateTowardsPlayer(Particle &particle, const sf::Vector2f &PlayerPos, float dt);
+    PixelMask buildMask(const sf::Texture& tex);
+    bool pixelCollision(const Particle& particle, const sf::FloatRect& target);
+    void UpdatePos(Particle &particle, const sf::Vector2f &playerpos, float dt);
+
     
     public:
     ParticleManager();
+    bool CheckAndUpdateLifetime(Particle &particle,const float &dt);
     bool checkCollision(const Particle& particle, const sf::FloatRect& target);
-    void UpdatePos(Particle &particle, const sf::Vector2f &playerpos, float dt);
+    void update(Particle &particle, const sf::Vector2f &PlayerPos, float dt);
     void drawParticle(sf::RenderWindow &window,Particle& particle);
     Particle makeCircle(sf::Vector2f pos, float speed, float angle,float radius,float steerStrength, MovementType mov, float lifetime);
     Particle makeRectangle(sf::Vector2f pos, float speed, float angle,sf::Vector2f size,float steerStrength, MovementType mov, float lifetime);
-    Particle makeSprite(sf::Vector2f pos, float speed, float angle,sf::Sprite sprite,float steerStrength, MovementType mov, float lifetime);
+    Particle makeSprite(sf::Vector2f pos, float speed, float angle,sf::Sprite sprite,PixelMask pixelMask,float spriteRotationSpeed=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=1);
     
 };
 #endif

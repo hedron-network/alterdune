@@ -53,7 +53,7 @@ namespace Render{
         if(const auto keyPress = event.getIf<sf::Event::KeyPressed>()){
             const auto keyCode= keyPress->code;
             if(keyCode == Key::B){
-                particles.push_back(particleManager.makeCircle(Origin(),150.f,0,10,500,MovementType::Homing,999));
+                particles.push_back(particleManager.makeCircle(Origin(),150.f,0,10,500,MovementType::Constant,1));
             }
         }
         if(const auto keyPress = event.getIf<sf::Event::KeyReleased>()){
@@ -87,10 +87,22 @@ namespace Render{
         for(int i=0;i<playerSprites.size();i++){
             playerSprites[i].setPosition(playerPos);
         }
-        for(Particle& p:particles){
-            particleManager.UpdatePos(p,playerSprites[playerSpriteIdex].getGlobalBounds().getCenter(),dt);
+        sf::FloatRect playerRect = playerSprites[playerSpriteIdex].getGlobalBounds();
+
+        for(auto it = particles.begin(); it != particles.end();){
+            particleManager.update(*it, playerRect.getCenter(), dt);
+
+            bool hit      = particleManager.checkCollision(*it, playerRect);
+            bool expired  = particleManager.CheckAndUpdateLifetime(*it, dt);
+
+            if(hit || expired){
+                it = particles.erase(it);
+                if(hit){std::cout<<"hit;";}
+            } else {
+                ++it;
+            }
         }
-    }
+        }
     void CombatRenderer::UpdatePos(float dt){
         playerPos.x = playerPos.x + playerVelocity.x *dt;
         if(playerPos.x<startX){playerPos.x=startX;}
