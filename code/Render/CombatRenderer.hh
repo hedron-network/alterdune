@@ -7,7 +7,7 @@
 #include "../GameLogic/Combat.hh"
 #include "Particle.hh"
 #include "Assets.hh"
-#include "Views.hh"
+#include "renderTypes.hh"
 namespace Render{
     enum CombatMode{
         MAIN,

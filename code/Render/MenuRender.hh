@@ -4,15 +4,12 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Assets.hh"
-#include "Views.hh"
+#include "renderTypes.hh"
 namespace Render{
-    enum MenuType{
-    MAIN_MENU,COMBAT_MENU,ITEM_MENU
-};
 class MenuRender
 {
 private:
-    Render::Signal signal= Render::Signal::None;
+    Render::Signal signal= Signal::None;
     Assets::ButtonId selected;
     sf::RectangleShape buttonRect;
     const MenuType menuType;

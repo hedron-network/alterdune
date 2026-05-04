@@ -53,9 +53,6 @@ namespace Entities{
         else hp=hpMax;
     }
 
-
-    
-
     int Entity::GetHpMax() const
     {
         return this->hpMax;

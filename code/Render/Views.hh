@@ -4,20 +4,10 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../GameLogic/Combat.hh"
-
+#include "renderTypes.hh"
 #include "MenuRender.hh"
 #include "CombatRenderer.hh"
 namespace Render{
-    enum Signal{
-        MAINMENU,
-        COMBATMENU,
-        ITEMMENU,
-        ACTMENU,
-        BESTIARYMENU,
-        COMBATSTEP,
-        POP,
-        None
-    };
     class State {
     public:
         virtual void handleEvent(sf::Event& event,sf::RenderWindow& window) = 0;
@@ -58,7 +48,7 @@ namespace Render{
         void handleEvent(sf::Event& event,sf::RenderWindow& window);
         void update(float dt);
         void draw(sf::RenderWindow& window);
-        Signal getSignal()override;
+        Signal getSignal() override;
     };
 }
 #endif
