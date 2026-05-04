@@ -3,13 +3,13 @@
 namespace Assets{
 std::vector<sf::Texture> LoadButtonTexture(){
     std::vector<sf::Texture> textures;
-    for(int i=0;i<buttonNumber;i++){
-        sf::Texture tex;
-        sf::Texture htex;
+    textures.reserve(buttonNumber * 2); // prevent reallocation
+    for(int i = 0; i < buttonNumber; i++){
+        sf::Texture tex, htex;
         tex.loadFromFile(buttonTextureFolder +"ut_button_"+buttonNames[i] + "_normal.png");
         htex.loadFromFile(buttonTextureFolder +"ut_button_"+buttonNames[i] + "_hover.png");
-        textures.push_back(tex);
-        textures.push_back(htex);
+        textures.push_back(std::move(tex));
+        textures.push_back(std::move(htex));
     }
     return textures;
 }

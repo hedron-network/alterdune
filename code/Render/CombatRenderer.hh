@@ -38,6 +38,7 @@ namespace Render{
             sf::Vector2f Origin();
             void ChangeTo(CombatMode combatMode);
             void UpdatePos(float dt);
+            void HandleInput();
         public:
             CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
             void handleEvent(sf::Event& event,sf::RenderWindow& window);

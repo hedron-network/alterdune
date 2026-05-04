@@ -1,8 +1,8 @@
 #include "CombatRenderer.hh"
 namespace Render{
     CombatRenderer::CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window):combat(combat){
-        CreateBounds(window);
         trottinetteeMask=particleManager.buildMask(tex);
+        CreateBounds(window);
         ChangeTo(CombatMode::MAIN);
         playerPos = Origin();
         for(int i =0;i<playerSprites.size();i++){
@@ -35,21 +35,7 @@ namespace Render{
     }
     void CombatRenderer::handleEvent(sf::Event& event,sf::RenderWindow& window){
         using namespace sf::Keyboard;
-        if(isKeyPressed(Key::Up)||isKeyPressed(Key::Z)){
-            playerVelocity.y= -PlayerSpeed;
-        }
-        if(isKeyPressed(Key::Down)||isKeyPressed(Key::S)){
-            playerVelocity.y+= PlayerSpeed;
-        }
-        if(isKeyPressed(Key::Left)||isKeyPressed(Key::Q)){
-            playerVelocity.x= -PlayerSpeed;
-        }
-        if(isKeyPressed(Key::Right)||isKeyPressed(Key::D)){
-            playerVelocity.x+= PlayerSpeed;
-        }
-        if (playerVelocity != sf::Vector2f(0,0)){
-            playerVelocity= playerVelocity.normalized()*PlayerSpeed;
-        }
+        
 
         if(const auto keyPress = event.getIf<sf::Event::KeyPressed>()){
             const auto keyCode= keyPress->code;
@@ -88,7 +74,26 @@ namespace Render{
             window.setMouseCursorVisible(true);
         }
     }
+    void CombatRenderer::HandleInput(){
+        using namespace sf::Keyboard;
+        if(isKeyPressed(Key::Up)||isKeyPressed(Key::Z)){
+            playerVelocity.y= -PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Down)||isKeyPressed(Key::S)){
+            playerVelocity.y+= PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Left)||isKeyPressed(Key::Q)){
+            playerVelocity.x= -PlayerSpeed;
+        }
+        if(isKeyPressed(Key::Right)||isKeyPressed(Key::D)){
+            playerVelocity.x+= PlayerSpeed;
+        }
+        if (playerVelocity != sf::Vector2f(0,0)){
+            playerVelocity= playerVelocity.normalized()*PlayerSpeed;
+        }
+    }
     void CombatRenderer::update(float dt){
+        HandleInput();
         UpdatePos(dt);
         for(int i=0;i<playerSprites.size();i++){
             playerSprites[i].setPosition(playerPos);
