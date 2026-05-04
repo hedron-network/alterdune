@@ -12,10 +12,8 @@ namespace Entities
 
 
 class Entity {
-    private:
-    int hpMax;
-
     protected:
+    int hpMax;
     int hp;
     string name;
     Attributes::Attack attack;

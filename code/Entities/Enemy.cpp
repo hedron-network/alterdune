@@ -55,5 +55,8 @@ namespace Entities{
     {
         return categorie;
     }
+    int Enemy::GetHpMax() const{
+        return this->hpMax;
+    }
 }   
 

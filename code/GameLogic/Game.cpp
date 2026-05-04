@@ -75,7 +75,7 @@ namespace GameLogic{
         case MenuChoice::FIGHT:
             break;
         case MenuChoice::BESTIARY:
-            menu.ShowBestiary();
+            //menu.ShowBestiary();
             ShowMainMenu();
             break;
         case MenuChoice::ITEMS:
@@ -135,7 +135,7 @@ namespace GameLogic{
             }
         }
             this->player = combat->GetPlayer(); 
-
+/*
         if(combat->PlayerLost()){
             std::cout << "\n=== GAME OVER ===" << std::endl;
             Reset(); // repart du début
@@ -148,7 +148,7 @@ namespace GameLogic{
             else       player.value().AddKill();
             bestiary.AddEnemy(combat->GetEnemy(), spared);
         }
-    
+    */
     }
     #pragma endregion
     void Game::StartGame(){

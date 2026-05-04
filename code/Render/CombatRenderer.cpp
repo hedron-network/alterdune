@@ -2,7 +2,7 @@
 namespace Render{
     CombatRenderer::CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window):combat(combat){
         Assets::LoadFont();
-        trottinetteeMask=particleManager.buildMask(tex);
+        IsFinished = false;
         CreateBounds(window);
         ChangeTo(CombatMode::MAIN);
         playerPos = Origin();
@@ -120,7 +120,7 @@ namespace Render{
                 ++it;
             }
         }
-       if(particles.size()==0){
+       if(particles.size()==0 && grace<=-2){
             IsFinished=true;
        }
     }

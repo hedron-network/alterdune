@@ -13,7 +13,8 @@ namespace Render{
         virtual void handleEvent(sf::Event& event,sf::RenderWindow& window) = 0;
         virtual void update(float dt) = 0;
         virtual void draw(sf::RenderWindow& window) = 0;
-        virtual Signal getSignal();
+        virtual Signal getSignal()=0;
+        virtual void setSignal(Signal signal)=0;
         virtual ~State() {}
     };
 
@@ -26,6 +27,7 @@ namespace Render{
         void update(float dt) override;
         void draw(sf::RenderWindow& window) override;
         Signal getSignal() override;
+        void setSignal(Signal signal) override;
     };
 
     class MainMenu : public MenuTemplate {
@@ -49,6 +51,7 @@ namespace Render{
         void update(float dt);
         void draw(sf::RenderWindow& window);
         Signal getSignal() override;
+        void setSignal(Signal signal) override;
     };
 }
 #endif

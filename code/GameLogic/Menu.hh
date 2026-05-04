@@ -29,7 +29,6 @@ public:
     void ShowBestiary();
     std::optional<size_t> ChooseItems(std::vector<Attributes::Item>& items);
     std::string NameSelection();
-    void ShowBestiary(GameLogic::Bestiary& bestiary);
 };  
 }
 #endif

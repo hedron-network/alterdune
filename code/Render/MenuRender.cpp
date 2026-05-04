@@ -155,7 +155,13 @@ namespace Render{
     }
     void MenuRender::update(float dt){
     }
-    
+    Render::Signal MenuRender::getSignal(){
+        return signal;
+    }
+    void MenuRender::setSignal(Render::Signal signal){
+        this->signal=signal;
+        std::cout<<"set signal";
+    }
     void MenuRender::onButtonPressed(Assets::ButtonId id) {
         using namespace Assets;
         switch (id)

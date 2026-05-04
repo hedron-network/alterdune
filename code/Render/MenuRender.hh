@@ -32,6 +32,7 @@ public:
     void onButtonPressed(Assets::ButtonId id);
     void SetComponentVisibility(MenuType menuType);
     Render::Signal getSignal();
+    void setSignal(Signal signal);
 };
 
 };
