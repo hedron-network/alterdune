@@ -1,6 +1,15 @@
 #include "Assets.hh"
 #include <iostream>
 namespace Assets{
+     sf::Font font;
+void LoadFont(){
+    std::string path = GUIFolder + "MonsterFriendBack.otf";
+    if (!font.openFromFile(path)) {
+        std::cerr << "FONT LOAD FAILED\n";
+    } else {
+        std::cerr << "Font loaded OK\n";
+    }
+}
 std::vector<sf::Texture> LoadButtonTexture(){
     std::vector<sf::Texture> textures;
     textures.reserve(buttonNumber * 2); // prevent reallocation
@@ -12,7 +21,9 @@ std::vector<sf::Texture> LoadButtonTexture(){
         textures.push_back(std::move(htex));
     }
     return textures;
-    font.openFromFile(GUIFolder+"")
+}
+const sf::Font& GetFont(){
+    return font;
 }
 std::vector<sf::Sprite> LoadButtonSprites(const std::vector<sf::Texture> & textures){
     std::vector<sf::Sprite> sprites;

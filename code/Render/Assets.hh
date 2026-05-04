@@ -12,7 +12,6 @@ const std::string AssetFolder=".\\asset\\";
 const std::string buttonTextureFolder = AssetFolder+"buttons\\";
 const std::string enemyTextureFolder = AssetFolder+"enemy\\";
 const std::string GUIFolder= AssetFolder+"GUI\\";
-sf::Font font;
 // Buttons assets
 constexpr int buttonNumber = 6;
 
@@ -51,8 +50,9 @@ std::vector<sf::Sprite> LoadEnemySprites(const std::vector<sf::Texture>& texture
 std::vector<sf::Texture> LoadPlayerTexture();
 std::vector<sf::Sprite> LoadPlayerSprites(const std::vector<sf::Texture> & textures);
 sf::Texture LoadSingleTexture(const std::string &path);
-
-
+extern sf::Font font;
+const sf::Font& GetFont();
+void LoadFont();
 std::vector<sf::Sprite> SimpleLoadTexture(const std::vector<sf::Texture> & textures);
 bool FileExist(const std::string &path);
 

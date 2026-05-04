@@ -14,6 +14,8 @@ namespace Render{
     };
     class CombatRenderer{
         private:
+            std::unique_ptr<sf::Text> enemyNameText;
+bool enemyNameInitialized = false;
             ParticleManager particleManager;
             std::vector<Particle> particles;
             sf::Vector2f playerPos;

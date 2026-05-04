@@ -1,6 +1,7 @@
 #include "CombatRenderer.hh"
 namespace Render{
     CombatRenderer::CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window):combat(combat){
+        Assets::LoadFont();
         trottinetteeMask=particleManager.buildMask(tex);
         CreateBounds(window);
         ChangeTo(CombatMode::MAIN);
@@ -122,6 +123,7 @@ namespace Render{
     }
     void CombatRenderer::draw(sf::RenderWindow& window){
         drawLifeBar(window);
+        drawEnemyName(window);
         window.draw(playerBounds);
         window.draw(playerSprites[playerSpriteIdex]);
         for(Particle& p:particles){
@@ -166,5 +168,17 @@ namespace Render{
 
         window.draw(bgBar);
         window.draw(fgBar);
+    }
+    void CombatRenderer::drawEnemyName(sf::RenderWindow& window) {
+        if (!enemyNameText) {
+            enemyNameText = std::make_unique<sf::Text>(Assets::GetFont(), combat.enemy.GetName(), 24);
+            enemyNameText->setFillColor(sf::Color::White);
+        }
+
+        sf::FloatRect bounds = enemyNameText->getLocalBounds();
+        float x = (window.getSize().x - bounds.size.x) / 2.f;
+        enemyNameText->setPosition(sf::Vector2f(x, 20.f));
+
+        window.draw(*enemyNameText);
     }
 }
