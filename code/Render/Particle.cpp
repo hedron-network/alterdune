@@ -84,7 +84,7 @@
         }
         case ShapeType::Sprite:
         {
-            pixelCollision(particle,target);
+            return pixelCollision(particle,target);
         }
         default:
             return false;

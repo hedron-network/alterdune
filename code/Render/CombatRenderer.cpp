@@ -2,6 +2,7 @@
 namespace Render{
     CombatRenderer::CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window):combat(combat){
         CreateBounds(window);
+        trottinetteeMask=particleManager.buildMask(tex);
         ChangeTo(CombatMode::MAIN);
         playerPos = Origin();
         for(int i =0;i<playerSprites.size();i++){
@@ -53,7 +54,12 @@ namespace Render{
         if(const auto keyPress = event.getIf<sf::Event::KeyPressed>()){
             const auto keyCode= keyPress->code;
             if(keyCode == Key::B){
-                particles.push_back(particleManager.makeCircle(Origin(),150.f,0,10,500,MovementType::Constant,1));
+                auto sprite = sf::Sprite(tex);
+                sprite.setScale(sf::Vector2f(
+                40.f / sprite.getLocalBounds().size.x,
+                40.f / sprite.getLocalBounds().size.y)
+            );
+                particles.push_back(particleManager.makeSprite(Origin()+sf::Vector2f(0,-150),150.f,0,sprite,trottinetteeMask,30));
             }
         }
         if(const auto keyPress = event.getIf<sf::Event::KeyReleased>()){
@@ -62,7 +68,7 @@ namespace Render{
             if((keyCode== Key::Up|| keyCode==Key::Z)&&playerVelocity.y<0){
                 playerVelocity.y= 0;
             }
-            if((keyCode== Key::Down|| keyCode==Key::S)&&playerVelocity.y>0&& CombatMode::GRAVITY){
+            if((keyCode== Key::Down|| keyCode==Key::S)&&playerVelocity.y>0&& combatMode!= CombatMode::GRAVITY){
                 playerVelocity.y= 0;
             }
             if((keyCode== Key::Left|| keyCode==Key::Q)&&playerVelocity.x<0){

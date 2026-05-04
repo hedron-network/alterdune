@@ -6,8 +6,8 @@ std::vector<sf::Texture> LoadButtonTexture(){
     for(int i=0;i<buttonNumber;i++){
         sf::Texture tex;
         sf::Texture htex;
-        tex.loadFromFile(buttonTextureFolder + +"ut_button_"+buttonNames[i] + "_normal.png");
-        htex.loadFromFile(buttonTextureFolder + +"ut_button_"+buttonNames[i] + "_hover.png");
+        tex.loadFromFile(buttonTextureFolder +"ut_button_"+buttonNames[i] + "_normal.png");
+        htex.loadFromFile(buttonTextureFolder +"ut_button_"+buttonNames[i] + "_hover.png");
         textures.push_back(tex);
         textures.push_back(htex);
     }
@@ -64,6 +64,11 @@ std::vector<sf::Texture> LoadEnemyTexture(const std::string& EnemyName){
     }
     return textures;
         
+}
+sf::Texture LoadSingleTexture(const std::string &path){
+    sf::Texture tex;
+    tex.loadFromFile(path);
+    return tex;
 }
 std::vector<sf::Sprite> LoadEnemySprites(const std::vector<sf::Texture>& textures){
     return SimpleLoadTexture(textures);

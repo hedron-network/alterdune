@@ -20,6 +20,8 @@ namespace Render{
             CombatMode combatMode;
             GameLogic::Combat combat;
             const float PlayerSpeed=150.f;
+            sf::Texture tex = Assets::LoadSingleTexture(Assets::GUIFolder+"trottinette.png");
+            PixelMask trottinetteeMask;
             
             float startX;
             float startY;

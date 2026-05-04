@@ -50,7 +50,7 @@ std::vector<sf::Texture> LoadEnemyTexture(const std::string& EnemyName);
 std::vector<sf::Sprite> LoadEnemySprites(const std::vector<sf::Texture>& textures);
 std::vector<sf::Texture> LoadPlayerTexture();
 std::vector<sf::Sprite> LoadPlayerSprites(const std::vector<sf::Texture> & textures);
-
+sf::Texture LoadSingleTexture(const std::string &path);
 
 
 std::vector<sf::Sprite> SimpleLoadTexture(const std::vector<sf::Texture> & textures);

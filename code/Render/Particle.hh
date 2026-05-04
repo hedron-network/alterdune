@@ -39,13 +39,13 @@ class ParticleManager{
     inline sf::Vector2f GetVelocity(const Particle &particle);
     inline void BaseUpdateStep(Particle &particle, float dt);
     inline void UpdateTowardsPlayer(Particle &particle, const sf::Vector2f &PlayerPos, float dt);
-    PixelMask buildMask(const sf::Texture& tex);
     bool pixelCollision(const Particle& particle, const sf::FloatRect& target);
     void UpdatePos(Particle &particle, const sf::Vector2f &playerpos, float dt);
-
+    
     
     public:
     ParticleManager();
+    PixelMask buildMask(const sf::Texture& tex);
     bool CheckAndUpdateLifetime(Particle &particle,const float &dt);
     bool checkCollision(const Particle& particle, const sf::FloatRect& target);
     void update(Particle &particle, const sf::Vector2f &PlayerPos, float dt);
