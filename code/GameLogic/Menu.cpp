@@ -76,19 +76,29 @@ namespace GameLogic
         return actions[choice];
     }
     
-    std::optional<Attributes::Item> Menu::ChooseItems(std::vector<Attributes::Item>& items){
-        for(int i =0;i<items.size();i++){
+    std::optional<size_t> Menu::ChooseItems(std::vector<Attributes::Item>& items){
+        if(items.empty()){
+            std::cout << "Aucun item disponible." << std::endl;
+            return std::nullopt;
+        }
+        for(size_t i = 0; i < items.size(); i++){
             std::cout<<"("<<i<<") : "<<items[i].GetName()<<" | "<<items[i].GetQuantity()<<std::endl;
         }
+        std::cout << "-1 Back" << std::endl;
         int choice;
-        std::cin>>choice;
-        if(choice<0||choice>=items.size()){
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return std::nullopt;
         }
-        if(items[choice].GetQuantity()==0){
+        if(choice < 0 || choice >= static_cast<int>(items.size())){
             return std::nullopt;
         }
-        return items[choice];
+        if(items[choice].GetQuantity() == 0){
+            std::cout << "Item épuisé." << std::endl;
+            return std::nullopt;
+        }
+        return static_cast<size_t>(choice);
     }
     
     std::string Menu::NameSelection(){
@@ -96,8 +106,5 @@ namespace GameLogic
         std::string name;
         std::cin>>name;
         return name;
-    } 
-
-    bestiary.Display();
-}
+    }
 

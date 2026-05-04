@@ -57,13 +57,12 @@ namespace GameLogic
     }
     bool Combat::UseItem(Menu& menu)
     {
-        auto items = player.GetItems();
+        auto& items = player.GetItems();
         auto select = menu.ChooseItems(items);
         if (!select.has_value()){
             return false;
         }
-        select.value().UseItem(player);
-        return true;
+        return items[select.value()].UseItem(player);
     }
     void Combat::Spare()
     {

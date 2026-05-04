@@ -21,7 +21,8 @@ namespace Entities
 
     public :
     Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
-    vector<Attributes::Item> GetItems();
+    std::vector<Attributes::Item>& GetItems();
+    const std::vector<Attributes::Item>& GetItems() const;
 };
 }
 #endif
