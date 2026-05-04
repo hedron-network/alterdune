@@ -6,9 +6,14 @@ namespace Entities {
         this->numberOfKill = 0;
         this->numberOfSpare = 0;
         this->numberOfVictory = 0;
-        this->ListOfItem=ListOfItem;
+        this->ListOfItem = std::move(ListOfItem);
     }
-    std::vector<Item> Player::GetItems(){
+
+    std::vector<Item>& Player::GetItems(){
+        return ListOfItem;
+    }
+
+    const std::vector<Item>& Player::GetItems() const {
         return ListOfItem;
     }
 }

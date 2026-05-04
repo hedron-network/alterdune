@@ -91,10 +91,10 @@ namespace GameLogic{
         return continueGame;
     }
     void Game::ShowAndUseItem(){
-        auto itemlist = this->player.value().GetItems();
-        auto item=menu.ChooseItems(itemlist);
-        if (item.has_value()){
-            item->UseItem(player.value());
+        auto& itemlist = this->player.value().GetItems();
+        auto itemIndex = menu.ChooseItems(itemlist);
+        if (itemIndex.has_value()){
+            itemlist[itemIndex.value()].UseItem(player.value());
         }
     }
     

@@ -5,20 +5,31 @@ using namespace std;
 namespace Attributes{
     Item::Item(string name, string description,int itemPower, int quantite)
     {
-        this->name=name;
-        this->description=description;
-        this->itemPower=itemPower;
-        this->quantite=quantite;
+        this->name = name;
+        this->description = description;
+        this->itemPower = itemPower;
+        this->quantite = quantite;
     }
-    void Item::UseItem(Entities::Player &player){
+
+    bool Item::UseItem(Entities::Player &player){
+        if (quantite <= 0) {
+            return false;
+        }
         player.Heal(itemPower);
-        quantite=quantite-1;
+        quantite -= 1;
+        return true;
     }
-    string Item::GetName(){
+
+    string Item::GetName() const {
         return name;
     }
-    int Item::GetQuantity(){
+
+    int Item::GetQuantity() const {
         return quantite;
+    }
+
+    bool Item::IsEmpty() const {
+        return quantite <= 0;
     }
 };
 
