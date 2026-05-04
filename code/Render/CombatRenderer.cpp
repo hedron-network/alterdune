@@ -15,6 +15,12 @@ namespace Render{
         }
         grace = 3;
     }
+    Signal CombatRenderer::getSignal(){
+        if(!IsFinished){
+            return Signal::None;
+        }
+        return Signal::POP;
+    }
     void CombatRenderer::CreateBounds(const sf::RenderWindow& window){
         const auto windowSize = window.getSize();
         const float totalWidth=200;
@@ -106,13 +112,18 @@ namespace Render{
                 it = particles.erase(it);
                 if(hit){std::cout<<"hit;";
                 combat.GetPlayer().TakeDamage(enemyDamage);
-                std::cout<<combat.GetPlayer().GetHp();
+                if(combat.GetPlayer().GetHp()<=0){
+                    IsFinished=true;
+                };
                 }
             } else {
                 ++it;
             }
         }
-        }
+       if(particles.size()==0){
+            IsFinished=true;
+       }
+    }
     void CombatRenderer::UpdatePos(float dt){
         playerPos.x = playerPos.x + playerVelocity.x *dt;
         if(playerPos.x<startX){playerPos.x=startX;}

@@ -5,6 +5,7 @@
 #include "Render/StateManager.hh"
 #include "Render/Views.hh"
 
+
 int main() {
     sf::RenderWindow window(sf::VideoMode({940, 720}), "Game");
 
@@ -36,13 +37,38 @@ int main() {
 
         if (auto* state = manager.getCurrentState())
             state->draw(window);
-
         window.display();
     }
 }
-/*
-int main(){
-    GameLogic::Game game;
-    game.StartGame(); 
-    return 0;
-};*/
+void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::StateManager& manager, Render::Signal signal){
+    using namespace Render;
+    
+    switch (signal)
+    {
+    case Signal::ACTMENU:
+        break;
+    case Signal::BESTIARYMENU:
+        break;
+    case Signal::COMBATMENU:
+        if(game.combat.value().IsRunning()){
+            manager.pushState(std::make_unique<Render::CombatMenu>(window));
+        }else{
+            manager.popState();
+        }
+        break;
+    case Signal::COMBATSTEP:
+        manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
+        break;
+    case Signal::ITEMMENU:
+        break;
+    case Signal::MAINMENU:
+        break;
+    case Signal::None:
+        break;
+    case Signal::POP:
+        manager.popState();
+        break;
+    default:
+        break;
+    }
+}

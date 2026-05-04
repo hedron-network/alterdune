@@ -7,6 +7,7 @@
 #include "../GameLogic/Combat.hh"
 #include "Particle.hh"
 #include "Assets.hh"
+#include "Views.hh"
 namespace Render{
     enum CombatMode{
         MAIN,
@@ -15,7 +16,8 @@ namespace Render{
     class CombatRenderer{
         private:
             std::unique_ptr<sf::Text> enemyNameText;
-bool enemyNameInitialized = false;
+            bool enemyNameInitialized = false;
+            bool IsFinished = false;
             ParticleManager particleManager;
             std::vector<Particle> particles;
             sf::Vector2f playerPos;
@@ -53,6 +55,7 @@ bool enemyNameInitialized = false;
             void handleEvent(sf::Event& event,sf::RenderWindow& window);
             void update(float dt);
             void draw(sf::RenderWindow& window);
+            Signal getSignal();
     };
 
 }

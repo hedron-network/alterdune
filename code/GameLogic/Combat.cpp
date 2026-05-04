@@ -7,7 +7,7 @@ namespace GameLogic
         this->isRunning = true;
     }
     bool Combat::IsRunning(){
-        return this->isRunning;
+        return player.GetHp()>0 && enemy.GetHp()>0;
     }
     void Combat::ExecutePlayerTurn(Menu& menu){
         std::cout<<"\n"<<player.GetName()<<" vs "<<enemy.GetName()<<std::endl;
