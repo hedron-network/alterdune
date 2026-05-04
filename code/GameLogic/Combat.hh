@@ -16,7 +16,7 @@ public:
     Combat(Entities::Player player, Entities::Enemy enemy);
     void ExecutePlayerTurn(Menu& menu);
     void ExecuteEnemyTurn();
-    Entities::Player GetPlayer();
+    Entities::Player& GetPlayer();
     bool IsRunning();
     void Attack();
     bool ACT(Menu& menu);

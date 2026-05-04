@@ -37,7 +37,7 @@ namespace Entities
 
     void ACT(Action action);
     vector <Particle> Attack();
-
+    int GetAttackDamage();
     bool Spare();
 
     vector<Action> GetAction();

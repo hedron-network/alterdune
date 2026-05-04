@@ -12,6 +12,7 @@ std::vector<sf::Texture> LoadButtonTexture(){
         textures.push_back(std::move(htex));
     }
     return textures;
+    font.openFromFile(GUIFolder+"")
 }
 std::vector<sf::Sprite> LoadButtonSprites(const std::vector<sf::Texture> & textures){
     std::vector<sf::Sprite> sprites;

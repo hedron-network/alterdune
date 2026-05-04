@@ -12,20 +12,7 @@ namespace Render{
             );
             playerSprites[i].setPosition(Origin());
         }
-
-        //std::string attkstr = "470|570|0|0|200|0|0|0|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.658|574.995|0|0|200|1.04667|0|0.05|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.666|584.991|0|0|200|2.09333|0|0.1|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n470.016|590|0|0|200|3.14|0|0.15|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.35|585.018|0|0|200|4.18667|0|0.2|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.327|575.023|0|0|200|5.23333|0|0.25|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE";
-        //circleAttack.BuildAttack(attkstr);
-        
-        circleAttack = Attack("Bullet Circle", "Fires a ring of bullets", 1.0, MakeBulletCircleAttack(
-            Origin()+sf::Vector2f(-50,25),
-            /*bulletCount=*/  6,
-            /*radius=*/       10.f,
-            /*bulletRadius=*/ 2.f,
-            /*speed=*/        200.f,
-            /*delayStep=*/    0.1f,
-            /*lifetime=*/     4.f,
-            /*base delay*/    1.5f
-        ));
+        grace = 3;
     }
     void CombatRenderer::CreateBounds(const sf::RenderWindow& window){
         const auto windowSize = window.getSize();
@@ -94,6 +81,13 @@ namespace Render{
         }
     }
     void CombatRenderer::update(float dt){
+        if(grace<=0 && hasCombatStarted ==false){
+            particles= combat.enemy.Attack();
+            enemyDamage= combat.enemy.GetAttackDamage();
+            hasCombatStarted=true;
+            std::cout<<enemyDamage;
+        }
+        grace-=dt;
         HandleInput();
         UpdatePos(dt);
         for(int i=0;i<playerSprites.size();i++){
@@ -109,7 +103,10 @@ namespace Render{
 
             if(hit || expired){
                 it = particles.erase(it);
-                if(hit){std::cout<<"hit;";}
+                if(hit){std::cout<<"hit;";
+                combat.GetPlayer().TakeDamage(enemyDamage);
+                std::cout<<combat.GetPlayer().GetHp();
+                }
             } else {
                 ++it;
             }
@@ -124,6 +121,7 @@ namespace Render{
         if(playerPos.y>endY-playerSprites[playerSpriteIdex].getGlobalBounds().size.y){playerPos.y=endY-playerSprites[playerSpriteIdex].getGlobalBounds().size.y;}
     }
     void CombatRenderer::draw(sf::RenderWindow& window){
+        drawLifeBar(window);
         window.draw(playerBounds);
         window.draw(playerSprites[playerSpriteIdex]);
         for(Particle& p:particles){
@@ -145,53 +143,28 @@ namespace Render{
             break;
         }
     }
+    void CombatRenderer::drawLifeBar(sf::RenderWindow& window) {
+        const float barWidth  = endX - startX;   // same width as the combat box
+        const float barHeight = 10.f;
+        const float barY      = endY + 18.f;
+        const float barX      = startX;
 
+        auto& player   = combat.GetPlayer();
+        float maxHp    = static_cast<float>(100);
+        float currentHp = static_cast<float>(player.GetHp());
+        float ratio    = std::clamp(currentHp / maxHp, 0.f, 1.f);
 
-    
-    std::vector<Particle> CombatRenderer::MakeBulletCircleAttack(
-    sf::Vector2f origin,
-    int bulletCount,
-    float radius,
-    float bulletRadius,
-    float speed,
-    float delayStep,   // 0.1s between each bullet appearing
-    float lifetime,
-    float baseDelay
-    ) {
-    ParticleManager pm;
-    std::vector<Particle> particles;
-    particles.reserve(bulletCount);
+        // Background (empty bar)
+        sf::RectangleShape bgBar(sf::Vector2f(barWidth, barHeight));
+        bgBar.setPosition(sf::Vector2f(barX, barY));
+        bgBar.setFillColor(sf::Color::Red);
 
-    // All bullets start moving only after the last one has appeared
-    const float moveDelay = (bulletCount - 1) * delayStep;
+        // Foreground (filled portion)
+        sf::RectangleShape fgBar(sf::Vector2f(barWidth * ratio, barHeight));
+        fgBar.setPosition(sf::Vector2f(barX, barY));
+        fgBar.setFillColor(sf::Color::Yellow);
 
-    for (int i = 0; i < bulletCount; i++) {
-        // Angle in radians, starting from top, going clockwise
-        float angle = (2.f * 3.14 * i) / bulletCount;
-
-        // Spawn position on the ring
-        sf::Vector2f spawnPos = {
-            origin.x + radius * std::sin(angle),
-            origin.y - radius * std::cos(angle)
-        };
-
-        // displayLag staggers visibility: bullet i appears at i * delayStep
-        // startupLag delays movement: all bullets wait until the ring is full
-        Particle p = pm.makeCircle(
-            spawnPos,
-            speed,
-            angle,
-            bulletRadius,
-            /*startupLag=*/ moveDelay+baseDelay,
-            /*displayLag=*/ i * delayStep+baseDelay,
-            /*steerStrength=*/ 0.f,
-            MovementType::Constant,
-            lifetime
-        );
-
-        particles.push_back(p);
+        window.draw(bgBar);
+        window.draw(fgBar);
     }
-
-    return particles;
-}
 }

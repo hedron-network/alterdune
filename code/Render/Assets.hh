@@ -12,7 +12,7 @@ const std::string AssetFolder=".\\asset\\";
 const std::string buttonTextureFolder = AssetFolder+"buttons\\";
 const std::string enemyTextureFolder = AssetFolder+"enemy\\";
 const std::string GUIFolder= AssetFolder+"GUI\\";
-
+sf::Font font;
 // Buttons assets
 constexpr int buttonNumber = 6;
 

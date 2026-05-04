@@ -36,6 +36,9 @@ namespace Entities{
         ShuffleAttacks();
         return attacks.back().GetAttackParticles();
     }
+    int Enemy::GetAttackDamage(){
+        return attacks.back().GetAttackModifier();
+    }
     vector<sf::Texture>& Enemy::GetTextures(){
         return textures;
     }

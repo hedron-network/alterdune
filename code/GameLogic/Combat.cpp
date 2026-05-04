@@ -79,7 +79,7 @@ namespace GameLogic
         std::cout<<"Enemy attack not implemented"<<std::endl;
         throw std::runtime_error("Not Implemented");
     }
-    Entities::Player Combat::GetPlayer(){
+    Entities::Player& Combat::GetPlayer(){
         return this->player;
     }
 
