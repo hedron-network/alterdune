@@ -161,16 +161,16 @@ namespace Render{
         switch (id)
         {
         case ButtonId::ATTACK:
-            signal=Signal::CombatStep;
+            signal= Render::Signal::COMBATSTEP;
             break;
         case ButtonId::ACT:
-            signal= Signal::ActMenu;
+            signal= Render::Signal::ACTMENU;
             break;
         case ButtonId::BESTIARY:
-            signal= Signal::BestiaryMenu;
+            signal= Render::Signal::BESTIARYMENU;
             break;
         case ButtonId::ITEM:
-            signal = Signal::ItemMenu;
+            signal = Render::Signal::ITEMMENU;
             break;
         case ButtonId::SPARE:
             std::cout<<"SPARE";

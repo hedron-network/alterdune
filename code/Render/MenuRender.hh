@@ -12,7 +12,7 @@ namespace Render{
 class MenuRender
 {
 private:
-    Signal signal= Signal::None;
+    Render::Signal signal= Render::Signal::None;
     Assets::ButtonId selected;
     sf::RectangleShape buttonRect;
     const MenuType menuType;

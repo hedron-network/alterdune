@@ -54,12 +54,9 @@ namespace Entities{
     }
 
 
-    EnemyType GetCategorie()
-    {
-        return this->categorie
-    }
+    
 
-    int GetHpMax()
+    int Entity::GetHpMax() const
     {
         return this->hpMax;
     }

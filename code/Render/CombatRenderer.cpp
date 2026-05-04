@@ -15,11 +15,11 @@ namespace Render{
         }
         grace = 3;
     }
-    Signal CombatRenderer::getSignal(){
+    Render::Signal CombatRenderer::getSignal(){
         if(!IsFinished){
-            return Signal::None;
+            return Render::Signal::None;
         }
-        return Signal::POP;
+        return Render::Signal::POP;
     }
     void CombatRenderer::CreateBounds(const sf::RenderWindow& window){
         const auto windowSize = window.getSize();

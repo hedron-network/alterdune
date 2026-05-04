@@ -58,7 +58,7 @@ namespace Render{
         void handleEvent(sf::Event& event,sf::RenderWindow& window);
         void update(float dt);
         void draw(sf::RenderWindow& window);
-        Signal getSignal();
+        Signal getSignal()override;
     };
 }
 #endif

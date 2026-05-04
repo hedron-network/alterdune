@@ -17,7 +17,7 @@ namespace GameLogic {
         std::cout << entries.size() << " ennemi(s) vaincu(s)\n" << std::endl;
 
         for (int i = 0; i < (int)entries.size(); i++) {
-            const BestiaryEntry& e = entries[i];
+            BestiaryEntry e = entries[i];
 
             // Convertir la catégorie en texte lisible
             std::string categorie;
