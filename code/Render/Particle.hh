@@ -2,7 +2,7 @@
 #define Particle_h
 #include "Assets.hh"
 #include <vector>
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 enum class ShapeType { Circle, Rectangle,Sprite };
 enum class MovementType { Constant, Homing,None};

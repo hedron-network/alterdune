@@ -12,6 +12,18 @@ namespace Render{
             );
             playerSprites[i].setPosition(Origin());
         }
+        std::string attkstr = "470|570|0|0|200|0|0|0|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.658|574.995|0|0|200|1.04667|0|0.05|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.666|584.991|0|0|200|2.09333|0|0.1|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n470.016|590|0|0|200|3.14|0|0.15|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.35|585.018|0|0|200|4.18667|0|0.2|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.327|575.023|0|0|200|5.23333|0|0.25|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE";
+        circleAttack.BuildAttack(attkstr);
+        return;
+        circleAttack = Attack("Bullet Circle", "Fires a ring of bullets", 1.0, MakeBulletCircleAttack(
+            Origin(),
+            /*bulletCount=*/  6,
+            /*radius=*/       10.f,
+            /*bulletRadius=*/ 2.f,
+            /*speed=*/        200.f,
+            /*delayStep=*/    0.1f,
+            /*lifetime=*/     4.f
+        ));
     }
     void CombatRenderer::CreateBounds(const sf::RenderWindow& window){
         const auto windowSize = window.getSize();
@@ -45,7 +57,9 @@ namespace Render{
                 40.f / sprite.getLocalBounds().size.x,
                 40.f / sprite.getLocalBounds().size.y)
             );
-                particles.push_back(particleManager.makeSprite(Origin()+sf::Vector2f(0,-150),150.f,0,sprite,trottinetteeMask,30));
+                //particles.push_back(particleManager.makeSprite(Origin()+sf::Vector2f(0,-150),150.f,0,sprite,trottinetteeMask,30));
+                particles= circleAttack.GetAttackParticles();
+                std::cout<<circleAttack.SerializeParticles()<<endl;
             }
         }
         if(const auto keyPress = event.getIf<sf::Event::KeyReleased>()){
@@ -126,6 +140,7 @@ namespace Render{
         window.draw(playerBounds);
         window.draw(playerSprites[playerSpriteIdex]);
         for(Particle& p:particles){
+            if(p.displayLag>0){continue;}
             particleManager.drawParticle(window,p);
         }
     }
@@ -144,4 +159,51 @@ namespace Render{
         }
     }
 
+
+    
+    std::vector<Particle> CombatRenderer::MakeBulletCircleAttack(
+    sf::Vector2f origin,
+    int bulletCount,
+    float radius,
+    float bulletRadius,
+    float speed,
+    float delayStep,   // 0.1s between each bullet appearing
+    float lifetime
+    ) {
+    ParticleManager pm;
+    std::vector<Particle> particles;
+    particles.reserve(bulletCount);
+
+    // All bullets start moving only after the last one has appeared
+    const float moveDelay = (bulletCount - 1) * delayStep;
+
+    for (int i = 0; i < bulletCount; i++) {
+        // Angle in radians, starting from top, going clockwise
+        float angle = (2.f * 3.14 * i) / bulletCount;
+
+        // Spawn position on the ring
+        sf::Vector2f spawnPos = {
+            origin.x + radius * std::sin(angle),
+            origin.y - radius * std::cos(angle)
+        };
+
+        // displayLag staggers visibility: bullet i appears at i * delayStep
+        // startupLag delays movement: all bullets wait until the ring is full
+        Particle p = pm.makeCircle(
+            spawnPos,
+            speed,
+            angle,
+            bulletRadius,
+            /*startupLag=*/ moveDelay,
+            /*displayLag=*/ i * delayStep,
+            /*steerStrength=*/ 0.f,
+            MovementType::Constant,
+            lifetime
+        );
+
+        particles.push_back(p);
+    }
+
+    return particles;
+}
 }

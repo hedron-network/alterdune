@@ -2,6 +2,7 @@
 #define CombatRenderer_h
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "../GameLogic/Combat.hh"
 #include "Particle.hh"
@@ -22,6 +23,7 @@ namespace Render{
             const float PlayerSpeed=150.f;
             sf::Texture tex = Assets::LoadSingleTexture(Assets::GUIFolder+"trottinette.png");
             PixelMask trottinetteeMask;
+            Attack circleAttack;
             
             float startX;
             float startY;
@@ -39,6 +41,7 @@ namespace Render{
             void ChangeTo(CombatMode combatMode);
             void UpdatePos(float dt);
             void HandleInput();
+            std::vector<Particle> MakeBulletCircleAttack(sf::Vector2f origin,int bulletCount,float radius,float bulletRadius,float speed,float delayStep,float lifetime);
         public:
             CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
             void handleEvent(sf::Event& event,sf::RenderWindow& window);

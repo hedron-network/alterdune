@@ -1,5 +1,4 @@
 #include "Particle.hh"
-
     ParticleManager::ParticleManager(){}
     bool ParticleManager::CheckAndUpdateLifetime(Particle &particle,const float &dt){
         particle.lifetime -=dt;
@@ -17,9 +16,12 @@
                 sf::degrees(rotation + particle.spriteRotationSpeed * dt)
             );
         }
+        particle.displayLag-=dt;
+        particle.startupLag-=dt;
     }
     
     void ParticleManager::UpdatePos(Particle &particle, const sf::Vector2f &PlayerPos, float dt){
+        if(particle.startupLag>0){return;}
         switch (particle.movement)
         {
         case MovementType::Constant:
@@ -60,6 +62,7 @@
 
 
    bool ParticleManager::checkCollision(const Particle& particle, const sf::FloatRect& target){
+        if(particle.displayLag>0){return false;}
         switch (particle.shape)
         {
         case ShapeType::Circle:
@@ -122,6 +125,7 @@
         return false;
     }
     void ParticleManager::drawParticle(sf::RenderWindow &window, Particle& particle){
+        if(particle.displayLag>0){return;}
         switch (particle.shape)
         {
         case ShapeType::Circle:
@@ -173,6 +177,8 @@
     p.shape = ShapeType::Circle;
     p.radius = radius;
     p.movement = mov;
+    p.startupLag = startupLag; 
+    p.displayLag = displayLag;
     p.lifetime = lifetime;
     return p;
     }
@@ -195,6 +201,8 @@
     p.steerStrength = steerStrength;
     p.shape = ShapeType::Rectangle;
     p.Rectsize = size;
+    p.startupLag = startupLag; 
+    p.displayLag = displayLag;
     p.movement = mov;
     p.lifetime = lifetime;
     return p;
