@@ -16,4 +16,28 @@ namespace Entities {
     const std::vector<Item>& Player::GetItems() const {
         return ListOfItem;
     }
+
+    int Player::GetVictories() const {
+        return numberOfVictory;
+    }
+
+    void Player::AddVictory() {
+        ++numberOfVictory;
+    }
+
+    int Player::GetKills() const {
+        return numberOfKill;
+    }
+
+    void Player::AddKill() {
+        ++numberOfKill;
+    }
+
+    int Player::GetSpares() const {
+        return numberOfSpare;
+    }
+
+    void Player::AddSpare() {
+        ++numberOfSpare;
+    }
 }

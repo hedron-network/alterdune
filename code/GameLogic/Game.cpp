@@ -94,7 +94,11 @@ namespace GameLogic{
         auto& itemlist = this->player.value().GetItems();
         auto itemIndex = menu.ChooseItems(itemlist);
         if (itemIndex.has_value()){
-            itemlist[itemIndex.value()].UseItem(player.value());
+            if(itemlist[itemIndex.value()].UseItem(player.value())){
+                std::cout << "Objet utilisé : " << itemlist[itemIndex.value()].GetName() << std::endl;
+            } else {
+                std::cout << "Impossible d'utiliser cet objet." << std::endl;
+            }
         }
     }
     

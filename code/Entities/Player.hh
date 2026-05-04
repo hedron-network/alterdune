@@ -23,6 +23,12 @@ namespace Entities
     Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
     std::vector<Attributes::Item>& GetItems();
     const std::vector<Attributes::Item>& GetItems() const;
+    int GetVictories() const;
+    void AddVictory();
+    int GetKills() const;
+    void AddKill();
+    int GetSpares() const;
+    void AddSpare();
 };
 }
 #endif
