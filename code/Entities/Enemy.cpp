@@ -1,7 +1,7 @@
 #include "Enemy.hh"
 
 namespace Entities{
-    Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0, {}))
+    Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act, vector<Attributes::Attack> attacks) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
     {
         this->categorie=categorie;
         this->description=description;
@@ -9,6 +9,7 @@ namespace Entities{
         this->Act=Act;  
         this->textures = Assets::LoadEnemyTexture(name);
         this->sprites = Assets::LoadEnemySprites(textures);
+        this->attacks=attacks;
 
     }
 
@@ -31,11 +32,19 @@ namespace Entities{
     {
         return Act;
     }
+    vector<Particle> Enemy::Attack(){
+        ShuffleAttacks();
+        return attacks.back().GetAttackParticles();
+    }
     vector<sf::Texture>& Enemy::GetTextures(){
         return textures;
     }
     vector<sf::Sprite>& Enemy::GetSprites(){
         return sprites;
+    }
+    void Enemy::ShuffleAttacks(){
+        auto rng = std::default_random_engine {static_cast<unsigned>(std::time(nullptr))};
+        std::shuffle(this->attacks.begin(), this->attacks.end(), rng);
     }
 
 

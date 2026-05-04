@@ -25,10 +25,6 @@ namespace Attributes
         return attack;
     }
         // --- Serialize ---
-        // Format per particle (one line):
-        // posX|posY|velX|velY|speed|angle|steerStrength|displayLag|startupLag
-        // |spriteRotationSpeed|shape|movement|radius|rectW|rectH|lifetime
-        // |textureName (or NONE)
         std::string Attack::SerializeParticles() const {
             std::ostringstream oss;
             for (size_t i = 0; i < attack.size(); ++i) {
@@ -58,14 +54,15 @@ namespace Attributes
         }
 
         // --- Deserialize ---
-        // attackData is the multi-line string produced by SerializeParticles()
-        // textureLoader is a callable: sf::Texture(const std::string& path)
-        // Pass a ParticleManager to rebuild PixelMasks.
-        void Attack::BuildAttack(std::string& attackData) {
+        void Attack::BuildAttack(const std::string& attackData) {
             attack.clear();
             texNames.clear();
-
-            std::istringstream stream(attackData);
+            std::string fixed = attackData;
+            size_t pos = 0;
+            while ((pos = fixed.find("\\n", pos)) != std::string::npos) {
+                fixed.replace(pos, 2, "\n");
+            }
+            std::istringstream stream(fixed);
             std::string line;
 
             while (std::getline(stream, line)) {

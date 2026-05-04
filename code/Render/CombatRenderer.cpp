@@ -12,17 +12,19 @@ namespace Render{
             );
             playerSprites[i].setPosition(Origin());
         }
-        std::string attkstr = "470|570|0|0|200|0|0|0|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.658|574.995|0|0|200|1.04667|0|0.05|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.666|584.991|0|0|200|2.09333|0|0.1|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n470.016|590|0|0|200|3.14|0|0.15|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.35|585.018|0|0|200|4.18667|0|0.2|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.327|575.023|0|0|200|5.23333|0|0.25|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE";
-        circleAttack.BuildAttack(attkstr);
-        return;
+
+        //std::string attkstr = "470|570|0|0|200|0|0|0|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.658|574.995|0|0|200|1.04667|0|0.05|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n478.666|584.991|0|0|200|2.09333|0|0.1|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n470.016|590|0|0|200|3.14|0|0.15|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.35|585.018|0|0|200|4.18667|0|0.2|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE\n461.327|575.023|0|0|200|5.23333|0|0.25|0.25|-1.07374e+08|Circle|Constant|2|0|0|4|NONE";
+        //circleAttack.BuildAttack(attkstr);
+        
         circleAttack = Attack("Bullet Circle", "Fires a ring of bullets", 1.0, MakeBulletCircleAttack(
-            Origin(),
+            Origin()+sf::Vector2f(-50,25),
             /*bulletCount=*/  6,
             /*radius=*/       10.f,
             /*bulletRadius=*/ 2.f,
             /*speed=*/        200.f,
             /*delayStep=*/    0.1f,
-            /*lifetime=*/     4.f
+            /*lifetime=*/     4.f,
+            /*base delay*/    1.5f
         ));
     }
     void CombatRenderer::CreateBounds(const sf::RenderWindow& window){
@@ -47,21 +49,6 @@ namespace Render{
     }
     void CombatRenderer::handleEvent(sf::Event& event,sf::RenderWindow& window){
         using namespace sf::Keyboard;
-        
-
-        if(const auto keyPress = event.getIf<sf::Event::KeyPressed>()){
-            const auto keyCode= keyPress->code;
-            if(keyCode == Key::B){
-                auto sprite = sf::Sprite(tex);
-                sprite.setScale(sf::Vector2f(
-                40.f / sprite.getLocalBounds().size.x,
-                40.f / sprite.getLocalBounds().size.y)
-            );
-                //particles.push_back(particleManager.makeSprite(Origin()+sf::Vector2f(0,-150),150.f,0,sprite,trottinetteeMask,30));
-                particles= circleAttack.GetAttackParticles();
-                std::cout<<circleAttack.SerializeParticles()<<endl;
-            }
-        }
         if(const auto keyPress = event.getIf<sf::Event::KeyReleased>()){
             const auto keyCode= keyPress->code;
             using namespace sf::Keyboard;
@@ -168,7 +155,8 @@ namespace Render{
     float bulletRadius,
     float speed,
     float delayStep,   // 0.1s between each bullet appearing
-    float lifetime
+    float lifetime,
+    float baseDelay
     ) {
     ParticleManager pm;
     std::vector<Particle> particles;
@@ -194,8 +182,8 @@ namespace Render{
             speed,
             angle,
             bulletRadius,
-            /*startupLag=*/ moveDelay,
-            /*displayLag=*/ i * delayStep,
+            /*startupLag=*/ moveDelay+baseDelay,
+            /*displayLag=*/ i * delayStep+baseDelay,
             /*steerStrength=*/ 0.f,
             MovementType::Constant,
             lifetime

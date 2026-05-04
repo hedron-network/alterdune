@@ -10,9 +10,9 @@ class Combat
 {
 private:
     Entities::Player player;
-    Entities::Enemy enemy;
     bool isRunning;
 public:
+    Entities::Enemy enemy;
     Combat(Entities::Player player, Entities::Enemy enemy);
     void ExecutePlayerTurn(Menu& menu);
     void ExecuteEnemyTurn();

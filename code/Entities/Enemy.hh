@@ -4,8 +4,12 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <ctime>
+#include <random>
 #include "../Render/Assets.hh"
 #include "../Attributes/Action.hh"
+#include "../Attributes/Attack.hh"
+#include "../Render/Particle.hh"
 #include "Entity.hh"
 
 using namespace std;
@@ -26,11 +30,13 @@ namespace Entities
     string description;
     int mercy;
     vector<Action> Act;
-
+    std::vector<Attributes::Attack> attacks;
+    void ShuffleAttacks();
     public :
-    Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act);
+    Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act, std::vector<Attributes::Attack> attacks);
 
     void ACT(Action action);
+    vector <Particle> Attack();
 
     bool Spare();
 

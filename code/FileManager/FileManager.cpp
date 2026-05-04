@@ -78,8 +78,10 @@ namespace File{
             std::string description = dataRow[3];
             int mercy = ConvertTo<int>(dataRow[4]);
             auto act = ActionVectorFromData(dataRow,5,4);
+            std::cout<<"act loaded;";
+            auto atk = AttackVectorFromData(dataRow,5+12,1);
 
-            Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act);
+            Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act,atk);
             entities.push_back(currEnemy);
         }
         return entities;
@@ -134,5 +136,28 @@ namespace File{
         }
         return act;
     }
-
+    std::vector<Attributes::Attack> FileManager::AttackVectorFromData(const std::vector<std::string>& dataRow, int offset, int numberOfActions)
+    {
+        vector<Attributes::Attack> atk;
+        for (int i = 0; i < numberOfActions; i++) {
+            int idx = offset + i * 4;
+            if (idx + 3 >= (int)dataRow.size()) {
+                std::cout << "Warning: not enough fields for action " << i << std::endl;
+                break; // or continue, depending on your needs
+            }
+            std::cout<<dataRow[idx]<<std::endl;
+            std::cout<<dataRow[idx + 1]<<std::endl;
+            std::cout<<ConvertTo<int>(dataRow[idx + 2])<<std::endl;
+            std::cout<<dataRow[idx + 3]<<std::endl;
+            Attributes::Attack attack(
+                dataRow[idx],
+                dataRow[idx + 1],
+                ConvertTo<int>(dataRow[idx + 2])
+            );
+            attack.BuildAttack(dataRow[idx + 3]);
+            atk.push_back(attack);
+        }
+        std::cout<<atk.size();
+        return atk;
+    }
 }

@@ -24,7 +24,7 @@ public:
     double GetAttackModifier();
     std::string GetInfoString();
     std::vector<Particle>& GetAttackParticles();
-    void BuildAttack(std::string& attackData);
+    void BuildAttack(const std::string& attackData);
     std::string SerializeParticles() const;
 };  
 static std::string serializeVec2(sf::Vector2f v) ;

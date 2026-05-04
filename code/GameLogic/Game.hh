@@ -1,10 +1,10 @@
 #ifndef Game_h
 #define Game_h
+#include <optional>
 #include <vector>
+#include <ctime>
 #include <random>
 #include <algorithm>
-#include <optional>
-#include <ctime>
 
 #include "Menu.hh"
 #include "Combat.hh"

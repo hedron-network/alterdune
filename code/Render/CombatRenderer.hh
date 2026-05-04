@@ -41,7 +41,7 @@ namespace Render{
             void ChangeTo(CombatMode combatMode);
             void UpdatePos(float dt);
             void HandleInput();
-            std::vector<Particle> MakeBulletCircleAttack(sf::Vector2f origin,int bulletCount,float radius,float bulletRadius,float speed,float delayStep,float lifetime);
+            std::vector<Particle> MakeBulletCircleAttack(sf::Vector2f origin,int bulletCount,float radius,float bulletRadius,float speed,float delayStep,float lifetime,float baseDelay);
         public:
             CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
             void handleEvent(sf::Event& event,sf::RenderWindow& window);
