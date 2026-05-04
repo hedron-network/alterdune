@@ -41,6 +41,8 @@ namespace GameLogic{
         std::cout<<"Enemies Shuffled ;";
         CreateFirstEncounter();
         std::cout<<"Encouter Created ;";
+
+        DisplayStartSummary();
     }
     bool Game::NextEncounter(){
         if(!combat.has_value()){
@@ -107,6 +109,14 @@ namespace GameLogic{
                 break;
             }
             Fight();
+
+            if(player.value().GetVictories() >= 10)
+            {
+                DisplayEnding(); // affiche fin génocidaire/pacifiste/neutre
+                return;
+            }
+
+
             if(!NextEncounter()){
                 Reset();
             }
@@ -120,10 +130,55 @@ namespace GameLogic{
                 combat.value().ExecuteEnemyTurn();
             }
         }
+            this->player = combat->GetPlayer(); 
+
+        if(combat->PlayerLost()){
+            std::cout << "\n=== GAME OVER ===" << std::endl;
+            Reset(); // repart du début
+            return;
+        }
+        if(combat->PlayerWon()){
+            player.value().AddVictory();
+            bool spared = combat->WasSpared();
+            if(spared) player.value().AddSpare();
+            else       player.value().AddKill();
+            bestiary.AddEnemy(combat->GetEnemy(), spared);
+        }
     
     }
     #pragma endregion
     void Game::StartGame(){
         GameLoop();
     }
+
+        void Game::DisplayStartSummary()
+        {
+            auto& p = player.value();
+            std::cout << "\n--- Bienvenue, " << p.GetName() << " ---" << std::endl;
+            std::cout << "HP : " << p.GetHp() << " / " << p.GetHpMax() << std::endl;
+            std::cout << "Inventaire :" << std::endl;
+            for(auto& item : p.GetItems()){
+                std::cout << "  - " << item.GetName() << " x" << item.GetQuantity() << std::endl;
+            }
+            std::cout << std::endl;
+        }
+
+    void Game::DisplayEnding(){
+        int kills  = player.value().GetKills();
+        int spares = player.value().GetSpares();
+
+        std::cout << "\n========================================" << std::endl;
+        std::cout << "     FIN — 10 victoires !" << std::endl;
+        std::cout << "========================================" << std::endl;
+
+        if(kills == 0)
+            std::cout << "  FIN PACIFISTE — Vous avez tout épargné." << std::endl;
+        else if(spares == 0)
+            std::cout << "  FIN GÉNOCIDAIRE — Vous avez tout tué." << std::endl;
+        else
+            std::cout << "  FIN NEUTRE — Tués : " << kills << " | Épargnés : " << spares << std::endl;
+
+        std::cout << "========================================\n" << std::endl;
+}
+
 }

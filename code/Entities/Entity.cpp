@@ -52,6 +52,17 @@ namespace Entities{
         }
         else hp=hpMax;
     }
+
+
+    EnemyType GetCategorie()
+    {
+        return this->categorie
+    }
+
+    int GetHpMax()
+    {
+        return this->hpMax;
+    }
 }
 
 

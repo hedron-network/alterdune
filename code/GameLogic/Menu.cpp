@@ -96,9 +96,8 @@ namespace GameLogic
         std::string name;
         std::cin>>name;
         return name;
-    }
-    void Menu::ShowBestiary(){
-        throw std::runtime_error("Not Implemented");
-    }
+    } 
+
+    bestiary.Display();
 }
 

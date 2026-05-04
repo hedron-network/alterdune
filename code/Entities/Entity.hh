@@ -29,6 +29,7 @@ class Entity {
     int Attack();
     void TakeDamage(int damage);
     void Heal(int amount);
+    int GetHpMax() const;
 };
 
 

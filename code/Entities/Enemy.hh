@@ -45,7 +45,10 @@ namespace Entities
     vector<sf::Texture>& GetTextures();
     vector<sf::Sprite>& GetSprites();
 
+    EnemyType GetCategorie() const;  // retourne this->categorie
+    int GetHpMax() const;  // retourne this->hpMax (déjà dans Entity)
 
+        
 };  
 }
 

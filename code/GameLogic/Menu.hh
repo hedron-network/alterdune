@@ -4,6 +4,7 @@
 #include <optional>
 #include <vector>
 #include <limits>
+#include "Bestiary.hh"
 
 #include "../Attributes/Item.hh"
 #include "../Attributes/Action.hh"
@@ -28,6 +29,7 @@ public:
     void ShowBestiary();
     std::optional<Attributes::Item> ChooseItems(std::vector<Attributes::Item>& items);
     std::string NameSelection();
+    void ShowBestiary(GameLogic::Bestiary& bestiary);
 };  
 }
 #endif

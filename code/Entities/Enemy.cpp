@@ -51,5 +51,10 @@ namespace Entities{
     }
 
 
+    EnemyType Enemy::GetCategorie() const
+    {
+        return categorie;
+    }
+
 }   
 

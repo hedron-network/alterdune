@@ -22,6 +22,7 @@ private:
     Menu menu;
     std::vector<Entities::Enemy> enemies;
     File::FileManager fileManager;
+    Bestiary bestiary;
 
     void LoadExternalData();
     void CreateFirstEncounter();
@@ -34,6 +35,8 @@ private:
     bool ShowMenu();
     bool ShowMainMenu();
     void ShowAndUseItem();
+    void DisplayStartSummary();
+    void DisplayEnding();
 
 
 public:
