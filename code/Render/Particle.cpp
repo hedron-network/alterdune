@@ -159,11 +159,12 @@
     /// @param angle Initial Angle
     /// @param radius Radius of the circle in px
     /// @param startupLag Lag before starting to move in seconds
+    /// @param displayLag Lag before starting to display/collide in seconds
     /// @param steerStrength Steering strength
     /// @param mov Movement type
     /// @param lifetime Lifetime in seconds
     /// @return Particle
-    Particle ParticleManager::makeCircle(sf::Vector2f pos, float speed, float angle,float radius,float startupLag,float steerStrength, MovementType mov, float lifetime) {
+    Particle ParticleManager::makeCircle(sf::Vector2f pos, float speed, float angle,float radius,float startupLag,float displayLag,float steerStrength, MovementType mov, float lifetime) {
     Particle p;
     p.position = pos;
     p.speed = speed;
@@ -181,11 +182,12 @@
     /// @param angle Initial Angle
     /// @param size Vector of the rectangles sizes in px
     /// @param startupLag Lag before starting to move in seconds
+    /// @param displayLag Lag before starting to display/collide in seconds
     /// @param steerStrength Steering strength
     /// @param mov Movement type
     /// @param lifetime Lifetime in seconds
     /// @return Particle
-    Particle ParticleManager::makeRectangle(sf::Vector2f pos, float speed, float angle,sf::Vector2f size,float startupLag,float steerStrength, MovementType mov, float lifetime) {
+    Particle ParticleManager::makeRectangle(sf::Vector2f pos, float speed, float angle,sf::Vector2f size,float startupLag,float displayLag,float steerStrength, MovementType mov, float lifetime) {
     Particle p;
     p.position = pos;
     p.speed = speed;
@@ -205,11 +207,12 @@
     /// @param pixelMask Pixel Mask
     /// @param spriteRotationSpeed Sprite rotation speed as Degree/second
     /// @param startupLag Lag before starting to move in seconds
+    /// @param displayLag Lag before starting to display/collide in seconds
     /// @param steerStrength Steering strength
     /// @param mov Movement type
     /// @param lifetime Lifetime in seconds
     /// @return Particle
-    Particle ParticleManager::makeSprite(sf::Vector2f pos,  float speed, float angle,sf::Sprite sprite,PixelMask pixelMask,float spriteRotationSpeed,float startupLag,float steerStrength, MovementType mov, float lifetime) {
+    Particle ParticleManager::makeSprite(sf::Vector2f pos,  float speed, float angle,sf::Sprite sprite,PixelMask pixelMask,float spriteRotationSpeed,float startupLag,float displayLag,float steerStrength, MovementType mov, float lifetime) {
     Particle p;
     p.position = pos;
     p.speed = speed;

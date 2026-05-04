@@ -17,6 +17,8 @@ struct Particle {
     float speed;
     float angle;
     float steerStrength;
+    float displayLag;
+    float startupLag;
     std::optional<sf::Sprite> sprite;
     float spriteRotationSpeed;
     std::optional<PixelMask> pixelMask;
@@ -50,9 +52,9 @@ class ParticleManager{
     bool checkCollision(const Particle& particle, const sf::FloatRect& target);
     void update(Particle &particle, const sf::Vector2f &PlayerPos, float dt);
     void drawParticle(sf::RenderWindow &window,Particle& particle);
-    Particle makeCircle(sf::Vector2f pos, float speed, float angle,float radius,float startupLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
-    Particle makeRectangle(sf::Vector2f pos, float speed, float angle,sf::Vector2f size,float startupLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
-    Particle makeSprite(sf::Vector2f pos, float speed, float angle,sf::Sprite sprite,PixelMask pixelMask,float spriteRotationSpeed=0,float startupLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
+    Particle makeCircle(sf::Vector2f pos, float speed, float angle,float radius,float startupLag=0,float displayLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
+    Particle makeRectangle(sf::Vector2f pos, float speed, float angle,sf::Vector2f size,float startupLag=0,float displayLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
+    Particle makeSprite(sf::Vector2f pos, float speed, float angle,sf::Sprite sprite,PixelMask pixelMask,float spriteRotationSpeed=0,float startupLag=0,float displayLag=0,float steerStrength=0, MovementType mov=MovementType::Constant, float lifetime=3);
     
 };
 #endif
