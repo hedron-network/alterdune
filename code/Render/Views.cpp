@@ -26,6 +26,9 @@ namespace Render{
     void MenuTemplate::draw(sf::RenderWindow& window) {
         menu.draw(window);
     }
+    Signal MenuTemplate::getSignal(){
+        menu.getSignal();
+    }
 
 
     MainMenu::MainMenu(const sf::RenderWindow& window):MenuTemplate(MAIN_MENU,window){}
@@ -41,6 +44,9 @@ namespace Render{
     }
     void CombatState::handleEvent(sf::Event& event,sf::RenderWindow& window){
         combatRenderer.handleEvent(event,window);
+    }
+        Signal CombatState::getSignal(){
+        combatRenderer.getSignal();
     }
 
 }

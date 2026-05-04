@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Assets.hh"
+#include "Views.hh"
 namespace Render{
     enum MenuType{
     MAIN_MENU,COMBAT_MENU,ITEM_MENU
@@ -11,6 +12,7 @@ namespace Render{
 class MenuRender
 {
 private:
+    Signal signal= Signal::None;
     Assets::ButtonId selected;
     sf::RectangleShape buttonRect;
     const MenuType menuType;
@@ -32,6 +34,7 @@ public:
     void AddButtons(const sf::RenderWindow& window);
     void onButtonPressed(Assets::ButtonId id);
     void SetComponentVisibility(MenuType menuType);
+    Render::Signal getSignal();
 };
 
 };

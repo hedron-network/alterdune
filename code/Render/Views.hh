@@ -8,11 +8,22 @@
 #include "MenuRender.hh"
 #include "CombatRenderer.hh"
 namespace Render{
+    enum Signal{
+        MAINMENU,
+        COMBATMENU,
+        ITEMMENU,
+        ACTMENU,
+        BESTIARYMENU,
+        COMBATSTEP,
+        POP,
+        None
+    };
     class State {
     public:
         virtual void handleEvent(sf::Event& event,sf::RenderWindow& window) = 0;
         virtual void update(float dt) = 0;
         virtual void draw(sf::RenderWindow& window) = 0;
+        virtual Signal getSignal();
         virtual ~State() {}
     };
 
@@ -24,6 +35,7 @@ namespace Render{
         void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
         void update(float dt) override;
         void draw(sf::RenderWindow& window) override;
+        Signal getSignal() override;
     };
 
     class MainMenu : public MenuTemplate {
@@ -46,6 +58,7 @@ namespace Render{
         void handleEvent(sf::Event& event,sf::RenderWindow& window);
         void update(float dt);
         void draw(sf::RenderWindow& window);
+        Signal getSignal();
     };
 }
 #endif
