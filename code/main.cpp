@@ -94,6 +94,10 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
             state->setSignal(Render::Signal::None);
         }
         game.NextEncounter();
+        if (game.stats.numberOfVictories >= 10|| game.combat.value().player.GetHp()<=0)
+        {
+            manager.pushState(std::make_unique<Render::EndingView>(game.stats));
+        }
     default:
         break;
     }

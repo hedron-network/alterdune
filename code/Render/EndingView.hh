@@ -63,12 +63,6 @@ namespace Render {
             sub.setPosition({(window.getSize().x - sb.size.x) / 2.f, 270.f});
             window.draw(sub);
 
-            // Prompt
-            sf::Text prompt(Assets::GetFont(), "Press Enter to continue", 16);
-            prompt.setFillColor({150, 150, 150, 255});
-            sf::FloatRect pb = prompt.getLocalBounds();
-            prompt.setPosition({(window.getSize().x - pb.size.x) / 2.f, 380.f});
-            window.draw(prompt);
         }
 
         Signal getSignal() override          { return signal; }

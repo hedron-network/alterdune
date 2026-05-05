@@ -60,7 +60,7 @@ namespace File{
             return {};
         }
         auto data = dataOpt.value();
-        for (int i =1;i<data.size();i++){
+        for (int i =0;i<data.size();i++){
             auto dataRow= data[i];
             for(std::string field:dataRow){
                 std::cout<<field<<";";
@@ -139,10 +139,6 @@ namespace File{
                 std::cout << "Warning: not enough fields for action " << i << std::endl;
                 break; // or continue, depending on your needs
             }
-            std::cout<<dataRow[idx]<<std::endl;
-            std::cout<<dataRow[idx + 1]<<std::endl;
-            std::cout<<ConvertTo<int>(dataRow[idx + 2])<<std::endl;
-            std::cout<<dataRow[idx + 3]<<std::endl;
             Attributes::Attack attack(
                 dataRow[idx],
                 dataRow[idx + 1],
