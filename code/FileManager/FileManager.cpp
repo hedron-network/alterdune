@@ -96,7 +96,7 @@ namespace File{
             return {};
         }
         auto data = dataOpt.value();
-        for (int i =1;i<data.size();i++){
+        for (int i =0;i<data.size();i++){
             auto dataRow= data[i];
             auto item=LoadItemFromData(dataRow);
             std::cout<<item.GetName()<<";";

@@ -22,6 +22,8 @@ private:
     Entities::Player& player;
     GameLogic::PlayerStats& stats;
     Signal signal = Signal::None;
+    void drawItems(sf::RenderWindow& window,float px, float iy, float pw);
+
 
     // Layout helpers
     void drawPanel(sf::RenderWindow& window);

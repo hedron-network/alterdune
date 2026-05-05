@@ -2,6 +2,9 @@
 #define Player_h
 #include <string>
 #include <vector>
+
+#include <random>
+#include <ctime>
 #include<SFML/Graphics.hpp>
 
 #include "Entity.hh"
@@ -29,6 +32,7 @@ namespace Entities
     void AddKill();
     int GetSpares() const;
     void AddSpare();
+    int Attack();
 };
 }
 #endif

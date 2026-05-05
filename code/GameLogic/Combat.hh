@@ -3,6 +3,8 @@
 #include "../Entities/Enemy.hh"
 #include "../Entities/Player.hh"
 #include "Menu.hh"
+#include <random>
+#include <ctime>
 
 namespace GameLogic
 {

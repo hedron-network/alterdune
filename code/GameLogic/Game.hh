@@ -23,6 +23,7 @@ namespace GameLogic
 class Game
 {
 private:
+    std::string playerName;
     std::optional<Entities::Player> player;
     Menu menu;
     std::vector<Entities::Enemy> enemies;
@@ -45,7 +46,7 @@ public:
     PlayerStats stats;
     void recordWin(bool hasSpared);
     Bestiary bestiary;
-    Game();
+    Game(std::string playerName);
     std::optional<Combat> combat;
     void StartGame();
     bool NextEncounter();

@@ -1,6 +1,8 @@
 #include "Game.hh"
 namespace GameLogic{
-    Game::Game(){
+    Game::Game(std::string playerName)
+    :playerName(playerName)
+    {
         Reset();
     }
     void Game::recordWin(bool hasSpared){
@@ -16,7 +18,7 @@ namespace GameLogic{
     void Game::LoadExternalData(){
         std::string name;
         if(!this->player.has_value()){
-           name = "a";//menu.NameSelection();
+           name = playerName;//menu.NameSelection();
         }
         else{
             name = this->player.value().GetName();      
@@ -28,6 +30,7 @@ namespace GameLogic{
         }
     }
     void Game::ShuffleEnemies(){
+        std::cout<<"enemies remaining"<<enemies.size()<<std::endl;
         auto rng = std::default_random_engine {static_cast<unsigned>(std::time(nullptr))};
         std::shuffle(this->enemies.begin(), this->enemies.end(), rng);
     }

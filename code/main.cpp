@@ -7,6 +7,8 @@
 #include "Render/Assets.hh"
 #include "Render/BestiaryView.hh"
 #include "Render/StatsView.hh"
+#include "Render/EndingView.hh"
+#include "Render/NameEntryView.hh"
 
 void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::StateManager& manager, Render::Signal signal){
     using namespace Render;
@@ -44,6 +46,9 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
     case Signal::ITEMMENUFROMMAIN:
         manager.pushState(std::make_unique<Render::ItemMenu>(game.combat.value().player.GetItems(),game.combat.value().player,window,true));
         break;
+    case Signal::ENDING:
+        manager.pushState(std::make_unique<Render::EndingView>(game.stats));
+        break;
     case Signal::MAINMENU:
         break;
     case Signal::None:
@@ -64,6 +69,10 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
                 state->setSignal(Render::Signal::None);
             }
             game.NextEncounter();
+            if (game.stats.numberOfVictories >= 10|| game.combat.value().player.GetHp()<=0)
+            {
+                manager.pushState(std::make_unique<Render::EndingView>(game.stats));
+            }
         }
         break;
     case Signal::POPANDFIGHT:
@@ -93,8 +102,33 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
 int main() {
     sf::RenderWindow window(sf::VideoMode({940, 720}), "Game");
     Assets::LoadFont();
+    
     Render::StateManager manager;
-    GameLogic::Game game;
+    std::string playerName;
+{
+    auto* nameView = new Render::NameEntryView();
+    manager.pushState(std::unique_ptr<Render::State>(nameView));
+
+    while (window.isOpen()) {
+        while (auto event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) window.close();
+            if (auto* s = manager.getCurrentState())
+                s->handleEvent(*event, window);
+        }
+
+        if (auto* s = manager.getCurrentState())
+            if (s->getSignal() == Render::Signal::POP) {
+                playerName = nameView->getName();   // grab name before pop
+                manager.popState();
+                break;
+            }
+
+        window.clear(sf::Color::Black);
+        if (auto* s = manager.getCurrentState()) s->draw(window);
+        window.display();
+    }
+}
+    GameLogic::Game game(playerName);
     sf::Clock clock;
 
     if(!game.combat.has_value()){
@@ -102,6 +136,7 @@ int main() {
     }
     //manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
     manager.pushState(std::make_unique<Render::MainMenu>(window));
+    manager.pushState(std::make_unique<Render::StatsView>(game.combat.value().player,game.stats,window));
     while (window.isOpen()) {
          if (auto* state = manager.getCurrentState()){
         HandleStateChange(game,window,manager,state->getSignal());

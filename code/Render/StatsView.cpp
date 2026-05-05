@@ -109,6 +109,9 @@ void StatsView::drawPanel(sf::RenderWindow& window) {
     drawStatRow(window, "Spared",
                 std::to_string(stats.numberOfSpares),
                 col1X, statsStartY + 5 * lineH);
+
+    drawItems(window, panelX, statsStartY + 6 * lineH + 8.f, panelW);
+
     sf::Text hint(font, "[Enter / Esc] Close", 12);
     hint.setFillColor(sf::Color(255, 255, 255, 100));
     {
@@ -117,6 +120,7 @@ void StatsView::drawPanel(sf::RenderWindow& window) {
                                       panelY + panelH - 20.f));
     }
     window.draw(hint);
+    
 }
 
 void StatsView::drawStatRow(sf::RenderWindow& window,
@@ -140,6 +144,36 @@ void StatsView::drawStatRow(sf::RenderWindow& window,
         vText.setPosition(sf::Vector2f(x + colW - b.size.x, y));
     }
     window.draw(vText);
+}
+
+void StatsView::drawItems(sf::RenderWindow& window,float px, float iy, float pw)
+{
+    auto& font  = Assets::GetFont();
+    const float pad = 20.f;
+
+    sf::Text header(font, "Items", 14);
+    header.setFillColor(sf::Color(200, 200, 200));
+    header.setPosition(sf::Vector2f(px + pad, iy));
+    window.draw(header);
+
+    auto& items = player.GetItems();
+    if (items.empty()) {
+        sf::Text none(font, "none", 13);
+        none.setFillColor(sf::Color(120, 120, 120));
+        none.setPosition(sf::Vector2f(px + pad, iy + 20.f));
+        window.draw(none);
+        return;
+    }
+
+    float itemY = iy + 22.f;
+    for (auto& item : items) {
+        std::string txt = item.GetName() + "  x" + std::to_string(item.GetQuantity());
+        sf::Text t(font, txt, 13);
+        t.setFillColor(sf::Color(220, 220, 220));
+        t.setPosition(sf::Vector2f(px + pad + 8.f, itemY));
+        window.draw(t);
+        itemY += 20.f;
+    }
 }
 
 }
