@@ -39,7 +39,7 @@ namespace Entities
     vector <Particle> Attack();
     int GetAttackDamage();
     bool Spare();
-
+    std::string GetDescription() const;
     vector<Action> GetAction();
 
     vector<sf::Texture>& GetTextures();

@@ -19,7 +19,7 @@ namespace Entities{
     {
         return hp;
     }
-    string Entity::GetName()
+    string Entity::GetName()const
     {
         return name;
     }

@@ -22,7 +22,7 @@ class Entity {
     Entity(int hpMax, string name, Attributes::Attack atk);
     virtual ~Entity();
     int GetHp();
-    std::string GetName();
+    std::string GetName() const;
     double GetAttackModifier();
     int Attack();
     void TakeDamage(int damage);

@@ -15,24 +15,18 @@ namespace File{
     FileManager::FileManager(){}
     std::vector<std::string> FileManager::readRow(const std::string &row){// passes original value as read only to avoid copying
         std::vector<std::string> fields = {""};
+        bool inQuotes = false;
         int i =0;
         for(char c : row){
-            switch(c){
-                case ';':{
-                    fields[i]= trim(fields[i]);
-                    fields.push_back("");
-                    i++;
-                    break;
-                }
-                case '\r':{
-                    break;
-                }
-                case '\0':{
-                    break;
-                }
-                default :{
-                    fields[i].push_back(c);
-                }
+             if (c == '"') {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ';' && !inQuotes) {
+                fields.push_back("");
+                i++;
+            }
+            else {
+                fields[i].push_back(c);
             }
         }
         return fields;
@@ -78,7 +72,7 @@ namespace File{
             std::string description = dataRow[3];
             int mercy = ConvertTo<int>(dataRow[4]);
             auto act = ActionVectorFromData(dataRow,5,4);
-            std::cout<<"act loaded;";
+            std::cout<<"mercy : "<<mercy;
             auto atk = AttackVectorFromData(dataRow,5+12,1);
 
             Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act,atk);

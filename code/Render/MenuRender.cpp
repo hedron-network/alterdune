@@ -71,9 +71,12 @@ namespace Render{
         const int buttonHeight =buttons[0].sprite.getTexture().getSize().y;
         const float staticOffset = 10.f;
         const float bottomMargin = 40.f;
-
-        const int cols = 4;
+        int cols = 4;
         const int rows =1;
+        if(menuType==MenuType::MAIN_MENU){
+            cols=5;
+        }
+        
 
         float totalWidth = cols * buttonWidth + (cols - 1) * staticOffset;
         float totalHeight = rows * buttonHeight + (rows - 1) * staticOffset;
@@ -138,7 +141,8 @@ namespace Render{
         case COMBAT_MENU:
             buttonsToHide = {
                 Assets::ButtonId::BESTIARY,
-                Assets::ButtonId::EXIT
+                Assets::ButtonId::EXIT,
+                Assets::ButtonId::STATS
             };
             break;
         default:
@@ -160,14 +164,17 @@ namespace Render{
     }
     void MenuRender::setSignal(Render::Signal signal){
         this->signal=signal;
-        std::cout<<"set signal";
     }
     void MenuRender::onButtonPressed(Assets::ButtonId id) {
         using namespace Assets;
         switch (id)
         {
         case ButtonId::ATTACK:
-            signal= Render::Signal::COMBATSTEP;
+            if(menuType==MenuType::COMBAT_MENU){
+            signal= Render::Signal::COMBATSTEP;}
+            else{
+                signal = Render::Signal::COMBATMENU;
+            }
             break;
         case ButtonId::ACT:
             signal= Render::Signal::ACTMENU;
@@ -176,13 +183,20 @@ namespace Render{
             signal= Render::Signal::BESTIARYMENU;
             break;
         case ButtonId::ITEM:
-            signal = Render::Signal::ITEMMENU;
+            if(menuType==MenuType::COMBAT_MENU){
+            signal = Render::Signal::ITEMMENU;}
+            else{
+                signal = Render::Signal::ITEMMENUFROMMAIN;
+            }
             break;
         case ButtonId::SPARE:
-            std::cout<<"SPARE";
+            signal = Render::Signal::SPARE;
             break;
         case ButtonId::EXIT:
             signal = Signal::POP;
+            break;
+        case ButtonId::STATS:
+            signal = Signal::STATSMENU;
             break;
         default:
             std::cout<<"gne";

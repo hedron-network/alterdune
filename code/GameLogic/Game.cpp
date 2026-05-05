@@ -3,6 +3,13 @@ namespace GameLogic{
     Game::Game(){
         Reset();
     }
+    void Game::recordWin(bool hasSpared){
+        if(hasSpared){
+            stats.numberOfSpares++;
+        }else{
+            stats.numberOfKills++;
+        }stats.numberOfVictories++;
+    }
     
     #pragma region dataHandling
 

@@ -13,12 +13,17 @@
 #include "../Entities/Player.hh"
 #include "../Entities/Enemy.hh"
 namespace GameLogic
-{
+{   
+    struct PlayerStats
+    {
+        int numberOfSpares=0;
+        int numberOfKills=0;
+        int numberOfVictories=0;
+    };
 class Game
 {
 private:
     std::optional<Entities::Player> player;
-    std::optional<Bestiary> bestiary;
     Menu menu;
     std::vector<Entities::Enemy> enemies;
     File::FileManager fileManager;
@@ -37,6 +42,9 @@ private:
 
 
 public:
+    PlayerStats stats;
+    void recordWin(bool hasSpared);
+    Bestiary bestiary;
     Game();
     std::optional<Combat> combat;
     void StartGame();

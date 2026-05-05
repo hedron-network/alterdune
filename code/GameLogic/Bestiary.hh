@@ -22,7 +22,7 @@ namespace GameLogic {
         Bestiary() = default;
 
         // Ajoute un ennemi vaincu au bestiaire
-        void AddEnemy(const Entities::Enemy& enemy, bool spared);
+        void AddEnemy(const Entities::Enemy enemy, bool spared);
 
         // Affiche tous les ennemis vaincus (pour le menu Bestiaire)
         void Display() const;

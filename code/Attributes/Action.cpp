@@ -4,7 +4,7 @@ namespace Attributes
     Action::Action(std::string name,std::string description,int mercyModifier){
         this->name = name;
         this->description = description;
-        this-> mercyModifier;
+        this-> mercyModifier= mercyModifier;
     }
     Action::~Action(){}
     int Action::GetMercyModifier(){

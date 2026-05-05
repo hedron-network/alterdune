@@ -13,10 +13,10 @@ const std::string buttonTextureFolder = AssetFolder+"buttons\\";
 const std::string enemyTextureFolder = AssetFolder+"enemy\\";
 const std::string GUIFolder= AssetFolder+"GUI\\";
 // Buttons assets
-constexpr int buttonNumber = 6;
+constexpr int buttonNumber = 7;
 
 const std::string buttonNames[buttonNumber]{
-    "ATTACK","ACT","ITEM","SPARE","BESTIARY","EXIT"
+    "ATTACK","ACT","ITEM","SPARE","BESTIARY","STATS","EXIT"
 };
 
 enum ButtonId {
@@ -25,11 +25,12 @@ enum ButtonId {
     ITEM,
     SPARE,
     BESTIARY,
+    STATS,
     EXIT
 };
 
 const int buttonPlacement[buttonNumber]{
-    0,1,2,3,2,3
+    0,1,2,3,2,3,3
 };
 
 struct Button {

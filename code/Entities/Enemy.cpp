@@ -15,13 +15,21 @@ namespace Entities{
 
     void Enemy::ACT(Action action)
     {
+        std::cout << "Modifier: " << action.GetMercyModifier() << std::endl;
         std::cout<<action.GetDescription()<<std::endl;
-        mercy-=action.GetMercyModifier();
+        std::cout<<mercy;
+        if(action.GetMercyModifier()>mercy){
+            mercy=0;
+        }
+        else{
+            mercy-=action.GetMercyModifier();
+        }
+        std::cout<<mercy;
     }
 
     bool Enemy::Spare()
     {
-        if (mercy<0){
+        if (mercy<=0){
 
         return true;
         }
@@ -58,5 +66,9 @@ namespace Entities{
     int Enemy::GetHpMax() const{
         return this->hpMax;
     }
+    std::string Enemy::GetDescription()const{
+        return description;
+    }
+    
 }   
 

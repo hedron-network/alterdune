@@ -3,7 +3,7 @@
 
 namespace GameLogic {
 
-    void Bestiary::AddEnemy(const Entities::Enemy& enemy, bool spared) {
+    void Bestiary::AddEnemy(const Entities::Enemy enemy, bool spared) {
         entries.push_back({enemy, spared});
     }
 
