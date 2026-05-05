@@ -9,9 +9,9 @@ namespace GameLogic
 class Combat
 {
 private:
-    Entities::Player player;
     bool isRunning;
 public:
+    Entities::Player player;
     Entities::Enemy enemy;
     Combat(Entities::Player player, Entities::Enemy enemy);
     void ExecutePlayerTurn(Menu& menu);

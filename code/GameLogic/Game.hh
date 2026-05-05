@@ -25,7 +25,6 @@ private:
 
     void LoadExternalData();
     void CreateFirstEncounter();
-    bool NextEncounter();
     void ShuffleEnemies();
     void GameLoop();
     void Fight();
@@ -41,6 +40,7 @@ public:
     Game();
     std::optional<Combat> combat;
     void StartGame();
+    bool NextEncounter();
 
 }; 
 

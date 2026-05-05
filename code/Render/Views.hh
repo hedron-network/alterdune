@@ -7,6 +7,7 @@
 #include "renderTypes.hh"
 #include "MenuRender.hh"
 #include "CombatRenderer.hh"
+#include "ItemMenuRenderer.hh"
 namespace Render{
     class State {
     public:
@@ -35,14 +36,25 @@ namespace Render{
             MainMenu(const sf::RenderWindow& window);
     };
     class CombatMenu : public MenuTemplate{
+        private:
+            std::unique_ptr<sf::Text> enemyNameText;
+            GameLogic::Combat& combat;
         public:
-            CombatMenu(const sf::RenderWindow& window);
+            CombatMenu(const sf::RenderWindow& window, GameLogic::Combat& combat);
+            void draw(sf::RenderWindow& window);
+            void drawEnemyName(sf::RenderWindow& window);
     };
-    class ItemMenu : public MenuTemplate{
-        public:
-            ItemMenu(const sf::RenderWindow& window);
-    };
+    class ItemMenu : public State {
+        ItemMenuRender itemMenuRender;
+    public:
+        ItemMenu(std::vector<Attributes::Item>& items,Entities::Player& player,const sf::RenderWindow& window);
 
+        void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
+        void update(float dt) override;
+        void draw(sf::RenderWindow& window) override;
+        Signal getSignal() override;
+        void setSignal(Signal signal) override;
+    };
     class CombatState: public State{
         public:
         CombatRenderer combatRenderer;

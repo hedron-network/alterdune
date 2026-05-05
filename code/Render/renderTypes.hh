@@ -5,7 +5,7 @@
 namespace Render {
     enum Signal {
         MAINMENU, COMBATMENU, ITEMMENU, ACTMENU,
-        BESTIARYMENU, COMBATSTEP, POP, None
+        BESTIARYMENU, COMBATSTEP, POP,POPANDFIGHT, None
     };
     enum MenuType {
         MAIN_MENU, COMBAT_MENU, ITEM_MENU

@@ -1,7 +1,6 @@
 #include "CombatRenderer.hh"
 namespace Render{
     CombatRenderer::CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window):combat(combat){
-        Assets::LoadFont();
         IsFinished = false;
         CreateBounds(window);
         ChangeTo(CombatMode::MAIN);
@@ -134,6 +133,7 @@ namespace Render{
     }
     void CombatRenderer::draw(sf::RenderWindow& window){
         drawLifeBar(window);
+        drawEnemyLifeBar(window);
         drawEnemyName(window);
         window.draw(playerBounds);
         window.draw(playerSprites[playerSpriteIdex]);
@@ -192,4 +192,29 @@ namespace Render{
 
         window.draw(*enemyNameText);
     }
+    void CombatRenderer::drawEnemyLifeBar(sf::RenderWindow& window){
+        const float barWidth  = endX - startX;   // same width as the combat box
+        const float barHeight = 10.f;
+        const float barY      = 20.f + 60.f;
+        const float barX      = startX;
+
+        auto& enemy   = combat.enemy;
+        float maxHp    = static_cast<float>(enemy.GetHpMax());
+        float currentHp = static_cast<float>(enemy.GetHp());
+        float ratio    = std::clamp(currentHp / maxHp, 0.f, 1.f);
+
+        // Background (empty bar)
+        sf::RectangleShape bgBar(sf::Vector2f(barWidth, barHeight));
+        bgBar.setPosition(sf::Vector2f(barX, barY));
+        bgBar.setFillColor(sf::Color::Red);
+
+        // Foreground (filled portion)
+        sf::RectangleShape fgBar(sf::Vector2f(barWidth * ratio, barHeight));
+        fgBar.setPosition(sf::Vector2f(barX, barY));
+        fgBar.setFillColor(sf::Color::Yellow);
+
+        window.draw(bgBar);
+        window.draw(fgBar);
+    }
+
 }

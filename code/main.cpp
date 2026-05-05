@@ -4,6 +4,7 @@
 
 #include "Render/StateManager.hh"
 #include "Render/Views.hh"
+#include "Render/Assets.hh"
 
 void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::StateManager& manager, Render::Signal signal){
     using namespace Render;
@@ -16,15 +17,17 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
         break;
     case Signal::COMBATMENU:
         if(game.combat.value().IsRunning()){
-            manager.pushState(std::make_unique<Render::CombatMenu>(window));
+            manager.pushState(std::make_unique<Render::CombatMenu>(window,game.combat.value()));
         }else{
             manager.popState();
         }
         break;
     case Signal::COMBATSTEP:
+        game.combat.value().enemy.TakeDamage(game.combat.value().player.Attack());
         manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
         break;
     case Signal::ITEMMENU:
+        manager.pushState(std::make_unique<Render::ItemMenu>(game.combat.value().player.GetItems(),game.combat.value().player,window));
         break;
     case Signal::MAINMENU:
         break;
@@ -37,7 +40,18 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
 
             state->setSignal(Render::Signal::None);
         }
+        if(!game.combat.value().IsRunning()){
+            game.NextEncounter();
+        }
         break;
+    case Signal::POPANDFIGHT:
+        manager.getCurrentState()->setSignal(Signal::None);
+        manager.popState();
+        if(auto* state = manager.getCurrentState()){
+
+            state->setSignal(Render::Signal::None);
+        }
+        manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
     default:
         break;
     }
@@ -45,7 +59,7 @@ void HandleStateChange(GameLogic::Game& game,sf::RenderWindow& window,Render::St
 
 int main() {
     sf::RenderWindow window(sf::VideoMode({940, 720}), "Game");
-
+    Assets::LoadFont();
     Render::StateManager manager;
     GameLogic::Game game;
     sf::Clock clock;
@@ -54,7 +68,7 @@ int main() {
         throw -1;
     }
     //manager.pushState(std::make_unique<Render::CombatState>(game.combat.value(),window));
-    manager.pushState(std::make_unique<Render::CombatMenu>(window));
+    manager.pushState(std::make_unique<Render::CombatMenu>(window,game.combat.value()));
     while (window.isOpen()) {
          if (auto* state = manager.getCurrentState()){
         HandleStateChange(game,window,manager,state->getSignal());

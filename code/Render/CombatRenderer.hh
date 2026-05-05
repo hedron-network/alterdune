@@ -23,7 +23,7 @@ namespace Render{
             sf::Vector2f playerPos;
             sf::Vector2f playerVelocity;
             CombatMode combatMode;
-            GameLogic::Combat combat;
+            GameLogic::Combat& combat;
             const float PlayerSpeed=150.f;
             sf::Texture tex = Assets::LoadSingleTexture(Assets::GUIFolder+"trottinette.png");
             PixelMask trottinetteeMask;
@@ -49,6 +49,7 @@ namespace Render{
             void UpdatePos(float dt);
             void HandleInput();
             void drawLifeBar(sf::RenderWindow& window);
+            void drawEnemyLifeBar(sf::RenderWindow& window);
             void drawEnemyName(sf::RenderWindow& window);
         public:
             CombatRenderer(GameLogic::Combat& combat,const sf::RenderWindow& window);
