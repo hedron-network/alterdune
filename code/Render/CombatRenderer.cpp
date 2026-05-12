@@ -92,6 +92,7 @@ namespace Render{
             enemyDamage= combat.enemy.GetAttackDamage();
             hasCombatStarted=true;
             std::cout<<enemyDamage;
+            std::cout<<particles.size();
         }
         grace-=dt;
         HandleInput();

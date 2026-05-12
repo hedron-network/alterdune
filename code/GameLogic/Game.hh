@@ -6,7 +6,6 @@
 #include <random>
 #include <algorithm>
 
-#include "Menu.hh"
 #include "Combat.hh"
 #include "Bestiary.hh"
 #include "../FileManager/FileManager.hh"
@@ -25,21 +24,14 @@ class Game
 private:
     std::string playerName;
     std::optional<Entities::Player> player;
-    Menu menu;
     std::vector<Entities::Enemy> enemies;
     File::FileManager fileManager;
 
     void LoadExternalData();
     void CreateFirstEncounter();
     void ShuffleEnemies();
-    void GameLoop();
     void Fight();
     void Reset();
-    bool ShowMenu();
-    bool ShowMainMenu();
-    void ShowAndUseItem();
-    void DisplayStartSummary();
-    void DisplayEnding();
 
 
 public:

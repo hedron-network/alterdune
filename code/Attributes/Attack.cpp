@@ -1,4 +1,5 @@
 #include "Attack.hh"
+#include <iostream>
 namespace Attributes
 {
     Attack::Attack(std::string name,std::string description,double attackModifier)
@@ -24,35 +25,6 @@ namespace Attributes
     std::vector<Particle>& Attack::GetAttackParticles(){
         return attack;
     }
-        // --- Serialize ---
-        std::string Attack::SerializeParticles() const {
-            std::ostringstream oss;
-            for (size_t i = 0; i < attack.size(); ++i) {
-                const Particle& p = attack[i];
-                oss << p.position.x        << "|"
-                    << p.position.y        << "|"
-                    << p.velocity.x        << "|"
-                    << p.velocity.y        << "|"
-                    << p.speed             << "|"
-                    << p.angle             << "|"
-                    << p.steerStrength     << "|"
-                    << p.displayLag        << "|"
-                    << p.startupLag        << "|"
-                    << p.spriteRotationSpeed << "|"
-                    << shapeToStr(p.shape) << "|"
-                    << movToStr(p.movement)<< "|"
-                    << p.radius            << "|"
-                    << p.Rectsize.x        << "|"
-                    << p.Rectsize.y        << "|"
-                    << p.lifetime          << "|"
-                    << (p.shape == ShapeType::Sprite && i < texNames.size()
-                        ? texNames[i] : "NONE");
-                if (i + 1 < attack.size())
-                    oss << "\n";
-            }
-            return oss.str();
-        }
-
         // --- Deserialize ---
         void Attack::BuildAttack(const std::string& attackData) {
             attack.clear();
@@ -147,7 +119,9 @@ namespace Attributes
     }
     static MovementType strToMov(const std::string& s) {
         if(s == "Homing") return MovementType::Homing;
-        if(s == "None")   return MovementType::None;
+        if(s == "None")   {
+            std::cout<<"None";
+            return MovementType::None;};
         return MovementType::Constant;
     }
 }

@@ -24,9 +24,6 @@ namespace GameLogic {
         // Ajoute un ennemi vaincu au bestiaire
         void AddEnemy(const Entities::Enemy enemy, bool spared);
 
-        // Affiche tous les ennemis vaincus (pour le menu Bestiaire)
-        void Display() const;
-
         // Retourne toutes les entrées (utile pour les stats de fin)
         const std::vector<BestiaryEntry>& GetEntries() const;
 

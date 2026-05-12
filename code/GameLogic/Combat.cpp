@@ -9,60 +9,11 @@ namespace GameLogic
     bool Combat::IsRunning(){
         return player.GetHp()>0 && enemy.GetHp()>0;
     }
-    void Combat::ExecutePlayerTurn(Menu& menu){
-        std::cout<<"\n"<<player.GetName()<<" vs "<<enemy.GetName()<<std::endl;
-        auto choiceOPT =menu.DisplayCombatMenu();
-        if (!choiceOPT.has_value()){
-            while (!choiceOPT.has_value()){choiceOPT = menu.DisplayCombatMenu();}
-        }
-        auto choice = choiceOPT.value();
-        switch (choice)
-        {
-        case MenuChoice::FIGHT:
-            Attack();
-            break;
-        case MenuChoice::ACT:
-            if(!ACT(menu)){
-                ExecutePlayerTurn(menu);
-            }
-            break;
-        case MenuChoice::ITEMS:
-            if(!UseItem(menu)){
-                ExecutePlayerTurn(menu);
-            }
-            break;
-        case MenuChoice::SPARE:
-            Spare();
-            break;
-        default:
-            break;
-        }
-        
-    }
     void Combat::Attack()
     {
         std::cout<<"Attacked"<<std::endl;
         const int dmg = player.Attack();
         enemy.TakeDamage(dmg);
-    }
-    bool Combat::ACT(Menu& menu)
-    {
-        auto actions = enemy.GetAction();
-        auto select = menu.ActMenu(actions);
-        if (!select.has_value()){
-            return false;
-        }    
-        enemy.ACT(select.value());
-        return true;
-    }
-    bool Combat::UseItem(Menu& menu)
-    {
-        auto& items = player.GetItems();
-        auto select = menu.ChooseItems(items);
-        if (!select.has_value()){
-            return false;
-        }
-        return items[select.value()].UseItem(player);
     }
     void Combat::Spare()
     {
@@ -74,10 +25,6 @@ namespace GameLogic
         }
     }
 
-    void Combat::ExecuteEnemyTurn(){
-        std::cout<<"Enemy attack not implemented"<<std::endl;
-        throw std::runtime_error("Not Implemented");
-    }
     Entities::Player& Combat::GetPlayer(){
         return this->player;
     }

@@ -74,6 +74,8 @@ namespace File{
             auto act = ActionVectorFromData(dataRow,5,4);
             std::cout<<"mercy : "<<mercy;
             auto atk = AttackVectorFromData(dataRow,5+12,1);
+            std::cout<<std::endl;
+            std::cout<<atk.size()<< "atk size"<<std::endl;
 
             Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act,atk);
             entities.push_back(currEnemy);
