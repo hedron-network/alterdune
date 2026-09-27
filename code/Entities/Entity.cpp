@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
-#include <Entity.hh>
-#include <Attack.hh>
+#include "Entity.hh"
 using namespace std;
 using namespace Attributes;
 namespace Entities{
@@ -20,7 +19,7 @@ namespace Entities{
     {
         return hp;
     }
-    string Entity::GetName()
+    string Entity::GetName()const
     {
         return name;
     }
@@ -52,6 +51,11 @@ namespace Entities{
             hp=hp+amount;
         }
         else hp=hpMax;
+    }
+
+    int Entity::GetHpMax() const
+    {
+        return this->hpMax;
     }
 }
 

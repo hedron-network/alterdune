@@ -4,27 +4,32 @@
 #include <vector>
 #include "../Entities/Enemy.hh"
 using namespace std;
+#pragma once
 
-namespace GameLogic{
+namespace GameLogic {
 
-class Bestiary {
+    // Une entrée du bestiaire : un ennemi vaincu + comment il a été vaincu
+    struct BestiaryEntry {
+        Entities::Enemy enemy;
+        bool wasSpared; // true = épargné, false = tué
+    };
+
+    class Bestiary {
     private:
-        vector<Entities::Enemy*> enemies;
-        string result;
+        std::vector<BestiaryEntry> entries;
 
     public:
-        Bestiary();
-        explicit Bestiary(const std::string& result);
-        Bestiary(const std::vector<Entities::Enemy*>& enemies, const std::string& result);
+        Bestiary() = default;
 
-        void AddEnemy(Entities::Enemy* enemy);
-        const vector<Entities::Enemy*>& GetEnemies() const;
-        const string& GetResult() const;
-        void SetResult(const std::string& value);
+        // Ajoute un ennemi vaincu au bestiaire
+        void AddEnemy(const Entities::Enemy enemy, bool spared);
 
-        size_t Size() const;
+        // Retourne toutes les entrées (utile pour les stats de fin)
+        const std::vector<BestiaryEntry>& GetEntries() const;
+
         bool IsEmpty() const;
+        size_t Size() const;
     };
-};
 
+} // namespace GameLogic
 #endif

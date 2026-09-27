@@ -1,32 +1,74 @@
-#include <Enemy.hh>
+#include "Enemy.hh"
 
 namespace Entities{
-    Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
+    Enemy::Enemy (string name, int hpMax, EnemyType categorie, string description, int mercy, vector<Action> Act, vector<Attributes::Attack> attacks) : Entity(hpMax, name, Attributes::Attack("Enemy Attack", "Basic enemy attack", 1.0))
     {
         this->categorie=categorie;
         this->description=description;
         this->mercy=mercy;
-        this->Act=Act;        
+        this->Act=Act;  
+        this->textures = Assets::LoadEnemyTexture(name);
+        this->sprites = Assets::LoadEnemySprites(textures);
+        this->attacks=attacks;
+
     }
 
     void Enemy::ACT(Action action)
     {
-        mercy-=action.GetMercyModifier();
+        std::cout << "Modifier: " << action.GetMercyModifier() << std::endl;
+        std::cout<<action.GetDescription()<<std::endl;
+        std::cout<<mercy;
+        if(action.GetMercyModifier()>mercy){
+            mercy=0;
+        }
+        else{
+            mercy-=action.GetMercyModifier();
+        }
+        std::cout<<mercy;
     }
 
     bool Enemy::Spare()
     {
-        if (mercy<0)
+        if (mercy<=0){
 
         return true;
+        }
+        return false;
     }
 
     vector<Action> Enemy::GetAction()
     {
         return Act;
     }
+    vector<Particle> Enemy::Attack(){
+        ShuffleAttacks();
+        return attacks.back().GetAttackParticles();
+    }
+    int Enemy::GetAttackDamage(){
+        return attacks.back().GetAttackModifier();
+    }
+    vector<sf::Texture>& Enemy::GetTextures(){
+        return textures;
+    }
+    vector<sf::Sprite>& Enemy::GetSprites(){
+        return sprites;
+    }
+    void Enemy::ShuffleAttacks(){
+        auto rng = std::default_random_engine {static_cast<unsigned>(std::time(nullptr))};
+        std::shuffle(this->attacks.begin(), this->attacks.end(), rng);
+    }
 
 
-
+    EnemyType Enemy::GetCategorie() const
+    {
+        return categorie;
+    }
+    int Enemy::GetHpMax() const{
+        return this->hpMax;
+    }
+    std::string Enemy::GetDescription()const{
+        return description;
+    }
+    
 }   
 

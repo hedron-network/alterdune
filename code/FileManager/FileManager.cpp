@@ -1,4 +1,4 @@
-#include <FileManager.hh>
+#include "FileManager.hh"
 #include <filesystem>
 #include <iostream>
 namespace File{
@@ -15,24 +15,18 @@ namespace File{
     FileManager::FileManager(){}
     std::vector<std::string> FileManager::readRow(const std::string &row){// passes original value as read only to avoid copying
         std::vector<std::string> fields = {""};
+        bool inQuotes = false;
         int i =0;
         for(char c : row){
-            switch(c){
-                case ';':{
-                    fields[i]= trim(fields[i]);
-                    fields.push_back("");
-                    i++;
-                    break;
-                }
-                case '\r':{
-                    break;
-                }
-                case '\0':{
-                    break;
-                }
-                default :{
-                    fields[i].push_back(c);
-                }
+             if (c == '"') {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ';' && !inQuotes) {
+                fields.push_back("");
+                i++;
+            }
+            else {
+                fields[i].push_back(c);
             }
         }
         return fields;
@@ -66,7 +60,7 @@ namespace File{
             return {};
         }
         auto data = dataOpt.value();
-        for (int i =1;i<data.size();i++){
+        for (int i =0;i<data.size();i++){
             auto dataRow= data[i];
             for(std::string field:dataRow){
                 std::cout<<field<<";";
@@ -78,8 +72,12 @@ namespace File{
             std::string description = dataRow[3];
             int mercy = ConvertTo<int>(dataRow[4]);
             auto act = ActionVectorFromData(dataRow,5,4);
+            std::cout<<"mercy : "<<mercy;
+            auto atk = AttackVectorFromData(dataRow,5+12,1);
+            std::cout<<std::endl;
+            std::cout<<atk.size()<< "atk size"<<std::endl;
 
-            Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act);
+            Entities::Enemy currEnemy(name, hpMax,enemyType, description, mercy,act,atk);
             entities.push_back(currEnemy);
         }
         return entities;
@@ -100,7 +98,7 @@ namespace File{
             return {};
         }
         auto data = dataOpt.value();
-        for (int i =1;i<data.size();i++){
+        for (int i =0;i<data.size();i++){
             auto dataRow= data[i];
             auto item=LoadItemFromData(dataRow);
             std::cout<<item.GetName()<<";";
@@ -134,5 +132,24 @@ namespace File{
         }
         return act;
     }
-
+    std::vector<Attributes::Attack> FileManager::AttackVectorFromData(const std::vector<std::string>& dataRow, int offset, int numberOfActions)
+    {
+        vector<Attributes::Attack> atk;
+        for (int i = 0; i < numberOfActions; i++) {
+            int idx = offset + i * 4;
+            if (idx + 3 >= (int)dataRow.size()) {
+                std::cout << "Warning: not enough fields for action " << i << std::endl;
+                break; // or continue, depending on your needs
+            }
+            Attributes::Attack attack(
+                dataRow[idx],
+                dataRow[idx + 1],
+                ConvertTo<int>(dataRow[idx + 2])
+            );
+            attack.BuildAttack(dataRow[idx + 3]);
+            atk.push_back(attack);
+        }
+        std::cout<<atk.size();
+        return atk;
+    }
 }

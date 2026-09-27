@@ -1,4 +1,4 @@
-#include <stringConverter.hh>
+#include "stringConverter.hh"
 namespace File
 {
     // Primary template
@@ -8,6 +8,7 @@ namespace File
     template <>
     int ConvertTo<int>(const std::string& data) {
         try{
+            if (data.empty()) return 0;
             return std::stoi(data);
         }catch(...){
             std::cout<<"can't convert "<<data<<" to int"<<std::endl;

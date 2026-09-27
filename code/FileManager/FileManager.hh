@@ -22,6 +22,7 @@ private:
     std::vector<Attributes::Item> LoadItems(const std::string &filepath);
     Attributes::Item LoadItemFromData(const std::vector<std::string>& dataRow, int startOffset=0);
     std::vector<Attributes::Action> ActionVectorFromData(const std::vector<std::string>& dataRow,int offset,int numberOfActions);
+    std::vector<Attributes::Attack> AttackVectorFromData(const std::vector<std::string>& dataRow, int offset, int numberOfActions);
 public:
     const std::string entityCSV="./asset/Enemies.csv";
     const std::string itemCSV="./asset/Items.csv";

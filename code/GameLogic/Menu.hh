@@ -4,6 +4,7 @@
 #include <optional>
 #include <vector>
 #include <limits>
+#include "Bestiary.hh"
 
 #include "../Attributes/Item.hh"
 #include "../Attributes/Action.hh"
@@ -26,7 +27,7 @@ public:
     std::optional<MenuChoice> DisplayCombatMenu();
     std::optional<Attributes::Action> ActMenu(std::vector<Attributes::Action>& actions);
     void ShowBestiary();
-    std::optional<Attributes::Item> ChooseItems(std::vector<Attributes::Item>& items);
+    std::optional<size_t> ChooseItems(std::vector<Attributes::Item>& items);
     std::string NameSelection();
 };  
 }

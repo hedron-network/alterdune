@@ -12,10 +12,8 @@ namespace Entities
 
 
 class Entity {
-    private:
-    int hpMax;
-
     protected:
+    int hpMax;
     int hp;
     string name;
     Attributes::Attack attack;
@@ -24,11 +22,12 @@ class Entity {
     Entity(int hpMax, string name, Attributes::Attack atk);
     virtual ~Entity();
     int GetHp();
-    std::string GetName();
+    std::string GetName() const;
     double GetAttackModifier();
     int Attack();
     void TakeDamage(int damage);
     void Heal(int amount);
+    int GetHpMax() const;
 };
 
 

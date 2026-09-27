@@ -3,23 +3,24 @@
 #include <string>
 #include <vector>
 
+#include <random>
+#include <ctime>
+#include<SFML/Graphics.hpp>
+
 #include "Entity.hh"
 #include "../Attributes/Item.hh"
+#include "../Render/Assets.hh"
 using namespace std;
 
 namespace Entities
 {
     class Player : public Entity {
-    private:
-    int numberOfKill;
-    int numberOfSpare;
-    int numberOfVictory;
     vector<Attributes::Item> ListOfItem;
-
     public :
     Player(string name, int hpMax,vector<Attributes::Item> ListOfItem);
-    vector<Attributes::Item> GetItems();
-
+    std::vector<Attributes::Item>& GetItems();
+    const std::vector<Attributes::Item>& GetItems() const;
+    int Attack();
 };
 }
 #endif

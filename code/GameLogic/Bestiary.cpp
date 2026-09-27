@@ -1,50 +1,22 @@
+#include "Bestiary.hh"
 #include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
 
-class Enemy;
+namespace GameLogic {
 
-class Bestiary {
-    private:
-    vector<Enemy*> enemies;
-    string result;
-
-    public:
-
-    Bestiary(vector<Enemy*> enemies, string result)
-    {
-        this->enemies = enemies;
-        this->result = result;
+    void Bestiary::AddEnemy(const Entities::Enemy enemy, bool spared) {
+        entries.push_back({enemy, spared});
     }
 
-    void AddEnemy(Enemy* enemy)
-    {
-        this->enemies.push_back(enemy);
+    const std::vector<BestiaryEntry>& Bestiary::GetEntries() const {
+        return entries;
     }
 
-    vector<Enemy*> GetEnemies()
-    {
-        return this->enemies;
+    bool Bestiary::IsEmpty() const {
+        return entries.empty();
     }
 
-    string GetResult()
-    {
-        return this->result;
+    size_t Bestiary::Size() const {
+        return entries.size();
     }
 
-    void SetResult(string value)
-    {
-        this->result = value;
-    }
-
-    size_t Size()
-    {
-        return this->enemies.size();
-    }
-
-    bool IsEmpty()
-    {
-        return this->enemies.empty();
-    }
-};
+} // namespace GameLogic
